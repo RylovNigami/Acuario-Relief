@@ -1,25 +1,37 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+  <q-layout view="hHh Lpr lFf">
+    <q-header elevated style="height: 60px; align-content: center;">
+      <q-toolbar class="glossy">
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title>
+        <q-avatar style="font-size: 55px;">
+          <img src="https://pbs.twimg.com/profile_images/1440665344322928653/iuwaZnp6_400x400.jpg">
+        </q-avatar>
+        <q-toolbar-title class="text-weight-bolder">
           Acuario Relief
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+
+
+
+        <q-btn flat round dense @click="userInformation">
+          <q-avatar icon="person" style="background-color: lightcoral;" />
+        </q-btn>
+
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header>
-          Essential Links
-        </q-item-label>
+    <q-drawer v-model="leftDrawerOpen" bordered>
+      <q-scroll-area class="fit">
+        <!--show-if-above (esto funciona para activar la muestra de algun elemento de forma predeterminada)-->
+        <q-list>
+          <q-item-label header>
+            Essential Links
+          </q-item-label>
 
-        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
-      </q-list>
+          <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
