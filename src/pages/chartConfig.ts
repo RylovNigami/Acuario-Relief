@@ -18,6 +18,7 @@ export const data1 = {
       label: "Proyectos",
       backgroundColor: "#486CA1",
       data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 98],
+      color: "#486CA1",
     },
   ],
 };
