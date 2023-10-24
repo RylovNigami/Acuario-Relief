@@ -26,6 +26,7 @@
             <q-card-section style="margin: 0%; padding: 0%;">
               <h5 class="no-margin q-mb-xs column items-center text-bold">Indicadores
               </h5>
+              <hr>
               <div class="q-my-sm text-bold">Reclamos</div>
               <div class="row justify-between">
                 <div class="q-my-sm text-light col-4">Bien</div>
@@ -41,6 +42,7 @@
                 </div>
               </div>
               <br>
+              <hr>
               <div class="q-my-sm text-bold">Sugerencias</div>
               <div class="row justify-between">
                 <div class="q-my-sm text-light col-4">Bien</div>
@@ -56,6 +58,7 @@
                 </div>
               </div>
               <br>
+              <hr>
               <div class="q-my-sm text-bold">Comentarios</div>
               <div class="row justify-between">
                 <div class="q-my-sm text-light col-4">Bien</div>
@@ -71,6 +74,7 @@
                 </div>
               </div>
               <br>
+              <hr>
               <div class="q-my-sm text-bold">Denuncias</div>
               <div class="row justify-between">
                 <div class="q-my-sm text-light col-4">Bien</div>
@@ -86,6 +90,7 @@
                 </div>
               </div>
               <br>
+              <hr>
               <div class="q-my-sm text-bold">Quejas</div>
               <div class="row justify-between">
                 <div class="q-my-sm text-light col-4">Bien</div>
@@ -101,6 +106,7 @@
                 </div>
               </div>
               <br>
+              <hr>
               <div class="q-my-sm text-bold">Inquietudes</div>
               <div class="row justify-between">
                 <div class="q-my-sm text-light col-4">Bien</div>
@@ -116,6 +122,7 @@
                 </div>
               </div>
               <br>
+              <hr>
               <div class="row justify-center items-center">
                 <div class="">
                   <q-btn @click="randomize">Prueba</q-btn>
