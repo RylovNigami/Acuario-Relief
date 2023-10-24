@@ -1,12 +1,14 @@
 <template>
   <q-page>
-    <div class="row q-mx-lg q-py-xs items-center">
-      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
-        <h2 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectName }}</h2>
-        <h5 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectDescription }}</h5>
+    <div class="row q-mx-xl q-py-xs items-center">
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <h2 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectName }}
+        </h2>
+        <h5 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectDescription }}.</h5>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
-        <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 column items-center">
+        <img src="/Logo-acuario-11-09-2023.png" style="height:300px" />
+        <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
           <h5 class="row inline" v-for="item in proyectNGOAllies" :key="item.id">{{ item.ngo }},
           </h5>
         </h5>
@@ -15,9 +17,119 @@
         </h5>
         <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Personal: {{ proyectWorkTeam }}
           Voluntarios
-        </h5>
+        </h5>-->
       </div>
       <div class="row inline items-center justify-center">
+
+        <div class="q-ma-md" id="indicadores">
+          <q-card class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-pa-md" style="width:">
+            <q-card-section style="margin: 0%; padding: 0%;">
+              <h5 class="no-margin q-mb-xs column items-center text-bold">Indicadores
+              </h5>
+              <div class="q-my-sm text-bold">Reclamos</div>
+              <div class="row justify-between">
+                <div class="q-my-sm text-light col-4">Bien</div>
+                <div class="q-my-sm text-light col-4 text-center">Regular</div>
+                <div class="q-my-sm text-light col-4 text-right">Mal</div>
+              </div>
+              <div class="progress" rounded style="width: calc(540px + 540px);">
+                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+                  :style="{ 'width': contador + '%' }" :class="color">
+                  <div class="flex flex-center">
+                    <q-badge color="white" text-color="black" :label="progressLabel" />
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="q-my-sm text-bold">Sugerencias</div>
+              <div class="row justify-between">
+                <div class="q-my-sm text-light col-4">Bien</div>
+                <div class="q-my-sm text-light col-4 text-center">Regular</div>
+                <div class="q-my-sm text-light col-4 text-right">Mal</div>
+              </div>
+              <div class="progress" rounded style="width: calc(540px + 540px);">
+                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+                  :style="{ 'width': contador2 + '%' }" :class="color2">
+                  <div class="flex flex-center">
+                    <q-badge color="white" text-color="black" :label="progressLabel2" />
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="q-my-sm text-bold">Comentarios</div>
+              <div class="row justify-between">
+                <div class="q-my-sm text-light col-4">Bien</div>
+                <div class="q-my-sm text-light col-4 text-center">Regular</div>
+                <div class="q-my-sm text-light col-4 text-right">Mal</div>
+              </div>
+              <div class="progress" rounded style="width: calc(540px + 540px);">
+                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+                  :style="{ 'width': contador3 + '%' }" :class="color3">
+                  <div class="flex flex-center">
+                    <q-badge color="white" text-color="black" :label="progressLabel3" />
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="q-my-sm text-bold">Denuncias</div>
+              <div class="row justify-between">
+                <div class="q-my-sm text-light col-4">Bien</div>
+                <div class="q-my-sm text-light col-4 text-center">Regular</div>
+                <div class="q-my-sm text-light col-4 text-right">Mal</div>
+              </div>
+              <div class="progress" rounded style="width: calc(540px + 540px);">
+                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+                  :style="{ 'width': contador4 + '%' }" :class="color4">
+                  <div class="flex flex-center">
+                    <q-badge color="white" text-color="black" :label="progressLabel4" />
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="q-my-sm text-bold">Quejas</div>
+              <div class="row justify-between">
+                <div class="q-my-sm text-light col-4">Bien</div>
+                <div class="q-my-sm text-light col-4 text-center">Regular</div>
+                <div class="q-my-sm text-light col-4 text-right">Mal</div>
+              </div>
+              <div class="progress" rounded style="width: calc(540px + 540px);">
+                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+                  :style="{ 'width': contador5 + '%' }" :class="color5">
+                  <div class="flex flex-center">
+                    <q-badge color="white" text-color="black" :label="progressLabel5" />
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="q-my-sm text-bold">Inquietudes</div>
+              <div class="row justify-between">
+                <div class="q-my-sm text-light col-4">Bien</div>
+                <div class="q-my-sm text-light col-4 text-center">Regular</div>
+                <div class="q-my-sm text-light col-4 text-right">Mal</div>
+              </div>
+              <div class="progress" rounded style="width: calc(540px + 540px);">
+                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+                  :style="{ 'width': contador6 + '%' }" :class="color6">
+                  <div class="flex flex-center">
+                    <q-badge color="white" text-color="black" :label="progressLabel6" />
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row justify-center items-center">
+                <div class="">
+                  <q-btn @click="randomize">Prueba</q-btn>
+                </div>
+                <!--<div>
+                  <button class="btn btn-primary" @click="contador++">+</button>
+                </div>
+                <div>
+                  <button class="btn btn-danger" @click="contador--">-</button>
+                </div>-->
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
 
         <div class="q-ma-md" id="proyectos">
           <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-pa-md">
@@ -36,7 +148,7 @@
                   </div>
                 </div>
 
-                <q-separator vertical inset class="q-mx-lg" />
+                <q-separator vertical inset class="q-mx-sm" />
 
                 <div class="container flex" style="width: 150px; height: 210px">
                   <div class="flex column">
@@ -69,7 +181,7 @@
                   </div>
                 </div>
 
-                <q-separator vertical inset class="q-mx-lg" />
+                <q-separator vertical inset class="q-mx-sm" />
 
                 <div class="container flex" style="width: 150px; height: 210px">
                   <div class="flex column">
@@ -91,7 +203,7 @@
             <q-card-section style="margin: 0%; padding: 0%;">
               <h5 class="no-margin q-mb-xs column items-center text-bold">Proyectos
               </h5>
-              <div class="flex row">
+              <div class="flex row no-wrap">
                 <div class="container flex" style="width: 150px; height: 210px">
                   <div class="flex column">
                     <div class="column items-center">
@@ -105,7 +217,7 @@
                   </div>
                 </div>
 
-                <q-separator vertical inset class="q-mx-lg" />
+                <q-separator vertical inset class="q-mx-sm" />
 
                 <div class="container flex" style="width: 150px; height: 210px">
                   <div class="flex column">
@@ -203,6 +315,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { reactive, computed } from 'vue'
 import {
   Chart as ChartJS,
   //chartJS Elements
@@ -251,6 +364,44 @@ export default defineComponent({
     const workteamCapitated = ref(50)
     const workTeamPreparated = ref(50)
 
+    const contador = ref(0)
+    const contador2 = ref(0)
+    const contador3 = ref(0)
+    const contador4 = ref(0)
+    const contador5 = ref(0)
+    const contador6 = ref(0)
+    const color = computed(() => ({
+      'bg-green': contador.value < 30,
+      'bg-warning': contador.value >= 30 && contador.value < 70,
+      'bg-red': contador.value >= 70
+    }))
+    const color2 = computed(() => ({
+      'bg-green': contador2.value < 30,
+      'bg-warning': contador2.value >= 30 && contador2.value < 70,
+      'bg-red': contador2.value >= 70
+    }))
+    const color3 = computed(() => ({
+      'bg-green': contador3.value < 30,
+      'bg-warning': contador3.value >= 30 && contador3.value < 70,
+      'bg-red': contador3.value >= 70
+    }))
+    const color4 = computed(() => ({
+      'bg-green': contador4.value < 30,
+      'bg-warning': contador4.value >= 30 && contador4.value < 70,
+      'bg-red': contador4.value >= 70
+    }))
+    const color5 = computed(() => ({
+      'bg-green': contador5.value < 30,
+      'bg-warning': contador5.value >= 30 && contador5.value < 70,
+      'bg-red': contador5.value >= 70
+    }))
+    const color6 = computed(() => ({
+      'bg-green': contador6.value < 30,
+      'bg-warning': contador6.value >= 30 && contador6.value < 70,
+      'bg-red': contador6.value >= 70
+    }))
+
+
     //convert-excel-to-json
     const file = ref(null)
     const files = ref(null)
@@ -259,6 +410,7 @@ export default defineComponent({
     const submitted = ref(false)
     const submitEmpty = ref(false)
     const submitResult = ref([])
+
 
     // expose the ref to the template
     return {
@@ -278,6 +430,34 @@ export default defineComponent({
       workteamCapitated,
       NgoIntenationalAllies,
       NgoNationalAllies,
+      contador,
+      contador2,
+      contador3,
+      contador4,
+      contador5,
+      contador6,
+      randomize(min, max) {
+        min = Math.ceil(0);
+        max = Math.floor(100);
+        contador.value = Math.floor(Math.random() * (max - min) + min);
+        contador2.value = Math.floor(Math.random() * (max - min) + min);
+        contador3.value = Math.floor(Math.random() * (max - min) + min);
+        contador4.value = Math.floor(Math.random() * (max - min) + min);
+        contador5.value = Math.floor(Math.random() * (max - min) + min);
+        contador6.value = Math.floor(Math.random() * (max - min) + min);
+      },
+      color,
+      color2,
+      color3,
+      color4,
+      color5,
+      color6,
+      progressLabel: computed(() => contador.value + '%'),
+      progressLabel2: computed(() => contador2.value + '%'),
+      progressLabel3: computed(() => contador3.value + '%'),
+      progressLabel4: computed(() => contador4.value + '%'),
+      progressLabel5: computed(() => contador5.value + '%'),
+      progressLabel6: computed(() => contador6.value + '%'),
 
       //elementos a retornar de la funcion para subir xlsx
 
@@ -418,9 +598,10 @@ export default defineComponent({
     }
   },
   computed() {
+
+
   },
   watcher() {
-    console.log(setup.file)
   }
 }
 )
