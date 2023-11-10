@@ -1,14 +1,16 @@
 <template>
   <q-page>
-    <div class="row q-mx-xl q-py-xs items-center">
-      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-        <h2 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectName }}
-        </h2>
-        <h5 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectDescription }}.</h5>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 column items-center">
-        <img src="/Logo-acuario-11-09-2023.png" style="height:300px" />
-        <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
+    <div class="flex row q-mx-xl q-py-xs flex-center">
+      <div class="q-container">
+        <div class="row inline">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-center">
+            <h2 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectName }}
+            </h2>
+            <h5 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectDescription }}.</h5>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 column items-center">
+            <img src="/Logo-acuario-11-09-2023.png" style="max-height:264px" />
+            <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
           <h5 class="row inline" v-for="item in proyectNGOAllies" :key="item.id">{{ item.ngo }},
           </h5>
         </h5>
@@ -18,290 +20,343 @@
         <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Personal: {{ proyectWorkTeam }}
           Voluntarios
         </h5>-->
+          </div>
+        </div>
       </div>
-      <div class="row inline items-center justify-center">
+    </div>
 
-        <div class="q-ma-md" id="indicadores">
-          <q-card class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-pa-md" style="width:">
-            <q-card-section style="margin: 0%; padding: 0%;">
-              <h5 class="no-margin q-mb-xs column items-center text-bold">Indicadores
-              </h5>
-              <hr>
-              <div class="q-my-sm text-bold">Reclamos</div>
-              <div class="row justify-between">
-                <div class="q-my-sm text-light col-4">Bien</div>
-                <div class="q-my-sm text-light col-4 text-center">Regular</div>
-                <div class="q-my-sm text-light col-4 text-right">Mal</div>
-              </div>
-              <div class="progress" rounded style="width: calc(540px + 540px);">
-                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-                  :style="{ 'width': contador + '%' }" :class="color">
-                  <div class="flex flex-center">
-                    <q-badge color="white" text-color="black" :label="progressLabel" />
+    <div class="flex row q-mx-lg q-py-xs flex-center" id="indicadores">
+      <q-card class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-pa-lg">
+        <q-card-section style="margin: 1%; padding: 0%;">
+          <h5 class="no-margin q-mb-xs text-bold" style="text-align: center;">Indicadores
+          </h5>
+          <div class="items-right justify-right"><q-select borderless style="width: 20%;" v-model="model"
+              :options="options1" label="Margen de tiempo" /></div>
+
+          <hr>
+          <div class="q-my-sm text-bold">Reclamos</div>
+          <div class="progress" rounded style="">
+            <div rounded class="rounded progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador + '%' }" :class="color">
+              <div class="inline-flex flex-center q-my-xs">
+                <q-badge color="white" text-color="black" :label="progressLabel">
+                  -
+                  <div class="flex flex-end" v-if="(contador <= 30)">
+                    <q-badge color="white" text-color="black" label="Bien" />
                   </div>
-                </div>
-              </div>
-              <br>
-              <hr>
-              <div class="q-my-sm text-bold">Sugerencias</div>
-              <div class="row justify-between">
-                <div class="q-my-sm text-light col-4">Bien</div>
-                <div class="q-my-sm text-light col-4 text-center">Regular</div>
-                <div class="q-my-sm text-light col-4 text-right">Mal</div>
-              </div>
-              <div class="progress" rounded style="width: calc(540px + 540px);">
-                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-                  :style="{ 'width': contador2 + '%' }" :class="color2">
-                  <div class="flex flex-center">
-                    <q-badge color="white" text-color="black" :label="progressLabel2" />
+                  <div class="flex flex-end" v-else-if="(contador < 70)">
+                    <q-badge color="white" text-color="black" label="Regular" />
                   </div>
-                </div>
-              </div>
-              <br>
-              <hr>
-              <div class="q-my-sm text-bold">Comentarios</div>
-              <div class="row justify-between">
-                <div class="q-my-sm text-light col-4">Bien</div>
-                <div class="q-my-sm text-light col-4 text-center">Regular</div>
-                <div class="q-my-sm text-light col-4 text-right">Mal</div>
-              </div>
-              <div class="progress" rounded style="width: calc(540px + 540px);">
-                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-                  :style="{ 'width': contador3 + '%' }" :class="color3">
-                  <div class="flex flex-center">
-                    <q-badge color="white" text-color="black" :label="progressLabel3" />
+                  <div class="flex flex-end" v-else-if="(contador >= 70)">
+                    <q-badge color="white" text-color="black" label="Mal" />
                   </div>
-                </div>
+                </q-badge>
               </div>
-              <br>
-              <hr>
-              <div class="q-my-sm text-bold">Denuncias</div>
-              <div class="row justify-between">
-                <div class="q-my-sm text-light col-4">Bien</div>
-                <div class="q-my-sm text-light col-4 text-center">Regular</div>
-                <div class="q-my-sm text-light col-4 text-right">Mal</div>
-              </div>
-              <div class="progress" rounded style="width: calc(540px + 540px);">
-                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-                  :style="{ 'width': contador4 + '%' }" :class="color4">
-                  <div class="flex flex-center">
-                    <q-badge color="white" text-color="black" :label="progressLabel4" />
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="q-my-sm text-bold">Sugerencias</div>
+          <div class="progress" rounded style="">
+            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador2 + '%' }" :class="color2">
+              <div class="inline-flex flex-center q-my-xs">
+                <q-badge color="white" text-color="black" :label="progressLabel2">
+                  -
+                  <div class="flex flex-end" v-if="(contador2 <= 30)">
+                    <q-badge color="white" text-color="black" label="Bien" />
                   </div>
-                </div>
-              </div>
-              <br>
-              <hr>
-              <div class="q-my-sm text-bold">Quejas</div>
-              <div class="row justify-between">
-                <div class="q-my-sm text-light col-4">Bien</div>
-                <div class="q-my-sm text-light col-4 text-center">Regular</div>
-                <div class="q-my-sm text-light col-4 text-right">Mal</div>
-              </div>
-              <div class="progress" rounded style="width: calc(540px + 540px);">
-                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-                  :style="{ 'width': contador5 + '%' }" :class="color5">
-                  <div class="flex flex-center">
-                    <q-badge color="white" text-color="black" :label="progressLabel5" />
+                  <div class="flex flex-end" v-else-if="(contador2 < 70)">
+                    <q-badge color="white" text-color="black" label="Regular" />
                   </div>
-                </div>
-              </div>
-              <br>
-              <hr>
-              <div class="q-my-sm text-bold">Inquietudes</div>
-              <div class="row justify-between">
-                <div class="q-my-sm text-light col-4">Bien</div>
-                <div class="q-my-sm text-light col-4 text-center">Regular</div>
-                <div class="q-my-sm text-light col-4 text-right">Mal</div>
-              </div>
-              <div class="progress" rounded style="width: calc(540px + 540px);">
-                <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-                  :style="{ 'width': contador6 + '%' }" :class="color6">
-                  <div class="flex flex-center">
-                    <q-badge color="white" text-color="black" :label="progressLabel6" />
+                  <div class="flex flex-end" v-else-if="(contador2 >= 70)">
+                    <q-badge color="white" text-color="black" label="Mal" />
                   </div>
-                </div>
+                </q-badge>
               </div>
-              <br>
-              <hr>
-              <div class="row justify-center items-center">
-                <div class="">
-                  <q-btn @click="randomize">Prueba</q-btn>
-                </div>
-                <!--<div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="q-my-sm text-bold">Comentarios</div>
+          <div class="progress" rounded style="">
+            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador3 + '%' }" :class="color3">
+              <div class="inline-flex flex-center q-my-xs">
+                <q-badge color="white" text-color="black" :label="progressLabel3">
+                  -
+                  <div class="flex flex-end" v-if="(contador3 <= 30)">
+                    <q-badge color="white" text-color="black" label="Bien" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador3 < 70)">
+                    <q-badge color="white" text-color="black" label="Regular" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador3 >= 70)">
+                    <q-badge color="white" text-color="black" label="Mal" />
+                  </div>
+                </q-badge>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="q-my-sm text-bold">Denuncias</div>
+          <div class="progress" rounded style="">
+            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador4 + '%' }" :class="color4">
+              <div class="inline-flex flex-center q-my-xs">
+                <q-badge color="white" text-color="black" :label="progressLabel4">
+                  -
+                  <div class="flex flex-end" v-if="(contador4 <= 30)">
+                    <q-badge color="white" text-color="black" label="Bien" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador4 < 70)">
+                    <q-badge color="white" text-color="black" label="Regular" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador4 >= 70)">
+                    <q-badge color="white" text-color="black" label="Mal" />
+                  </div>
+                </q-badge>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="q-my-sm text-bold">Quejas</div>
+          <div class="progress" rounded style="">
+            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador5 + '%' }" :class="color5">
+              <div class="inline-flex flex-center q-my-xs">
+                <q-badge color="white" text-color="black" :label="progressLabel5">
+                  -
+                  <div class="flex flex-end" v-if="(contador5 <= 30)">
+                    <q-badge color="white" text-color="black" label="Bien" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador5 < 70)">
+                    <q-badge color="white" text-color="black" label="Regular" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador5 >= 70)">
+                    <q-badge color="white" text-color="black" label="Mal" />
+                  </div>
+                </q-badge>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="q-my-sm text-bold">Inquietudes</div>
+          <div class="progress" rounded style="">
+            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador6 + '%' }" :class="color6">
+              <div class="inline-flex flex-center q-my-xs">
+                <q-badge color="white" text-color="black" :label="progressLabel6">
+                  -
+                  <div class="flex flex-end" v-if="(contador6 <= 30)">
+                    <q-badge color="white" text-color="black" label="Bien" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador6 < 70)">
+                    <q-badge color="white" text-color="black" label="Regular" />
+                  </div>
+                  <div class="flex flex-end" v-else-if="(contador6 >= 70)">
+                    <q-badge color="white" text-color="black" label="Mal" />
+                  </div>
+                </q-badge>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="row justify-center items-center">
+            <div class="">
+              <q-btn @click="randomize">Prueba</q-btn>
+            </div>
+            <!--<div>
                   <button class="btn btn-primary" @click="contador++">+</button>
                 </div>
                 <div>
                   <button class="btn btn-danger" @click="contador--">-</button>
                 </div>-->
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </div>
 
-        <div class="q-ma-md" id="proyectos">
-          <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-pa-md">
-            <q-card-section style="margin: 0%; padding: 0%;">
-              <h5 class="no-margin q-mb-xs column items-center text-bold">Organizaciones
-              </h5>
-              <div class="flex row">
-                <div class="container flex" style="width: 150px; height: 210px">
-                  <div class="flex column">
-                    <div class="column items-center">
-                      <div class="q-my-sm text-bold">Nacionales</div>
-                      <h3 class="q-my-sm" style="color:cadetblue">{{ NgoNationalAllies }}%</h3>
-                      <div class="column items-center wrap justify-center text-center">Organizaciones que prestan ayuda
-                        nacional o estatalmente.</div>
-                    </div>
-                  </div>
-                </div>
-
-                <q-separator vertical inset class="q-mx-sm" />
-
-                <div class="container flex" style="width: 150px; height: 210px">
-                  <div class="flex column">
-                    <div class="column items-center">
-                      <div class="q-my-sm text-bold">Internacionales</div>
-                      <h3 class="q-my-sm" style="color:cadetblue">{{ NgoIntenationalAllies }}%</h3>
-                      <div class="column items-center justify-center text-center">Organizaciones que financian y apoyan a
-                        Acuario.</div>
-                    </div>
+    <div class="flex row q-mx-lg q-py-xs items-center justify-between">
+      <div class="q-container q-my-md" id="proyectos">
+        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-pa-sm ">
+          <q-card-section style="margin: 0%; padding: 0%;">
+            <h5 class="no-margin q-mb-xs column items-center text-bold">Organizaciones
+            </h5>
+            <div class="flex row no-wrap">
+              <div class="container flex" style="width: 168px; height: 210px">
+                <div class="flex column">
+                  <div class="column items-center">
+                    <div class="q-my-sm text-bold">Nacionales</div>
+                    <h3 class="q-my-sm" style="color:cadetblue">{{ NgoNationalAllies }}%</h3>
+                    <div class="column items-center wrap justify-center text-center">Organizaciones que prestan ayuda
+                      nacional o estatalmente.</div>
                   </div>
                 </div>
               </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="q-ma-md" id="personal">
-          <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-my-md q-pa-md">
-            <q-card-section style="margin: 0%; padding: 0%;">
-              <h5 class="no-margin q-mb-xs column items-center text-bold">Equipo de trabajo
-              </h5>
-              <div class="flex row">
-                <div class="container flex" style="width: 150px; height: 210px">
-                  <div class="flex column">
-                    <div class="column items-center">
-                      <div class="q-my-sm text-bold">Profesionales</div>
-                      <h3 class="q-my-sm" style="color:cadetblue">{{ workTeamPreparated }}%</h3>
-                      <div class="column items-center wrap justify-center text-center">Personal preparado profesional y
-                        academicamente.</div>
-                    </div>
-                  </div>
-                </div>
 
-                <q-separator vertical inset class="q-mx-sm" />
+              <q-separator vertical inset class="q-mx-sm" />
 
-                <div class="container flex" style="width: 150px; height: 210px">
-                  <div class="flex column">
-                    <div class="column items-center">
-                      <div class="q-my-sm text-bold">Capacitados</div>
-                      <h3 class="q-my-sm" style="color:cadetblue">{{ workteamCapitated }}%</h3>
-                      <div class="column items-center justify-center text-center">Personal capacitado en distintas areas
-                        para el trabajo.</div>
-                    </div>
+              <div class="container flex" style="width: 155px; height: 210px">
+                <div class="flex column">
+                  <div class="column items-center">
+                    <div class="q-my-sm text-bold">Internacionales</div>
+                    <h3 class="q-my-sm" style="color:cadetblue">{{ NgoIntenationalAllies }}%</h3>
+                    <div class="column items-center justify-center text-center">Organizaciones que financian y apoyan
+                      a
+                      Acuario.</div>
                   </div>
                 </div>
               </div>
-            </q-card-section>
-          </q-card>
-        </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
 
-        <div class="q-ma-md" id="areas atendidas">
-          <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-my-md q-pa-md">
-            <q-card-section style="margin: 0%; padding: 0%;">
-              <h5 class="no-margin q-mb-xs column items-center text-bold">Proyectos
-              </h5>
-              <div class="flex row no-wrap">
-                <div class="container flex" style="width: 150px; height: 210px">
-                  <div class="flex column">
-                    <div class="column items-center">
-                      <div class="q-my-sm text-bold">Registrados</div>
-                      <h3 class="q-my-sm" style="color:cadetblue">{{ rProyects }}%</h3>
-                      <div class="column items-center wrap justify-center text-center">Proyectos abscritos y
-                        realizados bajo
-                        financiamiento de
-                        organizaciones mayores.</div>
-                    </div>
-                  </div>
-                </div>
-
-                <q-separator vertical inset class="q-mx-sm" />
-
-                <div class="container flex" style="width: 150px; height: 210px">
-                  <div class="flex column">
-                    <div class="column items-center">
-                      <div class="q-my-sm text-bold">Independientes</div>
-                      <h3 class="q-my-sm" style="color:cadetblue">{{ iProyects }}%</h3>
-                      <div class="column items-center justify-center text-center">Proyectos realizados
-                        independientemente por Acuario.</div>
-                    </div>
+      <div class="q-container q-my-md" id="personal">
+        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-pa-sm ">
+          <q-card-section style="margin: 0%; padding: 0%;">
+            <h5 class="no-margin q-mb-xs column items-center text-bold">Equipo de trabajo
+            </h5>
+            <div class="flex row no-wrap">
+              <div class="container flex" style="width: 168px; height: 210px">
+                <div class="flex column">
+                  <div class="column items-center">
+                    <div class="q-my-sm text-bold">Profesionales</div>
+                    <h3 class="q-my-sm" style="color:cadetblue">{{ workTeamPreparated }}%</h3>
+                    <div class="column items-center wrap justify-center text-center">Personal preparado profesional y
+                      academicamente.</div>
                   </div>
                 </div>
               </div>
-            </q-card-section>
-          </q-card>
-        </div>
 
-        <div class="q-ma-md">
-          <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-my-md q-pa-md">
-            <q-card-section style="margin: 0%; padding: 0%; height:300px;">
-              <Bar :data="data1" :options="options" />
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="q-ma-md">
-          <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-my-md q-pa-md">
-            <q-card-section style="margin: 0%; padding: 0%; height:300px;">
-              <Radar :data="data2" :options="options" />
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="q-ma-md">
-          <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-4 q-my-md q-pa-md">
-            <q-card-section style="margin: 0%; padding: 0%; height:300px;">
-              <PolarArea :data="data3" :options="options" />
-            </q-card-section>
-          </q-card>
-        </div>
+              <q-separator vertical inset class="q-mx-sm" />
 
-        <!--botones para analizar xlsx-->
+              <div class="container flex" style="width: 155px; height: 210px">
+                <div class="flex column">
+                  <div class="column items-center">
+                    <div class="q-my-sm text-bold">Capacitados</div>
+                    <h3 class="q-my-sm" style="color:cadetblue">{{ workteamCapitated }}%</h3>
+                    <div class="column items-center justify-center text-center">Personal capacitado en distintas areas
+                      para el trabajo.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
 
-        <div class="q-ma-md row inline items-center justify-center">
-          <q-form @submit="onSubmit" class="q-gutter-md q-pa-md col-md-12">
-            <q-file bg-color="green" color="white" standout name="5w_file" v-model="file" filled
-              label="Subir Informe (.xlsx)">
-              <template v-slot:prepend>
-                <q-icon name="attach_file" />
-              </template>
-            </q-file>
+      <div class="q-container q-my-md" id="areas atendidas">
+        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-pa-sm">
+          <q-card-section style="margin: 0%; padding: 0%;">
+            <h5 class="no-margin q-mb-xs column items-center text-bold">Proyectos
+            </h5>
+            <div class="flex row no-wrap">
+              <div class="container flex" style="width: 168px; height: 210px">
+                <div class="flex column">
+                  <div class="column items-center">
+                    <div class="q-my-sm text-bold">Registrados</div>
+                    <h3 class="q-my-sm" style="color:cadetblue">{{ rProyects }}%</h3>
+                    <div class="column items-center wrap justify-center text-center">Proyectos abscritos y
+                      realizados bajo
+                      financiamiento de
+                      organizaciones mayores.</div>
+                  </div>
+                </div>
+              </div>
 
-            <q-file bg-color="green" color="white" name="5w_files" v-model="files" filled multiple use-chips
+              <q-separator vertical inset class="q-mx-sm" />
+
+              <div class="container flex" style="width: 155px; height: 210px">
+                <div class="flex column">
+                  <div class="column items-center">
+                    <div class="q-my-sm text-bold">Independientes</div>
+                    <h3 class="q-my-sm" style="color:cadetblue">{{ iProyects }}%</h3>
+                    <div class="column items-center justify-center text-center">Proyectos realizados
+                      independientemente por Acuario.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+
+    <div class="flex row q-mx-lg q-py-xs items-center justify-between">
+      <div class="">
+        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-my-md q-pa-sm" style="width: 355px;">
+          <q-card-section style="margin: 3%; padding: 0%; height:300px;">
+            <Bar :data="data1" :options="options" />
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="">
+        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-my-md q-pa-sm" style="width: 355px;">
+          <q-card-section style="margin: 3%; padding: 0%; height:300px;">
+            <Radar :data="data2" :options="options" />
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="">
+        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-my-md q-pa-sm" style="width: 355px;">
+          <q-card-section style="margin: 3%; padding: 0%; height:300px;">
+            <PolarArea :data="data3" :options="options" />
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+
+
+    <!--botones para analizar xlsx-->
+    <div class="flex row q-mx-xl q-py-xs flex-center">
+      <div class="q-container">
+        <div class="flex row">
+          <div class="q-my-md">
+            <q-form @submit="onSubmit"
+              class="flex column items-center justify-center q-pa-md q-gutter-md col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <q-file bg-color="green" type="file" id="input" color="white" standout name="5w_file" v-model="file" filled
+                label="Subir Informe (.xlsx)">
+                <template v-slot:prepend>
+                  <q-icon name="attach_file" />
+                </template>
+              </q-file>
+
+              <!--<q-file bg-color="green" color="white" name="5w_files" v-model="files" filled multiple use-chips
               label="Subir multiples Informes (.xlsx)">
               <template v-slot:prepend>
                 <q-icon name="attach_file" />
               </template>
-            </q-file>
+            </q-file>-->
 
-            <div class="">
-              <q-btn label="Submit" type="submit" color="primary" />
-            </div>
-          </q-form>
+              <div class="">
+                <q-btn label="Submit" type="submit" color="primary" />
+              </div>
+            </q-form>
 
-          <q-card v-if="submitted" flat bordered class="q-mt-md" :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-2'">
-            <template v-if="submitEmpty">
-              <q-card-section>
-                Submitted form contains empty formData.
-              </q-card-section>
-            </template>
-            <template v-else>
-              <q-card-section>Submitted form contains the following formData (key = value):</q-card-section>
-              <q-separator />
-              <q-card-section class="row q-gutter-sm items-center">
-                <div v-for="(item, index) in submitResult" :key="index"
+            <q-card v-if="submitted" flat bordered class="q-mt-md" :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-2'">
+              <template v-if="submitEmpty">
+                <q-card-section>
+                  Submitted form contains empty formData.
+                </q-card-section>
+              </template>
+              <template v-else>
+                <q-card-section>Submitted form contains the following formData (key = value):</q-card-section>
+                <q-separator />
+                <q-card-section class="row q-gutter-sm items-center">
+                  <q-table title="datos" :submitResult="submitResult" />
+                  <!--<div v-for="(item, index) in submitResult" :key="index"
                   class="q-px-sm q-py-xs bg-grey-8 text-white rounded-borders text-center text-no-wrap">{{ item.name
-                  }} = {{ item.value }}</div>
-              </q-card-section>
-            </template>
-          </q-card>
+                  }} = {{ item.value }}</div>-->
+                </q-card-section>
+              </template>
+            </q-card>
+          </div>
         </div>
       </div>
     </div>
@@ -340,6 +395,7 @@ import {
 } from 'chart.js'
 import { Bar, Radar, PolarArea } from 'vue-chartjs'
 import * as chartConfig from './chartConfig.ts'
+import readXlsxFile from 'read-excel-file'
 //import { excelToJson } from 'convert-excel-to-json'
 
 ChartJS.register(CategoryScale, ArcElement, LinearScale, BarElement, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement, Filler)
@@ -411,7 +467,7 @@ export default defineComponent({
 
     //convert-excel-to-json
     const file = ref(null)
-    const files = ref(null)
+    //const files = ref(null)
 
     //datos de la funcion para subir elementos de xlsx
     const submitted = ref(false)
@@ -472,34 +528,50 @@ export default defineComponent({
       submitEmpty,
       submitResult,
 
-      files,
+      //files,
       file,
 
-      onSubmit(evt) {
-        const formData = new FormData(evt.target)
-        console.log(formData)
+      onSubmit() {
+        const formData = file.value
+        //console.log(formData)
+        //console.log(file)
+        //console.log(file.value)
         const data = []
+        readXlsxFile(formData).then((rows) => {
+          console.log(rows, 'es este')
+          data.push(rows)
+          //submitResult.value = rows;
+        });
+        //
 
-        for (const [name, value] of formData.entries()) {
+        /*for (const [name, value] of formData.entries()) {
           if (value.name.length > 0) {
             data.push({
               name,
               value: value.name
             })
           }
-        }
+        }*/
 
         submitted.value = true
         submitResult.value = data
         submitEmpty.value = data.length === 0
-        console.log(data)
-        console.log(file)
-      }
+
+        console.log(data, 'esto es data')
+        console.log(file, 'esto es file')
+      },
+      model: ref(null),
+      options1: [
+        'Día', 'Semana', 'Mes', 'Año'
+      ]
 
     }
   },
   data() {
     return {
+      elements: () => ({
+        items: [],
+      }),
       data1: {
         labels: [
           "Enero",
