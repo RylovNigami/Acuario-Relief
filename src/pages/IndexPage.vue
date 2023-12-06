@@ -3,12 +3,12 @@
     <div class="flex row q-mx-xl q-py-xs flex-center">
       <div class="q-container">
         <div class="row inline">
-          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-center">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-center q-my-md">
             <h2 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectName }}
             </h2>
             <h5 style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400;">{{ proyectDescription }}.</h5>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 column items-center">
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 q-my-md column items-center">
             <img src="/Logo-acuario-11-09-2023.png" style="max-height:264px" />
             <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
           <h5 class="row inline" v-for="item in proyectNGOAllies" :key="item.id">{{ item.ngo }},
@@ -35,9 +35,9 @@
 
           <hr>
           <div class="q-my-sm text-bold">Reclamos</div>
-          <div class="progress" rounded style="">
-            <div rounded class="rounded progress-bar column items-center justify-center" role="progressbar"
-              :style="{ 'width': contador + '%' }" :class="color">
+          <div class="progress">
+            <div class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador + '%' }" :class="color" style="border-radius: 20px">
               <div class="inline-flex flex-center q-my-xs">
                 <q-badge color="white" text-color="black" :label="progressLabel">
                   -
@@ -57,9 +57,9 @@
           <br>
           <hr>
           <div class="q-my-sm text-bold">Sugerencias</div>
-          <div class="progress" rounded style="">
-            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-              :style="{ 'width': contador2 + '%' }" :class="color2">
+          <div class="progress" style="">
+            <div class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador2 + '%' }" :class="color2" style="border-radius: 20px">
               <div class="inline-flex flex-center q-my-xs">
                 <q-badge color="white" text-color="black" :label="progressLabel2">
                   -
@@ -79,9 +79,9 @@
           <br>
           <hr>
           <div class="q-my-sm text-bold">Comentarios</div>
-          <div class="progress" rounded style="">
-            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-              :style="{ 'width': contador3 + '%' }" :class="color3">
+          <div class="progress" style="">
+            <div class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador3 + '%' }" :class="color3" style="border-radius: 20px">
               <div class="inline-flex flex-center q-my-xs">
                 <q-badge color="white" text-color="black" :label="progressLabel3">
                   -
@@ -101,9 +101,9 @@
           <br>
           <hr>
           <div class="q-my-sm text-bold">Denuncias</div>
-          <div class="progress" rounded style="">
-            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-              :style="{ 'width': contador4 + '%' }" :class="color4">
+          <div class="progress" style="">
+            <div class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador4 + '%' }" :class="color4" style="border-radius: 20px">
               <div class="inline-flex flex-center q-my-xs">
                 <q-badge color="white" text-color="black" :label="progressLabel4">
                   -
@@ -123,9 +123,9 @@
           <br>
           <hr>
           <div class="q-my-sm text-bold">Quejas</div>
-          <div class="progress" rounded style="">
-            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-              :style="{ 'width': contador5 + '%' }" :class="color5">
+          <div class="progress" style="">
+            <div class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador5 + '%' }" :class="color5" style="border-radius: 20px">
               <div class="inline-flex flex-center q-my-xs">
                 <q-badge color="white" text-color="black" :label="progressLabel5">
                   -
@@ -145,9 +145,9 @@
           <br>
           <hr>
           <div class="q-my-sm text-bold">Inquietudes</div>
-          <div class="progress" rounded style="">
-            <div rounded class="progress-bar column items-center justify-center" role="progressbar"
-              :style="{ 'width': contador6 + '%' }" :class="color6">
+          <div class="progress" style="">
+            <div class="progress-bar column items-center justify-center" role="progressbar"
+              :style="{ 'width': contador6 + '%' }" :class="color6" style="border-radius: 20px">
               <div class="inline-flex flex-center q-my-xs">
                 <q-badge color="white" text-color="black" :label="progressLabel6">
                   -
@@ -351,7 +351,7 @@
                 <q-card-section class="row q-gutter-sm items-center">
                   <q-table title="datos" :submitResult="submitResult" />
                   <!--<div v-for="(item, index) in submitResult" :key="index"
-                  class="q-px-sm q-py-xs bg-grey-8 text-white rounded-borders text-center text-no-wrap">{{ item.name
+                  class="q-px-sm q-py-xs bg-grey-8 text-white borders text-center text-no-wrap">{{ item.name
                   }} = {{ item.value }}</div>-->
                 </q-card-section>
               </template>

@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hhh lpr fff">
     <q-header elevated style="height: 50px; align-content: center;">
-      <q-toolbar class="glossy">
+      <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-avatar style="font-size: 40px;">
@@ -11,7 +11,24 @@
           Acuario Relief
         </q-toolbar-title>
 
-        <q-btn flat round dense @click="userInformation">
+        <q-btn outline color="white" label="Iniciar Sesion" class="q-ma-xs">
+          <q-menu transition-show="jump-down" class="" transition-hide="jump-up">
+            <div class="row q-pa-md">
+              <div class="column justify-center text-center">
+                <div class="text-h6 q-mb-xs">Iniciar Sesión</div>
+                <q-list>
+                  <q-input outlined v-model="email" class="q-mx-xs q-my-md" stack-label label="Correo" dense="dense" />
+                  <q-input outlined v-model="password" class="q-mx-xs q-my-md" stack-label label="Contraseña"
+                    dense="dense" />
+                  <q-btn color="primary" label="Ingresar" class="q-mx-xs" @click="LogIn()" />
+                </q-list>
+              </div>
+            </div>
+          </q-menu>
+        </q-btn>
+        <q-btn outline color="white" label="Registrarse" class="q-ma-xs" @click="$router.push('/RegisterPage')" />
+
+        <q-btn flat round dense v-if="authenticated" @click="userInformation">
           <q-avatar icon="person" style="background-color: lightcoral;">
             <q-menu transition-show="jump-down" transition-hide="jump-up">
               <div class="row q-pa-md">
@@ -130,6 +147,7 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false)
+    const authenticated = ref(false)
 
     return {
       essentialLinks: linksList,
