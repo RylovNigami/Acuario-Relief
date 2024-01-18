@@ -1042,7 +1042,7 @@ ChartJS.register(
 
 const clusterList = [
   {
-    title: ref("Conocimiento de el area nutricional en sucre"),
+    title: ref("Conocimiento de el área nutricional en sucre"),
     caption: ref(
       "talleres acerca del valor nutricional en alimentos para niños en desarrollo"
     ),
@@ -1099,7 +1099,7 @@ const clusterList = [
     women20to59: ref(0),
   },
   {
-    title: ref("Preparacion para la vida en el area laboral"),
+    title: ref("Preparación para la vida en el área laboral"),
     caption: ref(
       "talleres acerca de las adversidades que manejan las personas en la vida diaria"
     ),
@@ -1156,9 +1156,9 @@ const clusterList = [
     women20to59: ref(22),
   },
   {
-    title: ref("Jornada de esterilizacion femenina y masculina"),
+    title: ref("Jornada de esterilización femenina y masculina"),
     caption: ref(
-      "jornada donde se aplicaran procesos quirurgicos de estrilizacion para hombres y mujeres"
+      "jornada donde se aplicarán procesos quirúrgicos de estrilización para hombres y mujeres"
     ),
     //icon: ref("hospital-building"),
     cluster: ref("Salud"),
@@ -1214,10 +1214,10 @@ const clusterList = [
   },
   {
     title: ref(
-      "Jornada de limpieza en instituciones publicas del area de Cariaco"
+      "Jornada de limpieza en instituciones públicas del área de Cariaco"
     ),
     caption: ref(
-      "jornadas donde se haran servicios de limpieza, estrilizacion de ambientes, reorganización"
+      "jornadas donde se harán servicios de limpieza, estrilización de ambientes, reorganización"
     ),
     //icon: ref("hand-wash"),
     cluster: ref("Saneamiento"),
@@ -1284,9 +1284,9 @@ export default defineComponent({
   },
   setup() {
     //elementos reactivos de back para retornar del proyecto/organizacion
-    const proyectName = ref("Estadisticas de Acuario");
+    const proyectName = ref("Estadísticas de Acuario");
     const proyectDescription = ref(
-      "A continuacion de mostraran datos acerca de las actividades realizadas recientemente por Acuario"
+      "A continuación de mostrarán datos acerca de las actividades realizadas recientemente por Acuario"
     );
     const proyectType = ref("Tipo");
     const proyectPoblation = ref(0);
