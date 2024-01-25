@@ -970,9 +970,13 @@
                 <q-separator />
                 <q-card-section class="row q-gutter-sm items-center">
                   <q-table title="datos" :submitResult="submitResult" />
-                  <!--<div v-for="(item, index) in submitResult" :key="index"
-                  class="q-px-sm q-py-xs bg-grey-8 text-white borders text-center text-no-wrap">{{ item.name
-                  }} = {{ item.value }}</div>-->
+                  <div
+                    v-for="(item, index) in submitResult"
+                    :key="index"
+                    class="q-px-sm q-py-xs bg-grey-8 text-white borders text-center text-no-wrap"
+                  >
+                    {{ index.name }} = {{ index.value }}
+                  </div>
                 </q-card-section>
               </template>
             </q-card>
@@ -1024,6 +1028,7 @@ import { Bar, Radar, PolarArea } from "vue-chartjs";
 import * as chartConfig from "./chartConfig.ts";
 import readXlsxFile from "read-excel-file";
 import { date } from "quasar";
+import axios from "axios";
 //import { excelToJson } from 'convert-excel-to-json'
 
 ChartJS.register(
@@ -1532,6 +1537,10 @@ export default defineComponent({
         console.log(new Date().toLocaleDateString());
         console.log(new Date().toLocaleString());
         console.log(new Date().toString());
+
+        axios.get("http://localhost:5000/users").then(function (response) {
+          console.log(response.data);
+        });
         /*mailboxIndicators.forEach((element) => {
           console.log(element.title);
           console.log(element.counters.value);
@@ -1554,12 +1563,79 @@ export default defineComponent({
         //console.log(formData)
         //console.log(file)
         //console.log(file.value)
-        const data = [];
-        readXlsxFile(formData).then((rows) => {
-          console.log(rows, "es este");
-          data.push(rows);
-          //submitResult.value = rows;
+        const dataTransversal = [];
+        const dataSalud = [];
+        const dataSeguridadAlimentaria = [];
+        const dataEducacion = [];
+        const dataSaneamiento = [];
+        readXlsxFile(formData, { sheet: "Transversal" }).then(
+          (rowsTransversal) => {
+            for (let i = 4; i < rowsTransversal.length; i++) {
+              const fila = rowsTransversal[i].length;
+              for (let j = 0; j < fila; j++) {
+                //const columna = rowsTransversal[i][j];
+                console.log("[" + j + "]" + " " + rowsTransversal[i][j]);
+              }
+            }
+            //console.log(rowsTransversal[4], "solo fila de valor");
+            //console.log(rowsTransversal[4][0], "solo columna 1 de valor");
+            //console.log(rowsTransversal, "este es transversal");
+            const iterator = rowsTransversal.entries();
+            //console.log(rows.values, "rows.values");
+            /*console.log(rows.forEach, "rows.foreach");
+          console.log(rows.map, "rows.map");
+          console.log(rows.indexOf, "rows.indexof");
+          console.log(rows.join, "rows.join");
+          console.log(rows.keys, "rows.keys");*/
+            for (let values of iterator) {
+              //console.log(values);
+            }
+            dataTransversal.push(rowsTransversal);
+          }
+        );
+        /*readXlsxFile(formData, { sheet: "Salud" }).then((rowsSalud) => {
+          console.log(rowsSalud, "este es salud");
+          const iterator = rowsSalud.entries();
+
+          for (let values of iterator) {
+            console.log(values);
+          }
+          dataSalud.push(rowsSalud);
         });
+        readXlsxFile(formData, { sheet: "Seguridad Alimentaria" }).then(
+          (rowsSeguridadAlimentaria) => {
+            console.log(
+              rowsSeguridadAlimentaria,
+              "este es Seguridad Alimentaria"
+            );
+            const iterator = rowsSeguridadAlimentaria.entries();
+
+            for (let values of iterator) {
+              console.log(values);
+            }
+            dataSeguridadAlimentaria.push(rowsSeguridadAlimentaria);
+          }
+        );
+        readXlsxFile(formData, { sheet: "Educación" }).then((rowsEducacion) => {
+          console.log(rowsEducacion, "este es Educacion");
+          const iterator = rowsEducacion.entries();
+
+          for (let values of iterator) {
+            console.log(values);
+          }
+          dataEducacion.push(rowsEducacion);
+        });
+        readXlsxFile(formData, { sheet: "Agua, Saneamiento e Higiene" }).then(
+          (rowsSaneamiento) => {
+            console.log(rowsSaneamiento, "este es Saneamiento");
+            const iterator = rowsSaneamiento.entries();
+
+            for (let values of iterator) {
+              console.log(values);
+            }
+            dataSaneamiento.push(rowsSaneamiento);
+          }
+        );*/
         //
 
         /*for (const [name, value] of formData.entries()) {
@@ -1572,11 +1648,10 @@ export default defineComponent({
         }*/
 
         submitted.value = true;
-        submitResult.value = data;
-        submitEmpty.value = data.length === 0;
+        //submitEmpty.value = data.length;
 
-        console.log(data, "esto es data");
-        console.log(file, "esto es file");
+        //console.log(data, "esto es data");
+        //console.log(file, "esto es file");
       },
       model: ref(null),
       options1: ["Día", "Semana", "Mes", "Año"],

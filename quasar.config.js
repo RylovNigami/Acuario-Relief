@@ -44,7 +44,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
-      vueRouterMode: "hash", // available values: 'hash', 'history'
+      RouterMode: "hash", // available values: 'hash', 'history'
 
       // transpile: false,
       // publicPath: '/',
@@ -59,6 +59,9 @@ module.exports = configure(function (ctx) {
       // showProgress: false,
       // gzip: true,
       // analyze: true,
+      /*env: {
+        BACKEND_URL: "http://localhost:5000",
+      },*/
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
@@ -81,6 +84,16 @@ module.exports = configure(function (ctx) {
       },
       port: 8080,
       open: true, // opens browser window automatically
+      proxy: {
+        // proxy all requests starting with /api to jsonplaceholder
+        "/api": {
+          target: "http://localhost:5000",
+          changeOrigin: true,
+          pathRewrite: {
+            "^/api": "",
+          },
+        },
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
