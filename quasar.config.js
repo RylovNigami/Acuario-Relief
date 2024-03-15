@@ -59,9 +59,10 @@ module.exports = configure(function (ctx) {
       // showProgress: false,
       // gzip: true,
       // analyze: true,
-      /*env: {
-        BACKEND_URL: "http://localhost:5000",
-      },*/
+      env: {
+        baseUrl: process.env.BASE_URL || "http://localhost:3000",
+        refresh_interval: process.env.JWT_EXPIRES || 540000,
+      },
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
@@ -100,6 +101,7 @@ module.exports = configure(function (ctx) {
     framework: {
       config: {
         notify: [],
+        loading: [],
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -113,7 +115,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify"],
+      plugins: ["Notify", "Dialog", "Loading"],
     },
 
     // animations: 'all', // --- includes all animations

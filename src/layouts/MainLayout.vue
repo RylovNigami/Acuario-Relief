@@ -16,13 +16,89 @@
         </q-avatar>
         <q-toolbar-title
           class="text-weight-bolder"
-          style="text-shadow: 1px 1px black"
-          @click="prueba"
+          style="text-shadow: 1px 1px black; cursor: pointer"
+          clickable
+          @click="$router.push('/')"
         >
           Acuario Relief
         </q-toolbar-title>
 
-        <div class="" v-if="porfavorahora">
+        <q-toolbar-text class="q-mx-sm" v-if="authenticated === true">
+          {{ user[0].email }}
+        </q-toolbar-text>
+        <q-btn
+          flat
+          round
+          v-if="authenticated === true"
+          dense
+          @click="userInformation"
+          class="q-mr-sm"
+        >
+          <q-avatar icon="person" style="background-color: lightcoral">
+            <q-menu
+              transition-show="jump-down"
+              transition-hide="jump-up"
+              style="width: 30%"
+              class="flex row q-pa-sm flex-center"
+            >
+              <div class="column items-center">
+                <div class="text-h6 q-mb-xs">Configuracion</div>
+                <q-list style="">
+                  <!--q-item clickable v-close-popup>
+                    <q-item-section>Ver Perfil</q-item-section>
+                  </q-item>
+                  <q-separator />
+                  <q-item clickable v-close-popup>
+                    <q-item-section>Cambiar contraseña</q-item-section>
+                  </q-item>
+                  <q-separator /-->
+                  <q-item clickable v-close-popup push @click="logOut()">
+                    <q-item-section>Cerrar sesión</q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+
+              <q-separator vertical inset class="q-mx-md" />
+
+              <div class="column items-center q-mt-md">
+                <q-card
+                  v-if="user[0].role === 'superuser'"
+                  class="text-subtitle1 q-mt-sm q-mb-md q-pa-xs"
+                  style="color: red; text-shadow: 1px 1px grey"
+                >
+                  Super Usuario
+                </q-card>
+
+                <q-card
+                  v-if="user[0].role === 'admin'"
+                  class="text-subtitle1 q-mt-sm q-mb-md q-pa-xs"
+                  style="color: violet; text-shadow: 1px 1px grey"
+                >
+                  Admin
+                </q-card>
+
+                <q-avatar icon="person" style="background-color: lightcoral" />
+
+                <div class="text-subtitle1 q-mt-sm q-mb-xs">
+                  {{ user[0].email }}
+                </div>
+                <!--q-btn color="primary" label="Cerrar Sesión" push size="sm" v-close-popup /-->
+              </div>
+            </q-menu>
+          </q-avatar>
+        </q-btn>
+
+        <div v-if="authenticated === false">
+          <q-toolbar-text class="q-mx-sm">
+            Sí desea denunciar algo ¡Registrese aqui!
+          </q-toolbar-text>
+          <q-btn
+            outline
+            color="white"
+            label="Registrarse"
+            class="q-ma-xs"
+            @click="$router.push('/RegisterPage')"
+          />
           <q-btn outline color="white" label="Iniciar Sesion" class="q-ma-xs">
             <q-menu
               transition-show="jump-down"
@@ -69,10 +145,19 @@
                         <q-input
                           dense
                           outlined
+                          :type="isPwd ? 'password' : 'text'"
                           v-model="password"
                           class="q-mx-xs"
                           label="Ingrese su Contraseña"
-                        />
+                        >
+                          <template v-slot:append>
+                            <q-icon
+                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              class="cursor-pointer"
+                              @click="isPwd = !isPwd"
+                            />
+                          </template>
+                        </q-input>
                       </div>
                     </div>
                     <q-btn
@@ -86,52 +171,7 @@
               </div>
             </q-menu>
           </q-btn>
-          <q-btn
-            outline
-            color="white"
-            label="Registrarse"
-            class="q-ma-xs"
-            @click="$router.push('/RegisterPage')"
-          />
         </div>
-
-        <q-btn flat round dense v-if="authenticated" @click="userInformation">
-          <q-avatar icon="person" style="background-color: lightcoral">
-            <q-menu transition-show="jump-down" transition-hide="jump-up">
-              <div class="row q-pa-md">
-                <div class="column">
-                  <div class="text-h6 q-mb-xs">Configuracion</div>
-                  <q-list style="min-width: 90px">
-                    <q-item clickable v-close-popup>
-                      <q-item-section>Ver Perfil</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup>
-                      <q-item-section>Cambiar contraseña</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup push>
-                      <q-item-section>Cerrar sesión</q-item-section>
-                    </q-item>
-                  </q-list>
-                </div>
-
-                <q-separator vertical inset class="q-mx-md" />
-
-                <div class="column items-center">
-                  <q-avatar class="q-mt-xl">
-                    <q-avatar
-                      icon="person"
-                      style="background-color: lightcoral"
-                    />
-                  </q-avatar>
-                  <div class="text-subtitle1 q-mt-md q-mb-xs">Usuario 1</div>
-                  <!--q-btn color="primary" label="Cerrar Sesión" push size="sm" v-close-popup /-->
-                </div>
-              </div>
-            </q-menu>
-          </q-avatar>
-        </q-btn>
 
         <!--aqui se creara una modal para ingresar como usuario, haciendo click en el icono de usuario
             tambien se podra ingresar al perfil de usuario una vez ingresado
@@ -161,54 +201,22 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import { watcher, computed } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import axios from "axios";
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
+    title: "Módulo de captura de mensajes",
+    caption: "App de envio de denuncias",
+    icon: "pencil-plus",
+    link: "https://localhost:9080/",
   },
 ];
+
+const users = [];
+const user = [];
+const authenticated = ref(false);
 
 export default defineComponent({
   name: "MainLayout",
@@ -217,42 +225,87 @@ export default defineComponent({
     EssentialLink,
   },
 
+  created() {
+    //localStorage.removeItem("token");
+    axios.get("http://localhost:5000/users").then(function (response) {
+      response.data.forEach((element) => {
+        users.push(element);
+        console.log(element, "Elemento de axios.response.data a users");
+      });
+      users.forEach((element) => {
+        console.log(element.email);
+      });
+    });
+
+    console.log(localStorage, "localstorage");
+    console.log(users);
+    let datoslocalstorage = JSON.parse(localStorage.getItem("token"));
+    console.log(user, "user");
+    if (datoslocalstorage !== null) {
+      user.push(datoslocalstorage);
+    }
+    if (user.length === 0) {
+      authenticated.value = false;
+    } else {
+      authenticated.value = true;
+    }
+  },
+
+  beforeMount() {},
+
   setup() {
     const leftDrawerOpen = ref(false);
-    const authenticated = ref(false);
-    const porfavorahora = computed(() => {
-      return screen.width > 1023 ? true : false;
-    });
+    const email = ref(null);
+    const password = ref(null);
+
     return {
+      user,
+      users,
       essentialLinks: linksList,
+      email,
+      password,
+      authenticated,
       leftDrawerOpen,
-      porfavorahora,
+      isPwd: ref(true),
+
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      prueba() {
-        console.log(screen.width);
-        console.log(porfavorahora.value);
+
+      userInformation() {
+        console.log(user, "user");
+        console.log(users, "users");
+        console.log(JSON.parse(localStorage.getItem("token")));
+        console.log(authenticated.value);
       },
-      /*porfavorfunciona() {
-        if (screen.width >= 1024) {
-          pantalla.value = true;
-          console.log(pantalla.value);
-          console.log(porfavorahora.value);
-        } else {
-          pantalla.value = false;
-          console.log(pantalla.value);
-          console.log(porfavorahora.value);
-        }
-        //screen.width > 1024 ? (display.value = true) : (display.value = false);
-      },*/
+
+      LogIn() {
+        users.forEach((element) => {
+          if (element.email === email.value) {
+            user.push(element);
+            console.log("conseguido", user[0]);
+          }
+        });
+
+        axios
+          .post("http://localhost:5000/auth/login", {
+            email: email.value,
+            password: password.value,
+          })
+          .then(function (response) {
+            localStorage.setItem("token", JSON.stringify(user[0]));
+            console.log(response, "auth login success");
+            location.reload();
+          })
+          .catch(function (error) {
+            console.log(error, "auth login failure");
+          });
+      },
+      async logOut() {
+        localStorage.removeItem("token");
+        location.reload();
+      },
     };
-  },
-  watcher() {
-    return {};
-  },
-  computed() {
-    () => console.log(display.value);
   },
 });
 </script>
