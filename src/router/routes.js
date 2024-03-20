@@ -8,6 +8,15 @@ const routes = [
         path: "registerPage",
         component: () => import("src/pages/registerPage.vue"),
       },
+      {
+        path: "ClaimsIndex",
+        component: () => import("src/pages/ClaimsIndex.vue"),
+      },
+      {
+        path: "ClaimsForm",
+        component: () => import("src/pages/ClaimsForm.vue"),
+      },
+
       /*{
         path: "userPage",
         component: () => import("src/pages/userPage.vue"),

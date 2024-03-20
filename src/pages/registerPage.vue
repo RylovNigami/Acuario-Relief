@@ -16,32 +16,34 @@
           style="margin: 0%; padding: 0%"
           class="flex row q-px-sm"
         >
-          <div class="flex row q-mx-lg q-py-xs items-center">
-            <div class="q-px-xs col-xs-12 col-sm-4 col-md-3 col-lg-3 q-my-sm">
+          <div class="flex row q-mx-lg q-py-xs flex-center">
+            <div class="q-px-xs col-xs-12 col-sm-4 col-md-4 col-lg-4 q-my-sm">
               <div style="margin-bottom: 0px" class="text-weight-medium">
                 Cédula
               </div>
-              <div class="row inline" style="width: 100%">
-                <q-select
-                  v-model="preferred"
-                  :options="options"
-                  dense
-                  outlined
-                  :rules="[(val) => noEmpty(val)]"
-                />
-
-                <q-input
-                  dense
-                  outlined
-                  v-model.trim="idNumber"
-                  @keypress="isNumber($event)"
-                  label="Inserte su cédula"
-                  :mask="automatedMask"
-                  style="width: 80%"
-                  class="q-ml-xs"
-                  :rules="[(val) => noEmpty(val)]"
-                  :disable="preferred === null || preferred === ''"
-                />
+              <div class="flex flex-center row">
+                <div class="col-3">
+                  <q-select
+                    v-model="preferred"
+                    :options="options"
+                    dense
+                    outlined
+                    :rules="[(val) => noEmpty(val)]"
+                  />
+                </div>
+                <div class="col-9">
+                  <q-input
+                    dense
+                    outlined
+                    v-model.trim="idNumber"
+                    @keypress="isNumber($event)"
+                    label="Inserte su cédula"
+                    :mask="automatedMask"
+                    class="q-ml-xs"
+                    :rules="[(val) => noEmpty(val)]"
+                    :disable="preferred === null || preferred === ''"
+                  />
+                </div>
               </div>
             </div>
             <div class="q-px-xs col-xs-6 col-sm-4 col-md-3 col-lg-3 q-my-sm">
@@ -70,7 +72,7 @@
                 :rules="[(val) => noEmpty(val)]"
               />
             </div>
-            <div class="q-px-xs col-xs-12 col-sm-12 col-md-3 col-lg-3 q-my-sm">
+            <div class="q-px-xs col-xs-12 col-sm-12 col-md-2 col-lg-2 q-my-sm">
               <div style="margin-bottom: 0px" class="text-weight-medium">
                 Teléfono
               </div>

@@ -9,6 +9,7 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
+          v-if="authenticated === true"
         />
 
         <q-avatar style="font-size: 40px">
@@ -39,9 +40,9 @@
               transition-show="jump-down"
               transition-hide="jump-up"
               style="width: 30%"
-              class="flex row q-pa-sm flex-center"
+              class="flex row q-py-sm flex-center"
             >
-              <div class="column items-center">
+              <div class="column flex-center">
                 <div class="text-h6 q-mb-xs">Configuracion</div>
                 <q-list style="">
                   <!--q-item clickable v-close-popup>
@@ -58,7 +59,7 @@
                 </q-list>
               </div>
 
-              <q-separator vertical inset class="q-mx-md" />
+              <q-separator vertical inset class="q-mx-lg" />
 
               <div class="column items-center q-mt-md">
                 <q-card
@@ -79,6 +80,9 @@
 
                 <q-avatar icon="person" style="background-color: lightcoral" />
 
+                <div class="text-subtitle1 q-mt-sm q-mb-xs">
+                  {{ person[0].first_name + " " + person[0].last_name }}
+                </div>
                 <div class="text-subtitle1 q-mt-sm q-mb-xs">
                   {{ user[0].email }}
                 </div>
@@ -180,18 +184,36 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" bordered>
-      <q-scroll-area class="fit">
-        <!--show-if-above (esto funciona para activar la muestra de algun elemento de forma predeterminada)-->
-        <q-list>
-          <q-item-label header> Essential Links </q-item-label>
+      <!--show-if-above (esto funciona para activar la muestra de algun elemento de forma predeterminada)-->
+      <q-list>
+        <q-item-label header> Menú de secciones </q-item-label>
 
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
-        </q-list>
-      </q-scroll-area>
+        <!--q-item
+            clickable
+            tag="a"
+            :is="appModule[0].link.startsWith('http') ? 'a' : 'router-link'"
+            :key="appModule[0].link"
+            :to="appModule[0].link"
+            :href="appModule[0].link"
+            v-bind="appModule[0]"
+            target="_blank"
+          >
+            <q-item-section v-if="appModule[0].icon" avatar>
+              <q-icon :name="appModule[0].icon" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>{{ appModule[0].title }}</q-item-label>
+              <q-item-label caption>{{ appModule[0].caption }}</q-item-label>
+            </q-item-section>
+          </q-item-->
+
+        <EssentialLink
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+      </q-list>
     </q-drawer>
 
     <q-page-container>
@@ -203,19 +225,30 @@
 <script>
 import { defineComponent, ref, computed } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const linksList = [
   {
+    title: "Pagina Principal",
+    caption: "Home",
+    icon: "mdi-home",
+    link: "/",
+  },
+  {
     title: "Módulo de captura de mensajes",
-    caption: "App de envio de denuncias",
-    icon: "pencil-plus",
-    link: "https://localhost:9080/",
+    caption: "Módulo de envio de denuncias",
+    icon: "mdi-pencil-plus-outline",
+    link: "/ClaimsIndex",
   },
 ];
 
 const users = [];
+const persons = [];
+const person = [];
 const user = [];
+const userID = ref(null);
+//const notification = "Bienvenido" + user[0].email + ".";
 const authenticated = ref(false);
 
 export default defineComponent({
@@ -226,29 +259,55 @@ export default defineComponent({
   },
 
   created() {
-    //localStorage.removeItem("token");
+    //localStorage.removeItem("tokenUser");
+    //localStorage.removeItem("tokenPerson");
+    axios.get("http://localhost:5000/persons").then(function (response) {
+      response.data.forEach((element) => {
+        persons.push(element);
+        console.log(element, "Elemento de axios.response.data a persons");
+      });
+    });
+
     axios.get("http://localhost:5000/users").then(function (response) {
       response.data.forEach((element) => {
         users.push(element);
         console.log(element, "Elemento de axios.response.data a users");
       });
-      users.forEach((element) => {
-        console.log(element.email);
-      });
-    });
 
-    console.log(localStorage, "localstorage");
-    console.log(users);
-    let datoslocalstorage = JSON.parse(localStorage.getItem("token"));
-    console.log(user, "user");
-    if (datoslocalstorage !== null) {
-      user.push(datoslocalstorage);
-    }
-    if (user.length === 0) {
-      authenticated.value = false;
-    } else {
-      authenticated.value = true;
-    }
+      console.log(localStorage, "localstorage");
+      console.log(users);
+      let datoslocalstorageUser = JSON.parse(localStorage.getItem("tokenUser"));
+      let datoslocalstoragePerson = JSON.parse(
+        localStorage.getItem("tokenPerson")
+      );
+      console.log(user, "user");
+      console.log(person, "person");
+      if (datoslocalstorageUser !== null) {
+        user.push(datoslocalstorageUser);
+        person.push(datoslocalstoragePerson);
+      }
+      if (user.length === 0) {
+        authenticated.value = false;
+      } else {
+        /*persons.forEach((element) => {
+          if (element.id === user[0].id) {
+            person.push(element);
+            console.log(element, "person0");
+          }
+        });*/
+        authenticated.value = true;
+        Swal.fire({
+          icon: "success",
+          title: `Bienvenido ${person[0].first_name} ${person[0].last_name}!`,
+          showConfirmButton: false,
+          timer: 5000,
+          position: "bottom-end",
+          timerProgressBar: true,
+          toast: true,
+          showCloseButton: true,
+        });
+      }
+    });
   },
 
   beforeMount() {},
@@ -257,15 +316,26 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const email = ref(null);
     const password = ref(null);
+    const appModule = [
+      {
+        title: "Módulo de captura de mensajes",
+        caption: "App de envio de denuncias",
+        icon: "mdi-pencil-plus-outline",
+        link: "http://localhost:9080/",
+      },
+    ];
 
     return {
       user,
       users,
+      persons,
+      person,
       essentialLinks: linksList,
       email,
       password,
       authenticated,
       leftDrawerOpen,
+      appModule,
       isPwd: ref(true),
 
       toggleLeftDrawer() {
@@ -275,7 +345,8 @@ export default defineComponent({
       userInformation() {
         console.log(user, "user");
         console.log(users, "users");
-        console.log(JSON.parse(localStorage.getItem("token")));
+        console.log(JSON.parse(localStorage.getItem("tokenUser")));
+        console.log(JSON.parse(localStorage.getItem("tokenPerson")));
         console.log(authenticated.value);
       },
 
@@ -283,7 +354,16 @@ export default defineComponent({
         users.forEach((element) => {
           if (element.email === email.value) {
             user.push(element);
+            userID.value = element.id;
             console.log("conseguido", user[0]);
+          }
+        });
+
+        persons.forEach((element) => {
+          if (element.id === userID.value) {
+            person.push(element);
+
+            console.log("conseguido", person[0]);
           }
         });
 
@@ -293,16 +373,28 @@ export default defineComponent({
             password: password.value,
           })
           .then(function (response) {
-            localStorage.setItem("token", JSON.stringify(user[0]));
+            localStorage.setItem("tokenUser", JSON.stringify(user[0]));
+            localStorage.setItem("tokenPerson", JSON.stringify(person[0]));
             console.log(response, "auth login success");
             location.reload();
           })
           .catch(function (error) {
             console.log(error, "auth login failure");
+            Swal.fire({
+              icon: "error",
+              title: "Ha ocurrido un error al iniciar sesión.",
+              showConfirmButton: false,
+              timer: 5000,
+              position: "bottom-end",
+              timerProgressBar: true,
+              toast: true,
+              showCloseButton: true,
+            });
           });
       },
       async logOut() {
-        localStorage.removeItem("token");
+        localStorage.removeItem("tokenUser");
+        localStorage.removeItem("tokenPerson");
         location.reload();
       },
     };
