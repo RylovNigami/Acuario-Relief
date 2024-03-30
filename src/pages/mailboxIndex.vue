@@ -20,7 +20,9 @@
               <q-td key="inputType" :props="props">{{
                 props.row.inputType
               }}</q-td>
-
+              <q-td key="commentM" :props="props">{{
+                props.row.commentM
+              }}</q-td>
               <q-td key="createdAt" :props="props">{{
                 props.row.createdAt
               }}</q-td>
@@ -155,6 +157,15 @@ const columns = [
     name: "updateAt",
     label: "Modificado",
     field: "updateAt",
+    required: true,
+    align: "center",
+    sortable: true,
+    format: (val) => `${val}`,
+  },
+  {
+    name: "commentM",
+    label: "Mensaje",
+    field: "commentM",
     required: true,
     align: "center",
     sortable: true,

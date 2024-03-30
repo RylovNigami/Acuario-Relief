@@ -87,7 +87,7 @@
             <div style="width: 100%">
               <q-input
                 class="q-my-xs"
-                v-model="commentA"
+                v-model="commentM"
                 label="Deje su mensaje..."
                 type="textarea"
                 outlined
@@ -98,7 +98,7 @@
                 @click="insert()"
                 color="primary"
                 label="Enviar"
-                :disable="commentA === ''"
+                :disable="commentM === ''"
               />
               <q-btn
                 v-if="step > 2"
@@ -201,7 +201,7 @@ export default defineComponent({
 
   setup() {
     //const options = ref(projectArray);
-    const commentA = ref("");
+    const commentM = ref("");
     //const projectID = ref(null);
 
     //const options = ref(projectArray)
@@ -214,7 +214,7 @@ export default defineComponent({
       step: ref(1),
       inputType,
 
-      commentA,
+      commentM,
       isNumber(e) {
         let char = String.fromCharCode(e.keyCode); // Get the character
         if (/^[0-9]+$/i.test(char)) return true; // Match with regex
@@ -283,30 +283,12 @@ export default defineComponent({
           .post("http://localhost:5000/mailbox", {
             inputType: inputType.value,
             inputStatus: "Recibido",
+            commentM: commentM.value,
+            users: user[0].id,
+            persons: user[0].persons.id,
           })
           .then(function (response) {
             console.log(response, "Esto es mailbox");
-          })
-          .catch(function (error) {
-            console.log(error, "error en mailbox");
-          });
-        await axios
-          .get("http://localhost:5000/mailbox")
-          .then(function (response) {
-            console.log(response.data);
-            mailboxID.value = response.data.length;
-            console.log(mailboxID.value);
-          });
-
-        await axios
-          .post("http://localhost:5000/association-one", {
-            commentA: commentA.value,
-            users: user[0].id,
-            persons: user[0].persons.id,
-            mailbox: mailboxID.value,
-          })
-          .then(function (response) {
-            console.log(response, "Esto es association-one");
             Swal.fire({
               icon: "success",
               title: `¡Enviado!`,
