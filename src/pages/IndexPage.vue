@@ -95,13 +95,13 @@
                     />
                   </div-->
                   <div
-                    class="col-xs-11 col-sm-11 col-md-12 col-lg-12 column flex-center"
-                    style="align-items: end"
+                    class="col-xs-11 col-sm-11 col-md-12 col-lg-12 row inline justify-end items-center"
                   >
+                    <div class="text-h6">Actualizar datos</div>
                     <q-btn
                       flat
                       round
-                      color="grey"
+                      color="black"
                       icon="autorenew"
                       @click="refreshDashboard"
                     />
@@ -516,346 +516,371 @@
 
                           <q-dialog v-model="dialogFinishedProjects" full-width>
                             <q-card class="flex row">
-                              <div class="row inline">
-                                <div
-                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                >
-                                  <h4 class="column items-center text-bold">
-                                    Detalles del indicador
-                                  </h4>
-                                </div>
-                                <div
-                                  class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
-                                >
-                                  <div class="q-pa-xs q-mx-md">
-                                    <q-card
-                                      class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                    >
-                                      <q-card-section
-                                        style="margin: 0%; padding: 3%"
-                                      >
-                                        <Bar
-                                          :data="dataProjectsGeneral"
-                                          :options="options"
-                                        />
-                                      </q-card-section>
-                                    </q-card>
+                              <q-space />
+
+                              <q-btn
+                                flat
+                                rounded
+                                icon="close"
+                                class="q-mt-xl q-mr-xl"
+                                v-close-popup
+                              />
+
+                              <q-card-section>
+                                <div class="row inline">
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h4 class="row flex-center text-bold">
+                                      Detalles del indicador
+                                    </h4>
                                   </div>
-                                </div>
-                                <div
-                                  class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
-                                >
-                                  <div class="q-pa-xs q-mx-md">
-                                    <q-card
-                                      class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                    >
-                                      <q-card-section
-                                        class="flex row flex-center"
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                  >
+                                    <div class="q-pa-xs q-mx-md">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                       >
-                                        <h5
-                                          class="no-margin q-mb-xs column items-center text-bold"
+                                        <q-card-section
+                                          style="margin: 0%; padding: 3%"
                                         >
-                                          Estado del indicador
-                                        </h5>
-                                        <div class="flex row no-wrap">
-                                          <div
-                                            class="container flex"
-                                            style="width: 100%"
+                                          <Bar
+                                            :data="dataProjectsGeneral"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                  >
+                                    <div class="q-pa-xs q-mx-md">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
                                           >
-                                            <div class="flex column">
-                                              <div class="column items-center">
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
                                                 <div
-                                                  class="row inline flex-center"
+                                                  class="column items-center"
                                                 >
                                                   <div
-                                                    style="
-                                                      border-radius: 50%;
-                                                      display: inline-block;
-                                                      height: 70px;
-                                                      width: 70px;
-                                                    "
-                                                    :class="
-                                                      projectsValue[0].colours
-                                                        .value
-                                                    "
-                                                    class="q-mx-lg"
+                                                    class="row inline flex-center"
                                                   >
-                                                    <span></span>
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        projectsValue[0].colours
+                                                          .value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        projectsValue[0].colours
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        projectsValue[0].colours
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        projectsValue[0].colours
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
                                                   </div>
-                                                  <h2
-                                                    v-if="
-                                                      projectsValue[0].colours
-                                                        .value === 'bg-green'
-                                                    "
-                                                    style="
-                                                      color: #00a126;
-                                                      text-shadow: 1px 1px grey;
-                                                    "
+                                                  <div
+                                                    class="column items-center justify-center text-center"
                                                   >
-                                                    Bien
-                                                  </h2>
-                                                  <h2
-                                                    v-if="
-                                                      projectsValue[0].colours
-                                                        .value === 'bg-warning'
-                                                    "
-                                                    style="
-                                                      color: #ffb700;
-                                                      text-shadow: 1px 1px grey;
-                                                    "
-                                                  >
-                                                    Regular
-                                                  </h2>
-                                                  <h2
-                                                    v-if="
-                                                      projectsValue[0].colours
-                                                        .value === 'bg-red'
-                                                    "
-                                                    style="
-                                                      color: #c10000;
-                                                      text-shadow: 1px 1px grey;
-                                                    "
-                                                  >
-                                                    Por mejorar
-                                                  </h2>
-                                                </div>
-                                                <div
-                                                  class="column items-center justify-center text-center"
-                                                >
-                                                  Fueron finalizados por la
-                                                  organizacion Acuario hasta la
-                                                  fecha
-                                                  {{
-                                                    projectsValue[0].counters
-                                                      .value
-                                                  }}
-                                                  projectos, lo que equivale al
+                                                    Fueron finalizados por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      projectsValue[0].counters
+                                                        .value
+                                                    }}
+                                                    projectos, lo que equivale
+                                                    al
 
-                                                  {{
-                                                    projectsValue[0].cumplishmentFormula.value.toFixed(
-                                                      2
-                                                    )
-                                                  }}% con respecto a la meta por
-                                                  cumplir anual.
+                                                    {{
+                                                      projectsValue[0].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% con respecto a la meta
+                                                    por cumplir anual.
+                                                  </div>
                                                 </div>
                                               </div>
                                             </div>
                                           </div>
-                                        </div>
-                                      </q-card-section>
-                                    </q-card>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="row inline">
-                                <div
-                                  class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
-                                >
-                                  <div class="q-pa-xs q-mx-md">
-                                    <q-card
-                                      class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                    >
-                                      <q-card-section class="q-pa-lg q-ma-xs">
-                                        <h5
-                                          class="no-margin q-mb-xs"
-                                          style="text-align: center"
-                                        >
-                                          Proyectos registrados por clúster en
-                                          la ONG Acuario año 2023
-                                        </h5>
-                                        <q-separator inset class="q-my-sm" />
-                                        <div class="flex row">
-                                          <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column flex-center"
-                                          >
-                                            <div class="column">
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="transversal"
-                                              >
-                                                <div class="">
-                                                  Eje Transversal
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img src="/2459387.png" />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ transverseTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="alojamiento, Energia y Enseres"
-                                              >
-                                                <div class="">
-                                                  Alojamiento, Energia y Enseres
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img src="/1458564.png" />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ hostingTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="saneamiento"
-                                              >
-                                                <div class="">
-                                                  Agua, Saneamiento e Higiene
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img
-                                                    src="/wash-hands-icon-png_6023dcc6ad445.png"
-                                                  />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ sanitationTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="educacion"
-                                              >
-                                                <div class="">Educación</div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img
-                                                    src="/image_processing20220416-11036-toi50p.png"
-                                                  />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ educationTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="nutricion"
-                                              >
-                                                <div class="">Nutrición</div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img src="/7757761.png" />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ nutritionTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="proteccion"
-                                              >
-                                                <div class="">
-                                                  Protección General
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img
-                                                    src="/iconfinder-securityprotectlockshield39-4021447_113141.png"
-                                                  />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ protectionTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="proteccion infantil"
-                                              >
-                                                <div class="">
-                                                  Proteccion Niños, Niñas,
-                                                  Adolescentes
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img
-                                                    src="/children-s-rights-color-icon-child-protection-day-hand-holding-kids-childcare-isolated-illustration-vector.jpg"
-                                                  />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ childProtectionTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="proteccion VBG"
-                                              >
-                                                <div class="">
-                                                  Proteccion Violencia Basada en
-                                                  Género
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img
-                                                    src="/equal-treatment-concept-icon-employee-rights-protection-idea-thin-line-illustration-sexual-equality-gender-policy-women-empowerment-isolated-outline-drawing-editable-stroke-vector.jpg"
-                                                  />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ vbgProtectionTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="salud"
-                                              >
-                                                <div class="">Salud</div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img src="/2689945.png" />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ healthTotal }}
-                                                </div>
-                                              </div>
-
-                                              <div
-                                                class="row inline flex-center q-my-md"
-                                                label="seguridad alimentaria"
-                                              >
-                                                <div class="">
-                                                  Seguridad Alimentaria
-                                                </div>
-                                                <q-avatar class="q-mx-sm">
-                                                  <img
-                                                    src="/pngtree-food-safety-png-image_8624033.png"
-                                                  />
-                                                </q-avatar>
-                                                <div class="text-h5">
-                                                  {{ foodSafetyTotal }}
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </q-card-section>
-                                    </q-card>
-                                  </div>
-                                </div>
-                                <div
-                                  class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
-                                >
-                                  <div class="q-pa-xs q-mx-md q-mb-lg q-mt-xs">
-                                    <q-card
-                                      class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                    >
-                                      <q-card-section
-                                        style="
-                                          margin: 0%;
-                                          padding: 3%;
-                                          height: 550px;
-                                        "
+                              </q-card-section>
+                              <q-card-section>
+                                <div class="row inline">
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                  >
+                                    <div class="q-pa-xs q-mx-md">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                       >
-                                        <Doughnut
-                                          :data="dataProjectsDoughnut"
-                                          :options="options"
-                                        />
-                                      </q-card-section>
-                                    </q-card>
+                                        <q-card-section class="q-pa-lg q-ma-xs">
+                                          <h5
+                                            class="no-margin q-mb-xs"
+                                            style="text-align: center"
+                                          >
+                                            Proyectos registrados por clúster en
+                                            la ONG Acuario año 2023
+                                          </h5>
+                                          <q-separator inset class="q-my-sm" />
+                                          <div class="flex row">
+                                            <div
+                                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column flex-center"
+                                            >
+                                              <div class="column">
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="transversal"
+                                                >
+                                                  <div class="">
+                                                    Eje Transversal
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img src="/2459387.png" />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ transverseTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="alojamiento, Energia y Enseres"
+                                                >
+                                                  <div class="">
+                                                    Alojamiento, Energia y
+                                                    Enseres
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img src="/1458564.png" />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ hostingTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="saneamiento"
+                                                >
+                                                  <div class="">
+                                                    Agua, Saneamiento e Higiene
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img
+                                                      src="/wash-hands-icon-png_6023dcc6ad445.png"
+                                                    />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ sanitationTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="educacion"
+                                                >
+                                                  <div class="">Educación</div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img
+                                                      src="/image_processing20220416-11036-toi50p.png"
+                                                    />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ educationTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="nutricion"
+                                                >
+                                                  <div class="">Nutrición</div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img src="/7757761.png" />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ nutritionTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="proteccion"
+                                                >
+                                                  <div class="">
+                                                    Protección General
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img
+                                                      src="/iconfinder-securityprotectlockshield39-4021447_113141.png"
+                                                    />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ protectionTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="proteccion infantil"
+                                                >
+                                                  <div class="">
+                                                    Proteccion Niños, Niñas,
+                                                    Adolescentes
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img
+                                                      src="/children-s-rights-color-icon-child-protection-day-hand-holding-kids-childcare-isolated-illustration-vector.jpg"
+                                                    />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ childProtectionTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="proteccion VBG"
+                                                >
+                                                  <div class="">
+                                                    Proteccion Violencia Basada
+                                                    en Género
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img
+                                                      src="/equal-treatment-concept-icon-employee-rights-protection-idea-thin-line-illustration-sexual-equality-gender-policy-women-empowerment-isolated-outline-drawing-editable-stroke-vector.jpg"
+                                                    />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ vbgProtectionTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="salud"
+                                                >
+                                                  <div class="">Salud</div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img src="/2689945.png" />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ healthTotal }}
+                                                  </div>
+                                                </div>
+
+                                                <div
+                                                  class="row inline flex-center q-my-md"
+                                                  label="seguridad alimentaria"
+                                                >
+                                                  <div class="">
+                                                    Seguridad Alimentaria
+                                                  </div>
+                                                  <q-avatar class="q-mx-sm">
+                                                    <img
+                                                      src="/pngtree-food-safety-png-image_8624033.png"
+                                                    />
+                                                  </q-avatar>
+                                                  <div class="text-h5">
+                                                    {{ foodSafetyTotal }}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                  >
+                                    <div
+                                      class="q-pa-xs q-mx-md q-mb-lg q-mt-xs"
+                                    >
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 550px;
+                                          "
+                                        >
+                                          <Doughnut
+                                            :data="dataProjectsDoughnut"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
+                              </q-card-section>
                             </q-card>
                           </q-dialog>
                         </div>
@@ -989,6 +1014,15 @@
 
                           <q-dialog v-model="dialogAttendedPersons" full-width>
                             <q-card class="flex row">
+                              <q-space />
+
+                              <q-btn
+                                flat
+                                rounded
+                                icon="close"
+                                class="q-mt-xl q-mr-xl"
+                                v-close-popup
+                              />
                               <div class="row inline">
                                 <div
                                   class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
@@ -2465,8 +2499,8 @@ function distributeValues() {
     console.log(transverseArray, "este es transverse");
     transverseTotal.value = transverseArray.length;
 
-    personsAttendedValue[1].counters.value = 0;
-    personsAttendedValue[2].counters.value = 0;
+    //personsAttendedValue[1].counters.value = 0;
+    //personsAttendedValue[2].counters.value = 0;
 
     transverseArray.forEach((element, index) => {
       /*personsAttendedValue[0].counters.value =
@@ -6910,7 +6944,6 @@ export default defineComponent({
       //dataForChart,
       //prueba,
       //MultiPurposeDashboard: ClusterList,
-
       authenticated,
       projectsToCulminateYearly,
       projectstoCulminateMonthly,
@@ -6972,11 +7005,12 @@ export default defineComponent({
       userInformation() {
         console.log(user, "user");
         console.log(users, "users");
-        console.log(JSON.parse(localStorage.getItem("token")));
+        console.log(JSON.parse(localStorage.getItem("tokenUser")));
         console.log(authenticated.value);
       },
       async refreshDashboard() {
-        console.log("aqui arranca el refresh");
+        distributeValues();
+        /*console.log("aqui arranca el refresh");
         childProtectionArray.splice(0);
         console.log(childProtectionArray, "este child protection");
         healthArray.splice(0);
@@ -7108,7 +7142,7 @@ export default defineComponent({
 
         console.log(protectionArray, "este es protection");
 
-        console.log(sanitationArray, "este es sanitation");
+        console.log(sanitationArray, "este es sanitation");*/
       },
       randomize(min, max) {
         min = Math.ceil(0);
@@ -7754,7 +7788,7 @@ export default defineComponent({
   },
 
   created() {
-    let datoslocalstorage = JSON.parse(localStorage.getItem("token"));
+    let datoslocalstorage = JSON.parse(localStorage.getItem("tokenUser"));
     if (datoslocalstorage !== null) {
       user.push(datoslocalstorage);
     }

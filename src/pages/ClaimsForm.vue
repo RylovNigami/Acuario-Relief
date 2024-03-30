@@ -152,7 +152,6 @@ const mask = ref(null);
 const preferred = ref("");
 const idNumber = ref(null);
 const userID = ref(null);
-const personID = ref(null);
 const inputType = ref(null);
 const mailboxID = ref(null);
 
@@ -179,18 +178,16 @@ const automatedMask = computed(() => {
 function verification() {
   console.log(localStorage, "localstorage");
   let datoslocalstorageUser = JSON.parse(localStorage.getItem("tokenUser"));
-  let datoslocalstoragePerson = JSON.parse(localStorage.getItem("tokenPerson"));
+
   console.log(user, "user");
-  console.log(person, "person");
+
   if (datoslocalstorageUser !== null) {
     user.push(datoslocalstorageUser);
-    person.push(datoslocalstoragePerson);
   } else {
     window.location.href = "http://localhost:8080/";
   }
 }
 
-const person = [];
 const user = [];
 //const stringOptions = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 
@@ -200,7 +197,6 @@ export default defineComponent({
     verification();
 
     //localStorage.removeItem("tokenUser");
-    //localStorage.removeItem("tokenPerson");
   },
 
   setup() {
@@ -211,14 +207,13 @@ export default defineComponent({
     //const options = ref(projectArray)
 
     return {
-      //module: projectArray,
       userID,
-      personID,
+
       denunce: ref(null),
       mailboxID,
       step: ref(1),
       inputType,
-      //model2: ref(null),
+
       commentA,
       isNumber(e) {
         let char = String.fromCharCode(e.keyCode); // Get the character
@@ -230,9 +225,6 @@ export default defineComponent({
       preferred,
       optionsID: ["", "V", "E", "J"],
 
-      /*onSubmit(values) {
-        console.log(JSON.stringify(values, null, 2));
-      },*/
       noEmpty(value) {
         // if the field is empty
         if (!value) {
@@ -242,33 +234,6 @@ export default defineComponent({
         // All is good
         return true;
       },
-
-      /*validateID(value) {
-        // if the field is empty
-        if (!value) {
-          return "Debe Rellenar este campo.";
-        }
-
-        const result = personsArray.filter(
-          (element) => value === element.cedula.slice(2)
-        );
-
-        if (value === result) {
-          return "coincide";
-        } else {
-          return "no coincide";
-        }
-
-        /*personsArray.forEach((element) => {
-          console.log(element.cedula.slice(2));
-          if (value !== element.cedula.slice(2)) {
-            return "Esta cedula no esta registrada en el sistema";
-          }
-        });
-
-        // All is good
-        return true;
-      },*/
 
       prueba() {
         console.log(preferred.value.concat("-", idNumber.value));
@@ -295,23 +260,6 @@ export default defineComponent({
         "inquietudes",
       ],
 
-      /*filterFn(val, update) {
-        if (val === "") {
-          update(() => {
-            projectArray.forEach((element) => {
-              options.value.projectName = element.projectName;
-            });
-          });
-          return;
-        }
-
-        update(() => {
-          const needle = val.toLowerCase();
-          options.value.projectName = stringOptions.filter(
-            (v) => v.toLowerCase().indexOf(needle) > -1
-          );
-        });
-      },*/
       async insert() {
         /*personsArray.forEach((element) => {
           if (preferred.value.concat("-", idNumber.value) === element.cedula) {
@@ -341,11 +289,6 @@ export default defineComponent({
           })
           .catch(function (error) {
             console.log(error, "error en mailbox");
-            /*$q.notify({
-              type: "negative",
-              message: "Error al registrar Usuario.",
-              caption: "Por favor, revise los datos a ingresar.",
-            });*/
           });
         await axios
           .get("http://localhost:5000/mailbox")
@@ -353,15 +296,13 @@ export default defineComponent({
             console.log(response.data);
             mailboxID.value = response.data.length;
             console.log(mailboxID.value);
-            //console.log(projectArray[0].projectName);
           });
 
         await axios
           .post("http://localhost:5000/association-one", {
             commentA: commentA.value,
-            //project: projectID.value,
             users: user[0].id,
-            persons: person[0].id,
+            persons: user[0].persons.id,
             mailbox: mailboxID.value,
           })
           .then(function (response) {
@@ -377,6 +318,7 @@ export default defineComponent({
               confirmButtonText: "Enviar otro mensaje",
               cancelButtonText: "ir a Página Principal",
               reverseButtons: true,
+              allowOutsideClick: false,
             }).then((result) => {
               if (result.isConfirmed) {
                 location.reload();

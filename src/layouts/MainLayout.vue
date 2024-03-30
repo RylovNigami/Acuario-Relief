@@ -81,7 +81,9 @@
                 <q-avatar icon="person" style="background-color: lightcoral" />
 
                 <div class="text-subtitle1 q-mt-sm q-mb-xs">
-                  {{ person[0].first_name + " " + person[0].last_name }}
+                  {{
+                    user[0].persons.first_name + " " + user[0].persons.last_name
+                  }}
                 </div>
                 <div class="text-subtitle1 q-mt-sm q-mb-xs">
                   {{ user[0].email }}
@@ -189,30 +191,52 @@
         <q-item-label header> Menú de secciones </q-item-label>
 
         <!--q-item
-            clickable
-            tag="a"
-            :is="appModule[0].link.startsWith('http') ? 'a' : 'router-link'"
-            :key="appModule[0].link"
-            :to="appModule[0].link"
-            :href="appModule[0].link"
-            v-bind="appModule[0]"
-            target="_blank"
-          >
-            <q-item-section v-if="appModule[0].icon" avatar>
-              <q-icon :name="appModule[0].icon" />
-            </q-item-section>
+          v-if="authSuperUser === true"
+          clickable
+          tag="a"
+          :is="
+            linkListSuperUser[0].link.startsWith('http') ? 'a' : 'router-link'
+          "
+          :key="linkListSuperUser[0].link"
+          :to="linkListSuperUser[0].link"
+          :href="linkListSuperUser[0].link"
+          v-bind="linkListSuperUser[0]"
+        >
+          <q-item-section v-if="linkListSuperUser[0].icon" avatar>
+            <q-icon :name="linkListSuperUser[0].icon" />
+          </q-item-section>
 
-            <q-item-section>
-              <q-item-label>{{ appModule[0].title }}</q-item-label>
-              <q-item-label caption>{{ appModule[0].caption }}</q-item-label>
-            </q-item-section>
-          </q-item-->
+          <q-item-section>
+            <q-item-label>{{ linkListSuperUser[0].title }}</q-item-label>
+            <q-item-label caption>{{
+              linkListSuperUser[0].caption
+            }}</q-item-label>
+          </q-item-section>
+        </q-item-->
 
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
         />
+
+        <div v-if="authAdmin === true">
+          <q-item-label header> Menú Administrador </q-item-label>
+          <EssentialLink
+            v-for="Adminlink in linkListAdmin"
+            :key="Adminlink.title"
+            v-bind="Adminlink"
+          />
+        </div>
+
+        <div v-if="authSuperUser === true">
+          <q-item-label header> Menú Super Administrador </q-item-label>
+          <EssentialLink
+            v-for="Superlink in linkListSuperUser"
+            :key="Superlink.title"
+            v-bind="Superlink"
+          />
+        </div>
       </q-list>
     </q-drawer>
 
@@ -231,25 +255,43 @@ import axios from "axios";
 const linksList = [
   {
     title: "Pagina Principal",
-    caption: "Home",
+    caption: "",
     icon: "mdi-home",
     link: "/",
   },
   {
     title: "Módulo de captura de mensajes",
     caption: "Módulo de envio de denuncias",
-    icon: "mdi-pencil-plus-outline",
+    icon: "mdi-email-edit-outline",
     link: "/ClaimsIndex",
+    auth: "all",
+  },
+];
+
+const linkListSuperUser = [
+  {
+    title: "Administrar usuarios",
+    caption: "Módulo para cambiar roles o eliminar usuarios",
+    icon: "mdi-account-edit",
+    link: "/usersIndex",
+  },
+];
+
+const linkListAdmin = [
+  {
+    title: "Administrar Buzón",
+    caption: "Módulo para respuesta de mensajes del buzón",
+    icon: "mdi-mailbox-up-outline",
+    link: "/mailboxIndex",
   },
 ];
 
 const users = [];
-const persons = [];
-const person = [];
 const user = [];
 const userID = ref(null);
-//const notification = "Bienvenido" + user[0].email + ".";
 const authenticated = ref(false);
+const authSuperUser = ref(false);
+const authAdmin = ref(false);
 
 export default defineComponent({
   name: "MainLayout",
@@ -260,14 +302,6 @@ export default defineComponent({
 
   created() {
     //localStorage.removeItem("tokenUser");
-    //localStorage.removeItem("tokenPerson");
-    axios.get("http://localhost:5000/persons").then(function (response) {
-      response.data.forEach((element) => {
-        persons.push(element);
-        console.log(element, "Elemento de axios.response.data a persons");
-      });
-    });
-
     axios.get("http://localhost:5000/users").then(function (response) {
       response.data.forEach((element) => {
         users.push(element);
@@ -277,28 +311,32 @@ export default defineComponent({
       console.log(localStorage, "localstorage");
       console.log(users);
       let datoslocalstorageUser = JSON.parse(localStorage.getItem("tokenUser"));
-      let datoslocalstoragePerson = JSON.parse(
-        localStorage.getItem("tokenPerson")
-      );
+      /*console.log(
+        JSON.parse(localStorage.id.getItem("tokenUser")),
+        "json parse token user"
+      );*/
       console.log(user, "user");
-      console.log(person, "person");
+
       if (datoslocalstorageUser !== null) {
         user.push(datoslocalstorageUser);
-        person.push(datoslocalstoragePerson);
       }
+
+      if (user[0].role === "superuser") {
+        authSuperUser.value = true;
+        authAdmin.value = true;
+      }
+
+      if (user[0].role === "admin") {
+        authAdmin.value = true;
+      }
+
       if (user.length === 0) {
         authenticated.value = false;
       } else {
-        /*persons.forEach((element) => {
-          if (element.id === user[0].id) {
-            person.push(element);
-            console.log(element, "person0");
-          }
-        });*/
         authenticated.value = true;
         Swal.fire({
           icon: "success",
-          title: `Bienvenido ${person[0].first_name} ${person[0].last_name}!`,
+          title: `Bienvenido ${user[0].persons.first_name} ${user[0].persons.last_name}!`,
           showConfirmButton: false,
           timer: 5000,
           position: "bottom-end",
@@ -316,26 +354,21 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const email = ref(null);
     const password = ref(null);
-    const appModule = [
-      {
-        title: "Módulo de captura de mensajes",
-        caption: "App de envio de denuncias",
-        icon: "mdi-pencil-plus-outline",
-        link: "http://localhost:9080/",
-      },
-    ];
 
     return {
       user,
       users,
-      persons,
-      person,
       essentialLinks: linksList,
+      linkListAdmin,
+      linkListSuperUser,
       email,
       password,
       authenticated,
+      authSuperUser,
+      authAdmin,
+
       leftDrawerOpen,
-      appModule,
+
       isPwd: ref(true),
 
       toggleLeftDrawer() {
@@ -346,7 +379,6 @@ export default defineComponent({
         console.log(user, "user");
         console.log(users, "users");
         console.log(JSON.parse(localStorage.getItem("tokenUser")));
-        console.log(JSON.parse(localStorage.getItem("tokenPerson")));
         console.log(authenticated.value);
       },
 
@@ -359,14 +391,6 @@ export default defineComponent({
           }
         });
 
-        persons.forEach((element) => {
-          if (element.id === userID.value) {
-            person.push(element);
-
-            console.log("conseguido", person[0]);
-          }
-        });
-
         axios
           .post("http://localhost:5000/auth/login", {
             email: email.value,
@@ -374,7 +398,6 @@ export default defineComponent({
           })
           .then(function (response) {
             localStorage.setItem("tokenUser", JSON.stringify(user[0]));
-            localStorage.setItem("tokenPerson", JSON.stringify(person[0]));
             console.log(response, "auth login success");
             location.reload();
           })
@@ -394,7 +417,6 @@ export default defineComponent({
       },
       async logOut() {
         localStorage.removeItem("tokenUser");
-        localStorage.removeItem("tokenPerson");
         location.reload();
       },
     };

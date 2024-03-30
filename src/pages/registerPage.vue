@@ -147,7 +147,12 @@
                   color="green"
                   label="Crear Usuario"
                   style="margin-top: 1%; margin-bottom: 1%"
-                  @click="entry() && $router.push('/')"
+                  :disable="
+                    passwordConfirm !== password ||
+                    passwordConfirm === null ||
+                    passwordConfirm === ''
+                  "
+                  @click="entry() /*&& $router.push('/')*/"
                 />
               </div>
             </div>
@@ -231,7 +236,6 @@ export default defineComponent({
         const regex = /^[A-Za-z0-9+_.-]+@(.+)$/;
         return regex.test(email);
       },
-
       idNumber,
       firstName,
       pNumber,
@@ -292,58 +296,43 @@ export default defineComponent({
         // All is good
         return true;
       },
-      async entry() {
-        await axios
-          .post("http://localhost:5000/persons", {
+      entry() {
+        axios
+          .post("http://localhost:5000/users/create", {
             cedula: preferred.value.concat("-", idNumber.value),
             first_name: firstName.value,
             last_name: lastName.value,
             phone: pNumber.value,
             address: direction.value,
-          })
-          .then(function (response) {
-            console.log(response, "esto es persona");
-          })
-          .catch(function (error) {
-            console.log(error, "error en persona");
-          });
-
-        await axios
-          .get("http://localhost:5000/persons")
-          .then(function (response) {
-            personID.value = response.data.length;
-          });
-        await axios
-          .post("http://localhost:5000/auth/register", {
             email: email.value,
             password: password.value,
-            persons: personID.value,
           })
           .then(function (response) {
             console.log(response, "esto es usuario");
 
             Swal.fire({
               icon: "success",
-              title: `Usuario registrado con exito`,
-              showConfirmButton: false,
-              timer: 5000,
-              position: "bottom-end",
-              timerProgressBar: true,
-              toast: true,
-              showCloseButton: true,
+              title: `Usuario registrado`,
+              text: "El usuario ha sido registrado con exito.",
+              cancelButton: "btn btn-danger",
+              showConfirmButton: true,
+              showCancelButton: false,
+              confirmButtonText: "ir a Página Principal",
+              reverseButtons: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = "http://localhost:8080/";
+              }
             });
-            location.reload();
           })
           .catch(function (error) {
-            console.log(error, "error en usuario");
+            console.log(error, "Ha ocurrido un error registrando el usuario.");
             Swal.fire({
               icon: "error",
-              title: "Ha ocurrido un error al registrar el Usuario",
+              title: `Error al registrar.`,
+              text: "Ha ocurrido un error registrando el usuario.",
               showConfirmButton: false,
-              timer: 5000,
-              position: "bottom-end",
-              timerProgressBar: true,
-              toast: true,
+              //toast: true,
               showCloseButton: true,
             });
           });

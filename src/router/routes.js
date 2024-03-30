@@ -16,6 +16,14 @@ const routes = [
         path: "ClaimsForm",
         component: () => import("src/pages/ClaimsForm.vue"),
       },
+      {
+        path: "usersIndex",
+        component: () => import("src/pages/usersIndex.vue"),
+      },
+      {
+        path: "mailboxIndex",
+        component: () => import("src/pages/mailboxIndex.vue"),
+      },
 
       /*{
         path: "userPage",
