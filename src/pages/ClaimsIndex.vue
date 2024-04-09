@@ -16,7 +16,7 @@
       class="text-h6 q-mx-lg q-my-xl text-white"
       style="text-align: center; text-shadow: 1px 1px black"
     >
-      Esta aplicación esta destinada a la captura de comentarios, sugerencias,
+      Este formulario esta destinado a la captura de comentarios, sugerencias,
       quejas, denuncias, inquietudes, y reclamos, de los proyectos de la
       organización, para el mejoramiento de los procesos de la misma dando
       atencion a los mensajes recibidos por sus beneficiarios.

@@ -24,6 +24,10 @@ const routes = [
         path: "mailboxIndex",
         component: () => import("src/pages/mailboxIndex.vue"),
       },
+      {
+        path: "userPage",
+        component: () => import("src/pages/userPage.vue"),
+      },
 
       /*{
         path: "userPage",

@@ -20,15 +20,16 @@
               <q-td key="inputType" :props="props">{{
                 props.row.inputType
               }}</q-td>
-              <q-td key="commentM" :props="props">{{
-                props.row.commentM
-              }}</q-td>
               <q-td key="createdAt" :props="props">{{
-                props.row.createdAt
+                props.row.createdAt.slice(0, 10)
               }}</q-td>
               <q-td key="updateAt" :props="props">{{
-                props.row.updateAt
+                props.row.updateAt.slice(0, 10)
               }}</q-td>
+              <q-td key="commentM" :props="props"
+                >{{ props.row.commentM }}
+                <!--q-popup-edit :title="props.row.commentM"> </q-popup-edit-->
+              </q-td>
               <q-td key="inputStatus" :props="props">
                 <q-select
                   style="text-align: center"
@@ -51,8 +52,86 @@
                     )
                   "
                 />
+
                 <!--div class="">{{ props.row.role }} @click="prueba(props.row.role, value, props, 'role')" </div-->
               </q-td>
+              <q-td key="view" :props="props">
+                <q-btn
+                  rounded
+                  color="warning"
+                  icon="mdi-glasses"
+                  @click="(dialogMessages = true) && messageDataViewer(props)"
+                />
+              </q-td>
+              <q-dialog v-model="dialogMessages" full-width>
+                <q-card class="flex row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="row justify-end">
+                      <q-btn
+                        flat
+                        rounded
+                        icon="close"
+                        class="q-mt-xl q-mr-xl"
+                        v-close-popup
+                      />
+                    </div>
+                  </div>
+
+                  <div class="flex row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                      <h4
+                        class="row items-center justify-center text-bold"
+                        style="height: 5%"
+                      >
+                        Detalles del mensaje
+                      </h4>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Enviado por:</u><br />
+                        {{
+                          claimMessage[0].persons.first_name +
+                          " " +
+                          claimMessage[0].persons.last_name
+                        }}
+                      </h5>
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Numero de telefono de la persona:</u><br />
+                        {{ claimMessage[0].persons.phone }}
+                      </h5>
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Email de la persona:</u> <br />{{
+                          claimMessage[0].users.email
+                        }}
+                      </h5>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Fecha en que fue enviado:</u>
+                        {{ claimMessage[0].createdAt.slice(0, 10) }}
+                      </h5>
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Tipo de mensaje:</u> <br />
+                        {{ claimMessage[0].inputType }}
+                      </h5>
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Asunto:</u> <br />{{ claimMessage[0].inputClass }}
+                      </h5>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Estatus del mensaje:</u> <br />{{
+                          claimMessage[0].inputStatus
+                        }}
+                      </h5>
+                      <h5 class="q-mx-xl column text-bold">
+                        <u>Mensaje:</u><br />
+                        {{ claimMessage[0].commentM }}
+                      </h5>
+                    </div>
+                  </div>
+                </q-card>
+              </q-dialog>
             </q-tr>
           </template>
         </q-table>
@@ -70,6 +149,8 @@ import Swal from "sweetalert2";
 import { useQuasar } from "quasar";
 
 const userID = ref(null);
+const date = new Date();
+const claimMessage = ref([]);
 
 function verification() {
   console.log(localStorage, "localstorage");
@@ -84,6 +165,31 @@ function verification() {
   }
 }
 
+function action() {
+  rows.value.splice(0);
+  axios.get("http://localhost:5000/mailbox").then(function (response) {
+    //console.log(response.data);
+    response.data.forEach((element) => {
+      rows.value.push(element);
+      //console.log(element, "Elemento de axios.response.data a users");
+    });
+  });
+  console.log(rows, "rows");
+}
+
+function messageDataViewer(fila) {
+  claimMessage.value.splice(0);
+  //Tengo que buscar que columna se edito...
+  const message = rows.value.find((obj) => obj.id == fila.row.id);
+  console.log(message, "before change");
+
+  rows.value.forEach((element) => {
+    if (element.id === message.id) {
+      claimMessage.value.push(element);
+    }
+  });
+}
+
 async function guardar(newVal, oldVal, fila, col) {
   //Tengo que buscar que columna se edito...
   const editedClaim = rows.value.find((obj) => obj.id == fila.row.id);
@@ -95,6 +201,7 @@ async function guardar(newVal, oldVal, fila, col) {
   await axios
     .patch(`http://localhost:5000/mailbox/${editedClaim.id}`, {
       inputStatus: editedClaim.inputStatus,
+      updateAt: date.toJSON(),
     })
     .then(function (response) {
       console.log(response, "Cambio de estatus realizado");
@@ -105,6 +212,7 @@ async function guardar(newVal, oldVal, fila, col) {
         showConfirmButton: false,
         timer: 1500,
       });
+      action();
     })
     .catch(function (error) {
       console.log(error, "Error al cambiar estatus");
@@ -170,6 +278,7 @@ const columns = [
     align: "center",
     sortable: true,
     format: (val) => `${val}`,
+    style: "width: 10px",
   },
   {
     name: "inputStatus",
@@ -180,13 +289,20 @@ const columns = [
     sortable: true,
     format: (val) => `${val}`,
   },
+  {
+    name: "view",
+    align: "center",
+    label: "Visualizar",
+    field: "view",
+    format: (val) => `${val}`,
+  },
 ];
 
 export default defineComponent({
   name: "mailboxIndex",
 
   beforeCreate() {
-    this.action();
+    action();
   },
 
   created() {
@@ -197,7 +313,10 @@ export default defineComponent({
 
   setup() {
     return {
+      dialogMessages: ref(false),
       guardar,
+      messageDataViewer,
+      claimMessage,
       columns,
       rows,
       user,
@@ -208,78 +327,6 @@ export default defineComponent({
         console.log(editedUser)
 
       },*/
-      action() {
-        rows.value.splice(0);
-        axios.get("http://localhost:5000/mailbox").then(function (response) {
-          //console.log(response.data);
-          response.data.forEach((element) => {
-            rows.value.push(element);
-            //console.log(element, "Elemento de axios.response.data a users");
-          });
-        });
-        console.log(rows, "rows");
-      },
-
-      async insert() {
-        await axios
-          .post("http://localhost:5000/mailbox", {
-            inputType: inputType.value,
-            inputStatus: "Recibido",
-          })
-          .then(function (response) {
-            console.log(response, "Esto es mailbox");
-          })
-          .catch(function (error) {
-            console.log(error, "error en mailbox");
-          });
-        await axios
-          .get("http://localhost:5000/mailbox")
-          .then(function (response) {
-            console.log(response.data);
-            mailboxID.value = response.data.length;
-            console.log(mailboxID.value);
-          });
-
-        await axios
-          .post("http://localhost:5000/association-one", {
-            commentA: commentA.value,
-            users: user[0].id,
-            persons: user[0].persons.id,
-            mailbox: mailboxID.value,
-          })
-          .then(function (response) {
-            console.log(response, "Esto es association-one");
-            Swal.fire({
-              icon: "success",
-              title: `¡Enviado!`,
-              text: "Su mensaje ha sido enviado con exito.",
-              confirmButton: "btn btn-success",
-              cancelButton: "btn btn-danger",
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: "Enviar otro mensaje",
-              cancelButtonText: "ir a Página Principal",
-              reverseButtons: true,
-              allowOutsideClick: false,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                location.reload();
-              } else if (result.dismiss === Swal.DismissReason.cancel) {
-                window.location.href = "http://localhost:8080/";
-              }
-            });
-          })
-          .catch(function (error) {
-            console.log(error, "error en mailbox");
-            Swal.fire({
-              icon: "error",
-              title: `Ha ocurrido un error al enviar el mensaje`,
-              showConfirmButton: false,
-              toast: true,
-              showCloseButton: true,
-            });
-          });
-      },
     };
   },
 });

@@ -53,6 +53,15 @@
                     <q-item-section>Cambiar contraseña</q-item-section>
                   </q-item>
                   <q-separator /-->
+                  <!--q-item
+                    clickable
+                    v-close-popup
+                    push
+                    @click="$router.push('/userPage')"
+                  >
+                    <q-item-section>Editar perfil</q-item-section>
+                  </q-item>
+                  <q-separator /-->
                   <q-item clickable v-close-popup push @click="logOut()">
                     <q-item-section>Cerrar sesión</q-item-section>
                   </q-item>
@@ -96,7 +105,8 @@
 
         <div v-if="authenticated === false">
           <q-toolbar-text class="q-mx-sm">
-            Sí desea denunciar algo ¡Registrese aqui!
+            Sí desea realizar una denuncia, comentario o sugerencia ¡Registrese
+            aqui!
           </q-toolbar-text>
           <q-btn
             outline
@@ -303,47 +313,54 @@ export default defineComponent({
   created() {
     //localStorage.removeItem("tokenUser");
     axios.get("http://localhost:5000/users").then(function (response) {
-      response.data.forEach((element) => {
-        users.push(element);
-        console.log(element, "Elemento de axios.response.data a users");
-      });
+      console.log(response.data.length, "response data lenght");
+      if (response.data.length === 0) {
+        localStorage.removeItem("tokenUser");
+      } else {
+        response.data.forEach((element) => {
+          users.push(element);
+          console.log(element, "Elemento de axios.response.data a users");
+        });
 
-      console.log(localStorage, "localstorage");
-      console.log(users);
-      let datoslocalstorageUser = JSON.parse(localStorage.getItem("tokenUser"));
-      /*console.log(
+        console.log(localStorage, "localstorage");
+        console.log(users);
+        let datoslocalstorageUser = JSON.parse(
+          localStorage.getItem("tokenUser")
+        );
+        /*console.log(
         JSON.parse(localStorage.id.getItem("tokenUser")),
         "json parse token user"
       );*/
-      console.log(user, "user");
+        console.log(user, "user");
 
-      if (datoslocalstorageUser !== null) {
-        user.push(datoslocalstorageUser);
-      }
+        if (datoslocalstorageUser !== null) {
+          user.push(datoslocalstorageUser);
+        }
 
-      if (user[0].role === "superuser") {
-        authSuperUser.value = true;
-        authAdmin.value = true;
-      }
+        if (user[0].role === "superuser") {
+          authSuperUser.value = true;
+          authAdmin.value = true;
+        }
 
-      if (user[0].role === "admin") {
-        authAdmin.value = true;
-      }
+        if (user[0].role === "admin") {
+          authAdmin.value = true;
+        }
 
-      if (user.length === 0) {
-        authenticated.value = false;
-      } else {
-        authenticated.value = true;
-        Swal.fire({
-          icon: "success",
-          title: `Bienvenido ${user[0].persons.first_name} ${user[0].persons.last_name}!`,
-          showConfirmButton: false,
-          timer: 5000,
-          position: "bottom-end",
-          timerProgressBar: true,
-          toast: true,
-          showCloseButton: true,
-        });
+        if (user.length === 0) {
+          authenticated.value = false;
+        } else {
+          authenticated.value = true;
+          Swal.fire({
+            icon: "success",
+            title: `Bienvenido ${user[0].persons.first_name} ${user[0].persons.last_name}!`,
+            showConfirmButton: false,
+            timer: 5000,
+            position: "bottom-end",
+            timerProgressBar: true,
+            toast: true,
+            showCloseButton: true,
+          });
+        }
       }
     });
   },

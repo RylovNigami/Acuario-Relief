@@ -51,7 +51,7 @@
               class="q-my-xl"
               filled
               v-model="denunce"
-              label="Seleccione o Filtre un proyecto"
+              label="Seleccione el motivo del mensaje"
               :options="options"
               emit-value
               map-options
@@ -202,14 +202,14 @@ export default defineComponent({
   setup() {
     //const options = ref(projectArray);
     const commentM = ref("");
+    const denunce = ref(null);
     //const projectID = ref(null);
 
     //const options = ref(projectArray)
 
     return {
       userID,
-
-      denunce: ref(null),
+      denunce,
       mailboxID,
       step: ref(1),
       inputType,
@@ -245,7 +245,7 @@ export default defineComponent({
         "Extorsión",
         "Explotación o Abuso Sexual",
         "Trato deficiente en la distribucion",
-        "Distibuciones no cumples las condiciones adecuadas",
+        "Distribuciones no cumplen las condiciones adecuadas",
         "Otro",
       ],
 
@@ -257,7 +257,7 @@ export default defineComponent({
         "Queja",
         "Reclamo",
         "Denuncia",
-        "inquietudes",
+        "Inquietud",
       ],
 
       async insert() {
@@ -283,6 +283,7 @@ export default defineComponent({
           .post("http://localhost:5000/mailbox", {
             inputType: inputType.value,
             inputStatus: "Recibido",
+            inputClass: denunce.value,
             commentM: commentM.value,
             users: user[0].id,
             persons: user[0].persons.id,

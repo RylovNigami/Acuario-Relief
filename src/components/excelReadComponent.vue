@@ -229,6 +229,22 @@ export default defineComponent({
       async onSubmit() {
         const formData = file.value;
 
+        /*Swal.fire({
+          title: "¿Esta seguro que desea subir este documento?",
+          text: `Se procedera subir el archivo ${formData}`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Aceptar",
+          cancelButtonText: "Cancelar",
+          allowOutsideClick: false,
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+
+          }
+        });*/
+
         //Transverse
 
         await readXlsxFile(formData, { sheet: "Transversal" }).then(

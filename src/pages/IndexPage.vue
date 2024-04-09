@@ -273,67 +273,2081 @@
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <q-card class="q-pa-lg q-ma-xs">
-                      <div
-                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                        v-for="indicators in mailboxIndicators"
-                        :key="indicators.id"
-                      >
-                        <div class="q-my-sm text-bold">
-                          {{ indicators.title }}
-                        </div>
-                        <div class="progress" style="">
+                      <div class="flex row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                           <div
-                            class="progress-bar column items-center justify-center"
-                            role="progressbar"
-                            :style="{ width: indicators.counters.value + '%' }"
-                            :class="indicators.colours.value"
-                            style="border-radius: 20px"
+                            v-for="indicators in mailboxIndicators"
+                            :key="indicators.id"
+                            @click="dialogMailbox = true"
                           >
-                            <div
-                              class="inline-flex flex-center q-my-xs text-white"
-                              style="text-shadow: 1px 1px black"
-                            >
-                              <q-badge
-                                style="font-size: 15px; font-weight: bold"
-                                color="transparent"
-                                :label="indicators.counters.value + '%'"
-                              >
-                                -
-                                <div
-                                  class="flex"
-                                  v-if="indicators.counters.value <= 30"
-                                >
-                                  <q-badge
-                                    color="transparent"
-                                    label="Bien"
-                                    style="font-size: 15px; font-weight: bold"
-                                  />
-                                </div>
-                                <div
-                                  class="flex"
-                                  v-else-if="indicators.counters.value < 70"
-                                >
-                                  <q-badge
-                                    color="transparent"
-                                    label="Regular"
-                                    style="font-size: 15px; font-weight: bold"
-                                  />
-                                </div>
-                                <div
-                                  class="flex"
-                                  v-else-if="indicators.counters.value >= 70"
-                                >
-                                  <q-badge
-                                    color="transparent"
-                                    label="Mal"
-                                    style="font-size: 15px; font-weight: bold"
-                                  />
-                                </div>
-                              </q-badge>
+                            <div class="flex row flex-center">
+                              <div class="q-my-sm text-bold">
+                                {{ indicators.title }}
+                              </div>
                             </div>
+                            <div class="flex row">
+                              <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                <div class="row flex-center">
+                                  <div class="q-my-sm text-bold">Recibidos</div>
+                                </div>
+                                <div
+                                  class="row flex-center bg-primary q-mx-md"
+                                  style="border-radius: 30px"
+                                >
+                                  <div
+                                    class="text-h5 text-white"
+                                    style="text-shadow: 1px 1px black"
+                                  >
+                                    {{ indicators.countersReceived.value }}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+                                <div class="row flex-center">
+                                  <div class="q-my-sm text-bold">
+                                    Por atender
+                                  </div>
+                                </div>
+
+                                <div class="progress" style="">
+                                  <div
+                                    class="progress-bar column flex-center q-mx-sm"
+                                    role="progressbar"
+                                    :class="indicators.coloursReaded.value"
+                                    style="border-radius: 20px"
+                                  >
+                                    <div
+                                      class="inline-flex flex-center q-my-xs text-white"
+                                      style="text-shadow: 1px 1px black"
+                                    >
+                                      <q-badge
+                                        style="
+                                          font-size: 15px;
+                                          font-weight: bold;
+                                        "
+                                        color="transparent"
+                                        :label="indicators.countersReaded.value"
+                                      >
+                                        -
+                                        <div
+                                          class="flex"
+                                          v-if="
+                                            indicators.coloursReaded.value ===
+                                            'bg-green'
+                                          "
+                                        >
+                                          <q-badge
+                                            color="transparent"
+                                            label="Bien"
+                                            style="
+                                              font-size: 15px;
+                                              font-weight: bold;
+                                            "
+                                          />
+                                        </div>
+                                        <div
+                                          class="flex"
+                                          v-else-if="
+                                            indicators.coloursReaded.value ===
+                                            'bg-warning'
+                                          "
+                                        >
+                                          <q-badge
+                                            color="transparent"
+                                            label="Regular"
+                                            style="
+                                              font-size: 15px;
+                                              font-weight: bold;
+                                            "
+                                          />
+                                        </div>
+                                        <div
+                                          class="flex"
+                                          v-else-if="
+                                            indicators.coloursReaded.value ===
+                                            'bg-red'
+                                          "
+                                        >
+                                          <q-badge
+                                            color="transparent"
+                                            label="Por Mejorar"
+                                            style="
+                                              font-size: 15px;
+                                              font-weight: bold;
+                                            "
+                                          />
+                                        </div>
+                                      </q-badge>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+                                <div class="row flex-center">
+                                  <div class="q-my-sm text-bold">Atendidos</div>
+                                </div>
+
+                                <div class="progress" style="">
+                                  <div
+                                    class="progress-bar column flex-center q-mx-sm"
+                                    role="progressbar"
+                                    :class="indicators.coloursAttended.value"
+                                    style="border-radius: 20px"
+                                  >
+                                    <div
+                                      class="inline-flex flex-center q-my-xs text-white"
+                                      style="text-shadow: 1px 1px black"
+                                    >
+                                      <q-badge
+                                        style="
+                                          font-size: 15px;
+                                          font-weight: bold;
+                                        "
+                                        color="transparent"
+                                        :label="
+                                          indicators.countersAttended.value
+                                        "
+                                      >
+                                        -
+                                        <div
+                                          class="flex"
+                                          v-if="
+                                            indicators.coloursAttended.value ===
+                                            'bg-green'
+                                          "
+                                        >
+                                          <q-badge
+                                            color="transparent"
+                                            label="Bien"
+                                            style="
+                                              font-size: 15px;
+                                              font-weight: bold;
+                                            "
+                                          />
+                                        </div>
+                                        <div
+                                          class="flex"
+                                          v-else-if="
+                                            indicators.coloursAttended.value ===
+                                            'bg-warning'
+                                          "
+                                        >
+                                          <q-badge
+                                            color="transparent"
+                                            label="Regular"
+                                            style="
+                                              font-size: 15px;
+                                              font-weight: bold;
+                                            "
+                                          />
+                                        </div>
+                                        <div
+                                          class="flex"
+                                          v-else-if="
+                                            indicators.coloursAttended.value ===
+                                            'bg-red'
+                                          "
+                                        >
+                                          <q-badge
+                                            color="transparent"
+                                            label="Por Mejorar"
+                                            style="
+                                              font-size: 15px;
+                                              font-weight: bold;
+                                            "
+                                          />
+                                        </div>
+                                      </q-badge>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <hr class="q-my-md" />
+                            <q-tooltip class="bg-white" :offset="[10, 10]">
+                              <q-card class="" style="width: 400px">
+                                <q-card-section>
+                                  <div
+                                    style="margin: 0%; height: 300px"
+                                    v-if="indicators.title === 'Reclamos'"
+                                  >
+                                    <Bar
+                                      :data="dataTooltipReclamosRecibidos"
+                                      :options="options"
+                                    />
+                                  </div>
+                                  <div
+                                    style="margin: 0%; height: 300px"
+                                    v-if="indicators.title === 'Sugerencias'"
+                                  >
+                                    <Bar
+                                      :data="dataTooltipSugerenciasRecibidos"
+                                      :options="options"
+                                    />
+                                  </div>
+                                  <div
+                                    style="margin: 0%; height: 300px"
+                                    v-if="indicators.title === 'Comentarios'"
+                                  >
+                                    <Bar
+                                      :data="dataTooltipComentariosRecibidos"
+                                      :options="options"
+                                    />
+                                  </div>
+                                  <div
+                                    style="margin: 0%; height: 300px"
+                                    v-if="indicators.title === 'Denuncias'"
+                                  >
+                                    <Bar
+                                      :data="dataTooltipDenunciasRecibidos"
+                                      :options="options"
+                                    />
+                                  </div>
+                                  <div
+                                    style="margin: 0%; height: 300px"
+                                    v-if="indicators.title === 'Quejas'"
+                                  >
+                                    <Bar
+                                      :data="dataTooltipQuejasRecibidos"
+                                      :options="options"
+                                    />
+                                  </div>
+                                  <div
+                                    style="margin: 0%; height: 300px"
+                                    v-if="indicators.title === 'Inquietudes'"
+                                  >
+                                    <Bar
+                                      :data="dataTooltipInquietudesRecibidos"
+                                      :options="options"
+                                    />
+                                  </div>
+                                </q-card-section>
+                              </q-card>
+                            </q-tooltip>
+
+                            <q-dialog v-model="dialogMailbox" full-width>
+                              <q-card class="flex row">
+                                <q-space />
+
+                                <q-btn
+                                  flat
+                                  rounded
+                                  icon="close"
+                                  class="q-mt-xl q-mr-xl"
+                                  v-close-popup
+                                />
+                                <div class="row inline">
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h4
+                                      class="column items-center text-bold"
+                                      style="height: 5%"
+                                    >
+                                      Detalles de los Indicadores
+                                    </h4>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h5 class="q-mx-xl column text-bold">
+                                      {{ mailboxIndicators[0].title }}
+                                    </h5>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <Bar
+                                            :data="dataReclamos"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="row inline flex-center"
+                                                  >
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        mailboxIndicators[0]
+                                                          .coloursAttended.value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[0]
+                                                          .coloursAttended
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[0]
+                                                          .coloursAttended
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[0]
+                                                          .coloursAttended
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
+                                                  </div>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron atendidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      mailboxIndicators[0]
+                                                        .countersAttended.value
+                                                    }}
+                                                    personas, lo que equivale al
+
+                                                    {{
+                                                      mailboxIndicators[0].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todas las personas
+                                                    atendidas.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estadistica de datos
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Recibidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #c56821"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[0]
+                                                        .countersReceived.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    100% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Atendidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #f06a00"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[0]
+                                                        .countersAttended.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[0].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Por Atender
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #9b6034"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[0]
+                                                        .countersReaded.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[0].uncomplishFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div class="flex row">
+                                    <hr class="q-my-md" />
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h5 class="q-mx-xl column text-bold">
+                                      {{ mailboxIndicators[1].title }}
+                                    </h5>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <Bar
+                                            :data="dataSugerencias"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="row inline flex-center"
+                                                  >
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        mailboxIndicators[1]
+                                                          .coloursAttended.value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[1]
+                                                          .coloursAttended
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[1]
+                                                          .coloursAttended
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[1]
+                                                          .coloursAttended
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
+                                                  </div>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron atendidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      mailboxIndicators[1]
+                                                        .countersAttended.value
+                                                    }}
+                                                    personas, lo que equivale al
+
+                                                    {{
+                                                      mailboxIndicators[1].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todas las personas
+                                                    atendidas.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estadistica de datos
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Recibidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #c5b821"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[1]
+                                                        .countersReceived.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    100% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Atendidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #f0dd00"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[1]
+                                                        .countersAttended.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[1].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Por Atender
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #9b9234"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[1]
+                                                        .countersReaded.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[1].uncomplishFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div class="flex row">
+                                    <hr class="q-my-md" />
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h5 class="q-mx-xl column text-bold">
+                                      {{ mailboxIndicators[2].title }}
+                                    </h5>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <Bar
+                                            :data="dataComentarios"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="row inline flex-center"
+                                                  >
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        mailboxIndicators[2]
+                                                          .coloursAttended.value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[2]
+                                                          .coloursAttended
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[2]
+                                                          .coloursAttended
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[2]
+                                                          .coloursAttended
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
+                                                  </div>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron atendidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      mailboxIndicators[2]
+                                                        .countersAttended.value
+                                                    }}
+                                                    personas, lo que equivale al
+
+                                                    {{
+                                                      mailboxIndicators[2].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todas las personas
+                                                    atendidas.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estadistica de datos
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Recibidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #2f9dc5"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[2]
+                                                        .countersReceived.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    100% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Atendidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #10b4f0"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[2]
+                                                        .countersAttended.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[2].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Por Atender
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #3e829b"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[2]
+                                                        .countersReaded.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[2].uncomplishFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div class="flex row">
+                                    <hr class="q-my-md" />
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h5 class="q-mx-xl column text-bold">
+                                      {{ mailboxIndicators[3].title }}
+                                    </h5>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <Bar
+                                            :data="dataDenuncias"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="row inline flex-center"
+                                                  >
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        mailboxIndicators[3]
+                                                          .coloursAttended.value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[3]
+                                                          .coloursAttended
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[3]
+                                                          .coloursAttended
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[3]
+                                                          .coloursAttended
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
+                                                  </div>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron atendidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      mailboxIndicators[3]
+                                                        .countersAttended.value
+                                                    }}
+                                                    personas, lo que equivale al
+
+                                                    {{
+                                                      mailboxIndicators[3].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todas las personas
+                                                    atendidas.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estadistica de datos
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Recibidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #803ec5"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[3]
+                                                        .countersReceived.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    100% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Atendidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #8725f0"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[3]
+                                                        .countersAttended.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[3].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Por Atender
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #714b9b"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[3]
+                                                        .countersReaded.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[3].uncomplishFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div class="flex row">
+                                    <hr class="q-my-md" />
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h5 class="q-mx-xl column text-bold">
+                                      {{ mailboxIndicators[4].title }}
+                                    </h5>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <Bar
+                                            :data="dataQuejas"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="row inline flex-center"
+                                                  >
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        mailboxIndicators[4]
+                                                          .coloursAttended.value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[4]
+                                                          .coloursAttended
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[4]
+                                                          .coloursAttended
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[4]
+                                                          .coloursAttended
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
+                                                  </div>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron atendidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      mailboxIndicators[4]
+                                                        .countersAttended.value
+                                                    }}
+                                                    personas, lo que equivale al
+
+                                                    {{
+                                                      mailboxIndicators[4].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todas las personas
+                                                    atendidas.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estadistica de datos
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Recibidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #c5217b"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[4]
+                                                        .countersReceived.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    100% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Atendidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #f00085"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[4]
+                                                        .countersAttended.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[4].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Por Atender
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #9b346c"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[4]
+                                                        .countersReaded.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[4].uncomplishFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div class="flex row">
+                                    <hr class="q-my-md" />
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                  >
+                                    <h5 class="q-mx-xl column text-bold">
+                                      {{ mailboxIndicators[5].title }}
+                                    </h5>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <Bar
+                                            :data="dataInquietudes"
+                                            :options="options"
+                                          />
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estado del indicador
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 100%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="row inline flex-center"
+                                                  >
+                                                    <div
+                                                      style="
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        height: 70px;
+                                                        width: 70px;
+                                                      "
+                                                      :class="
+                                                        mailboxIndicators[5]
+                                                          .coloursAttended.value
+                                                      "
+                                                      class="q-mx-lg"
+                                                    >
+                                                      <span></span>
+                                                    </div>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[5]
+                                                          .coloursAttended
+                                                          .value === 'bg-green'
+                                                      "
+                                                      style="
+                                                        color: #00a126;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Bien
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[5]
+                                                          .coloursAttended
+                                                          .value ===
+                                                        'bg-warning'
+                                                      "
+                                                      style="
+                                                        color: #ffb700;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Regular
+                                                    </h2>
+                                                    <h2
+                                                      v-if="
+                                                        mailboxIndicators[5]
+                                                          .coloursAttended
+                                                          .value === 'bg-red'
+                                                      "
+                                                      style="
+                                                        color: #c10000;
+                                                        text-shadow: 1px 1px
+                                                          grey;
+                                                      "
+                                                    >
+                                                      Por mejorar
+                                                    </h2>
+                                                  </div>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron atendidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha
+                                                    {{
+                                                      mailboxIndicators[5]
+                                                        .countersAttended.value
+                                                    }}
+                                                    personas, lo que equivale al
+
+                                                    {{
+                                                      mailboxIndicators[5].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todas las personas
+                                                    atendidas.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                                  >
+                                    <div class="q-pa-xs q-mx-xs">
+                                      <q-card
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                      >
+                                        <q-card-section
+                                          class="flex row flex-center"
+                                          style="
+                                            margin: 0%;
+                                            padding: 3%;
+                                            height: 300px;
+                                          "
+                                        >
+                                          <h5
+                                            class="no-margin q-mb-xs column items-center text-bold"
+                                          >
+                                            Estadistica de datos
+                                          </h5>
+                                          <div class="flex row no-wrap">
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Recibidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #00b332"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[5]
+                                                        .countersReceived.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    100% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Atendidos
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #44ebc9"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[5]
+                                                        .countersAttended.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[5].cumplishmentFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <q-separator
+                                              vertical
+                                              inset
+                                              class="q-mx-sm"
+                                            />
+
+                                            <div
+                                              class="container flex"
+                                              style="width: 33%"
+                                            >
+                                              <div class="flex column">
+                                                <div
+                                                  class="column items-center"
+                                                >
+                                                  <div
+                                                    class="q-my-sm text-bold"
+                                                  >
+                                                    Por Atender
+                                                  </div>
+                                                  <h4
+                                                    class="q-my-sm"
+                                                    style="color: #5d968a"
+                                                  >
+                                                    {{
+                                                      mailboxIndicators[5]
+                                                        .countersReaded.value
+                                                    }}
+                                                  </h4>
+                                                  <div
+                                                    class="column items-center justify-center text-center"
+                                                  >
+                                                    Fueron recibidos por la
+                                                    organizacion Acuario hasta
+                                                    la fecha, lo que equivale al
+                                                    {{
+                                                      mailboxIndicators[5].uncomplishFormula.value.toFixed(
+                                                        2
+                                                      )
+                                                    }}% de todos los reclamos.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </q-card-section>
+                                      </q-card>
+                                    </div>
+                                  </div>
+                                  <div class="flex row">
+                                    <hr class="q-my-md" />
+                                  </div>
+                                </div>
+                              </q-card>
+                            </q-dialog>
                           </div>
                         </div>
-                        <hr class="q-my-md" />
+
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
                       </div>
                     </q-card>
                   </div>
@@ -1490,213 +3504,6 @@
           </div>
         </div>
       </q-tab-panel>
-
-      <q-tab-panel
-        v-for="reference in clusterList"
-        :key="reference.cluster.value"
-        :name="reference.cluster.value"
-      >
-        <div class="flex row q-mx-xl q-py-xs flex-center">
-          <div class="q-container">
-            <div class="row inline">
-              <div
-                class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-center q-my-md"
-              >
-                <h2
-                  style="
-                    color: rgb(77, 75, 75);
-                    font-style: italic;
-                    font-weight: 400;
-                  "
-                >
-                  {{ reference.title }}
-                </h2>
-                <h5
-                  style="
-                    color: rgb(77, 75, 75);
-                    font-style: italic;
-                    font-weight: 400;
-                  "
-                >
-                  {{ reference.caption }}.
-                </h5>
-              </div>
-              <div
-                class="col-xs-12 col-sm-12 col-md-5 col-lg-5 q-my-md column items-center"
-              >
-                <img
-                  v-if="reference.cluster.value === 'Seguridad Alimentaria'"
-                  src="/7757761.png"
-                  style="max-height: 264px"
-                />
-                <img
-                  v-if="reference.cluster.value === 'Educación'"
-                  src="/image_processing20220416-11036-toi50p.png"
-                  style="max-height: 264px"
-                />
-                <img
-                  v-if="reference.cluster.value === 'Salud'"
-                  src="/2689945.png"
-                  style="max-height: 264px"
-                />
-                <img
-                  v-if="reference.cluster.value === 'Saneamiento'"
-                  src="/wash-hands-icon-png_6023dcc6ad445.png"
-                  style="max-height: 264px"
-                />
-
-                <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
-              <h5 class="row inline" v-for="item in proyectNGOAllies" :key="item.id">{{ item.ngo }},
-            </h5>
-            </h5>
-            <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Nº Proyectos en curso: {{
-              N_Proyects }}
-            </h5>
-            <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Personal: {{ proyectWorkTeam }}
-              Voluntarios
-            </h5>-->
-              </div>
-              <div
-                class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-my-md column items-center"
-              >
-                <h5
-                  class="no-margin q-mb-xs text-bold"
-                  style="text-align: center"
-                >
-                  Indicadores
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex row q-mx-lg q-py-xs flex-center" id="indicadores">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <q-card class="q-pa-lg">
-              <q-card-section style="margin: 0%; padding: 0%">
-                <div class="">
-                  <q-select
-                    borderless
-                    style="width: 20%"
-                    v-model="model"
-                    :options="optionsTimeSelect"
-                    label="Margen de tiempo"
-                  />
-                </div>
-                <div class="flex row">
-                  <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    <q-card class="q-pa-lg q-ma-xs">
-                      <div
-                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                        v-for="indicators in mailboxIndicators"
-                        :key="indicators.id"
-                      >
-                        <div class="q-my-sm text-bold">
-                          {{ indicators.title }}
-                        </div>
-                        <div class="progress" style="">
-                          <div
-                            class="progress-bar column items-center justify-center"
-                            role="progressbar"
-                            :style="{ width: indicators.counters.value + '%' }"
-                            :class="indicators.colours.value"
-                            style="border-radius: 20px"
-                          >
-                            <div
-                              class="inline-flex flex-center q-my-xs text-white"
-                              style="text-shadow: 1px 1px black"
-                            >
-                              <q-badge
-                                style="font-size: 15px; font-weight: bold"
-                                color="transparent"
-                                :label="indicators.counters.value + '%'"
-                              >
-                                -
-                                <div
-                                  class="flex"
-                                  v-if="indicators.counters.value <= 30"
-                                >
-                                  <q-badge
-                                    color="transparent"
-                                    label="Bien"
-                                    style="font-size: 15px; font-weight: bold"
-                                  />
-                                </div>
-                                <div
-                                  class="flex"
-                                  v-else-if="indicators.counters.value < 70"
-                                >
-                                  <q-badge
-                                    color="transparent"
-                                    label="Regular"
-                                    style="font-size: 15px; font-weight: bold"
-                                  />
-                                </div>
-                                <div
-                                  class="flex"
-                                  v-else-if="indicators.counters.value >= 70"
-                                >
-                                  <q-badge
-                                    color="transparent"
-                                    label="Mal"
-                                    style="font-size: 15px; font-weight: bold"
-                                  />
-                                </div>
-                              </q-badge>
-                            </div>
-                          </div>
-                        </div>
-                        <hr class="q-my-md" />
-                      </div>
-                    </q-card>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                    <q-card class="q-pa-lg q-ma-xs">
-                      <div
-                        class="flex row"
-                        style="text-shadow: 1px 1px rgb(0, 0, 0)"
-                      >
-                        <div
-                          class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
-                          v-for="indicators in personsAttendedValue"
-                          :key="indicators.id"
-                        >
-                          <q-card class="q-ma-xs">
-                            <q-card-section
-                              class="text-white"
-                              :class="indicators.colours.value"
-                            >
-                              <div class="text-subtitle1 text-bold">
-                                {{ indicators.title }}
-                              </div>
-                              <div class="text-h5" style="text-align: end">
-                                {{
-                                  indicators.counters.value +
-                                  "/" +
-                                  totalValue.value
-                                }}
-                              </div>
-                            </q-card-section>
-                          </q-card>
-                        </div>
-                      </div>
-                    </q-card>
-                  </div>
-                </div>
-                <br />
-                <!--div class="row justify-center items-center">
-                  <div class="">
-                    <q-btn @click="randomize">Prueba</q-btn>
-                  </div>
-                  <div class="">
-                    <q-btn @click="display">ver resolucion</q-btn>
-                  </div>
-                </div-->
-              </q-card-section>
-            </q-card>
-          </div>
-        </div>
-      </q-tab-panel>
     </q-tab-panels>
 
     <div class="flex row q-mx-lg q-py-xs items-center justify-between">
@@ -2174,33 +3981,81 @@ const clusterList = [
 const mailboxIndicators = [
   {
     title: "Reclamos",
-    counters: ref(0),
-    colours: ref(""),
+    countersReceived: ref(0),
+    received: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersAttended: ref(0),
+    attended: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersReaded: ref(0),
+    readed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    coloursAttended: ref(""),
+    coloursReaded: ref(""),
+    cumplishmentFormula: ref(0),
+    uncomplishFormula: ref(0),
   },
   {
     title: "Sugerencias",
-    counters: ref(0),
-    colours: ref(""),
+    countersReceived: ref(0),
+    received: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersAttended: ref(0),
+    attended: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersReaded: ref(0),
+    readed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    coloursAttended: ref(""),
+    coloursReaded: ref(""),
+    cumplishmentFormula: ref(0),
+    uncomplishFormula: ref(0),
   },
   {
     title: "Comentarios",
-    counters: ref(0),
-    colours: ref(""),
+    countersReceived: ref(0),
+    received: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersAttended: ref(0),
+    attended: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersReaded: ref(0),
+    readed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    coloursAttended: ref(""),
+    coloursReaded: ref(""),
+    cumplishmentFormula: ref(0),
+    uncomplishFormula: ref(0),
   },
   {
     title: "Denuncias",
-    counters: ref(0),
-    colours: ref(""),
+    countersReceived: ref(0),
+    received: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersAttended: ref(0),
+    attended: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersReaded: ref(0),
+    readed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    coloursAttended: ref(""),
+    coloursReaded: ref(""),
+    cumplishmentFormula: ref(0),
+    uncomplishFormula: ref(0),
   },
   {
     title: "Quejas",
-    counters: ref(0),
-    colours: ref(""),
+    countersReceived: ref(0),
+    received: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersAttended: ref(0),
+    attended: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersReaded: ref(0),
+    readed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    coloursAttended: ref(""),
+    coloursReaded: ref(""),
+    cumplishmentFormula: ref(0),
+    uncomplishFormula: ref(0),
   },
   {
     title: "Inquietudes",
-    counters: ref(0),
-    colours: ref(""),
+    countersReceived: ref(0),
+    received: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersAttended: ref(0),
+    attended: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    countersReaded: ref(0),
+    readed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    coloursAttended: ref(""),
+    coloursReaded: ref(""),
+    cumplishmentFormula: ref(0),
+    uncomplishFormula: ref(0),
   },
 ];
 
@@ -2469,24 +4324,1055 @@ const monthsDataValuesNative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   }
 }*/
 
-function randomizeAll(min, max) {
-  min = Math.ceil(0);
-  max = Math.floor(100);
+function randomizeAll(/*min, max*/) {
+  //min = Math.ceil(0);
+  //max = Math.floor(100);
   mailboxIndicators.forEach((element) => {
-    element.counters.value = Math.floor(Math.random() * (max - min) + min);
-    if (element.counters.value < 30) {
-      element.colours.value = "bg-green";
+    //element.counters.value = Math.floor(Math.random() * (max - min) + min);
+    if (element.countersReceived.value < 30) {
+      element.coloursAttended.value = "bg-green";
     } else {
-      if (element.counters.value >= 30 && element.counters.value < 70) {
-        element.colours.value = "bg-warning";
+      if (
+        element.countersReceived.value >= 30 &&
+        element.countersReceived.value < 70
+      ) {
+        element.coloursAttended.value = "bg-warning";
       } else {
-        element.colours.value = "bg-red";
+        element.coloursAttended.value = "bg-red";
       }
     }
   });
 }
 
 function distributeValues() {
+  console.log(mailboxIndicators, "mailbox before");
+  mailboxIndicators.forEach((element) => {
+    element.countersReceived.value = 0;
+    element.countersAttended.value = 0;
+    element.countersReaded.value = 0;
+    for (let index = 0; index < element.received.length; index++) {
+      element.received[index] = 0;
+    }
+
+    for (let index = 0; index < element.attended.length; index++) {
+      element.attended[index] = 0;
+    }
+
+    for (let index = 0; index < element.readed.length; index++) {
+      element.readed[index] = 0;
+    }
+  });
+
+  for (let index = 0; index < monthsDataValuesEducation.length; index++) {
+    monthsDataValuesEducation[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesTransverse.length; index++) {
+    monthsDataValuesTransverse[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesHealth.length; index++) {
+    monthsDataValuesHealth[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesProtection.length; index++) {
+    monthsDataValuesProtection[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesNutrition.length; index++) {
+    monthsDataValuesNutrition[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesfoodsafety.length; index++) {
+    monthsDataValuesfoodsafety[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesHosting.length; index++) {
+    monthsDataValuesHosting[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesSanitation.length; index++) {
+    monthsDataValuesSanitation[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesChildProtection.length; index++) {
+    monthsDataValuesChildProtection[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesvbgProtection.length; index++) {
+    monthsDataValuesvbgProtection[index] = 0;
+  }
+
+  for (let index = 0; index < monthsDataValuesProjects.length; index++) {
+    monthsDataValuesProjects[index] = 0;
+  }
+  for (
+    let index = 0;
+    index < monthsDataValuesFinishedProjects.length;
+    index++
+  ) {
+    monthsDataValuesFinishedProjects[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesPlannedProjects.length; index++) {
+    monthsDataValuesPlannedProjects[index] = 0;
+  }
+  for (
+    let index = 0;
+    index < monthsDataValuesInActionProjects.length;
+    index++
+  ) {
+    monthsDataValuesInActionProjects[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesGeneral.length; index++) {
+    monthsDataValuesGeneral[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesWomen.length; index++) {
+    monthsDataValuesWomen[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesMen.length; index++) {
+    monthsDataValuesMen[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesDisabled.length; index++) {
+    monthsDataValuesDisabled[index] = 0;
+  }
+  for (let index = 0; index < monthsDataValuesNative.length; index++) {
+    monthsDataValuesNative[index] = 0;
+  }
+
+  console.log(mailboxIndicators, "mailbox after");
+  axios.get("http://localhost:5000/mailbox").then(function (response) {
+    response.data.forEach((element) => {
+      console.log(element.createdAt.slice(5, 7), "created At locale string");
+      console.log(typeof element.createdAt, "created At raw");
+      //mailboxArray.push(element);
+      if (element.inputType === "Reclamo") {
+        mailboxIndicators[0].countersReceived.value++;
+        switch (element.createdAt.slice(5, 7)) {
+          case "01":
+            mailboxIndicators[0].received[0]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[0]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[0]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "02":
+            mailboxIndicators[0].received[1]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[1]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[1]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "03":
+            mailboxIndicators[0].received[2]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[2]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[2]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "04":
+            mailboxIndicators[0].received[3]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[3]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[3]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "05":
+            mailboxIndicators[0].received[4]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[4]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[4]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "06":
+            mailboxIndicators[0].received[5]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[5]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[5]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "07":
+            mailboxIndicators[0].received[6]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[6]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[6]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "08":
+            mailboxIndicators[0].received[7]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[7]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[7]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "09":
+            mailboxIndicators[0].received[8]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[8]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[8]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "10":
+            mailboxIndicators[0].received[9]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[9]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[9]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "11":
+            mailboxIndicators[0].received[10]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[10]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[10]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+          case "12":
+            mailboxIndicators[0].received[11]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[0].attended[11]++;
+              mailboxIndicators[0].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[0].readed[11]++;
+                mailboxIndicators[0].countersReaded.value++;
+              }
+            }
+            break;
+        }
+      }
+      if (element.inputType === "Sugerencia") {
+        mailboxIndicators[1].countersReceived.value++;
+        switch (element.createdAt.slice(5, 7)) {
+          case "01":
+            mailboxIndicators[1].received[0]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[0]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[0]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "02":
+            mailboxIndicators[1].received[1]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[1]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[1]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "03":
+            mailboxIndicators[1].received[2]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[2]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[2]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "04":
+            mailboxIndicators[1].received[3]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[3]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[3]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "05":
+            mailboxIndicators[1].received[4]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[4]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[4]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "06":
+            mailboxIndicators[1].received[5]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[5]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[5]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "07":
+            mailboxIndicators[1].received[6]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[6]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[6]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "08":
+            mailboxIndicators[1].received[7]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[7]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[7]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "09":
+            mailboxIndicators[1].received[8]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[8]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[8]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "10":
+            mailboxIndicators[1].received[9]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[9]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[9]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "11":
+            mailboxIndicators[1].received[10]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[10]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[10]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+          case "12":
+            mailboxIndicators[1].received[11]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[1].attended[11]++;
+              mailboxIndicators[1].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[1].readed[11]++;
+                mailboxIndicators[1].countersReaded.value++;
+              }
+            }
+            break;
+        }
+      }
+      if (element.inputType === "Comentario") {
+        mailboxIndicators[2].countersReceived.value++;
+        switch (element.createdAt.slice(5, 7)) {
+          case "01":
+            mailboxIndicators[2].received[0]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[0]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[0]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "02":
+            mailboxIndicators[2].received[1]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[1]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[1]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "03":
+            mailboxIndicators[2].received[2]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[2]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[2]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "04":
+            mailboxIndicators[2].received[3]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[3]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[3]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "05":
+            mailboxIndicators[2].received[4]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[4]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[4]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "06":
+            mailboxIndicators[2].received[5]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[5]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[5]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "07":
+            mailboxIndicators[2].received[6]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[6]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[6]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "08":
+            mailboxIndicators[2].received[7]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[7]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[7]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "09":
+            mailboxIndicators[2].received[8]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[8]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[8]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "10":
+            mailboxIndicators[2].received[9]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[9]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[9]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "11":
+            mailboxIndicators[2].received[10]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[10]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[10]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+          case "12":
+            mailboxIndicators[2].received[11]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[2].attended[11]++;
+              mailboxIndicators[2].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[2].readed[11]++;
+                mailboxIndicators[2].countersReaded.value++;
+              }
+            }
+            break;
+        }
+      }
+      if (element.inputType === "Denuncia") {
+        mailboxIndicators[3].countersReceived.value++;
+        switch (element.createdAt.slice(5, 7)) {
+          case "01":
+            mailboxIndicators[3].received[0]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[0]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[0]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "02":
+            mailboxIndicators[3].received[1]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[1]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[1]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "03":
+            mailboxIndicators[3].received[2]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[2]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[2]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "04":
+            mailboxIndicators[3].received[3]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[3]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[3]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "05":
+            mailboxIndicators[3].received[4]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[4]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[4]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "06":
+            mailboxIndicators[3].received[5]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[5]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[5]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "07":
+            mailboxIndicators[3].received[6]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[6]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[6]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "08":
+            mailboxIndicators[3].received[7]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[7]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[7]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "09":
+            mailboxIndicators[3].received[8]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[8]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[8]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "10":
+            mailboxIndicators[3].received[9]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[9]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[9]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "11":
+            mailboxIndicators[3].received[10]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[10]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[10]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+          case "12":
+            mailboxIndicators[3].received[11]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[3].attended[11]++;
+              mailboxIndicators[3].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[3].readed[11]++;
+                mailboxIndicators[3].countersReaded.value++;
+              }
+            }
+            break;
+        }
+      }
+      if (element.inputType === "Queja") {
+        mailboxIndicators[4].countersReceived.value++;
+        switch (element.createdAt.slice(5, 7)) {
+          case "01":
+            mailboxIndicators[4].received[0]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[0]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[0]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "02":
+            mailboxIndicators[4].received[1]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[1]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[1]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "03":
+            mailboxIndicators[4].received[2]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[2]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[2]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "04":
+            mailboxIndicators[4].received[3]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[3]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[3]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "05":
+            mailboxIndicators[4].received[4]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[4]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[4]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "06":
+            mailboxIndicators[4].received[5]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[5]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[5]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "07":
+            mailboxIndicators[4].received[6]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[6]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[6]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "08":
+            mailboxIndicators[4].received[7]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[7]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[7]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "09":
+            mailboxIndicators[4].received[8]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[8]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[8]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "10":
+            mailboxIndicators[4].received[9]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[9]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[9]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "11":
+            mailboxIndicators[4].received[10]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[10]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[10]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+          case "12":
+            mailboxIndicators[4].received[11]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[4].attended[11]++;
+              mailboxIndicators[4].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[4].readed[11]++;
+                mailboxIndicators[4].countersReaded.value++;
+              }
+            }
+            break;
+        }
+      }
+      if (element.inputType === "Inquietud") {
+        mailboxIndicators[5].countersReceived.value++;
+        switch (element.createdAt.slice(5, 7)) {
+          case "01":
+            mailboxIndicators[5].received[0]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[0]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[0]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "02":
+            mailboxIndicators[5].received[1]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[1]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[1]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "03":
+            mailboxIndicators[5].received[2]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[2]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[2]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "04":
+            mailboxIndicators[5].received[3]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[3]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[3]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "05":
+            mailboxIndicators[5].received[4]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[4]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[4]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "06":
+            mailboxIndicators[5].received[5]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[5]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[5]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "07":
+            mailboxIndicators[5].received[6]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[6]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[6]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "08":
+            mailboxIndicators[5].received[7]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[7]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[7]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "09":
+            mailboxIndicators[5].received[8]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[8]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[8]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "10":
+            mailboxIndicators[5].received[9]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[9]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[9]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "11":
+            mailboxIndicators[5].received[10]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[10]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[10]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+          case "12":
+            mailboxIndicators[5].received[11]++;
+            if (element.inputStatus === "Atendido") {
+              mailboxIndicators[5].attended[11]++;
+              mailboxIndicators[5].countersAttended.value++;
+            } else {
+              if (element.inputStatus === "Visto") {
+                mailboxIndicators[5].readed[11]++;
+                mailboxIndicators[5].countersReaded.value++;
+              }
+            }
+            break;
+        }
+      }
+    });
+
+    mailboxIndicators.forEach((element) => {
+      element.cumplishmentFormula.value =
+        (element.countersAttended.value / element.countersReceived.value) * 100;
+
+      element.uncomplishFormula.value =
+        (element.countersReaded.value / element.countersReceived.value) * 100;
+
+      if (element.cumplishmentFormula.value >= 95.0) {
+        element.coloursAttended.value = "bg-green";
+      } else {
+        if (
+          element.cumplishmentFormula.value >= 50.0 &&
+          element.cumplishmentFormula.value < 94.0
+        ) {
+          element.coloursAttended.value = "bg-warning";
+        } else {
+          element.coloursAttended.value = "bg-red";
+        }
+      }
+
+      if (element.countersReaded.value === 0) {
+        element.coloursReaded.value = "bg-green";
+      } else {
+        if (
+          element.countersReaded.value >= 1 &&
+          element.countersReaded.value <= 4
+        ) {
+          element.coloursReaded.value = "bg-warning";
+        } else {
+          element.coloursReaded.value = "bg-red";
+        }
+      }
+    });
+
+    console.log(mailboxIndicators[0], "reclamos");
+    console.log(mailboxIndicators[1], "sugerencias");
+    console.log(mailboxIndicators[2], "comentarios");
+    console.log(mailboxIndicators[3], "denuncias");
+    console.log(mailboxIndicators[4], "quejas");
+    console.log(mailboxIndicators[5], "inquietudes");
+  });
   transverseArray.splice(0);
   personsAttendedValue[1].counters.value = 0;
   personsAttendedValue[2].counters.value = 0;
@@ -6953,6 +9839,7 @@ export default defineComponent({
       attendedCoursesYearly,
       dialogAttendedPersons: ref(false),
       dialogFinishedProjects: ref(false),
+      dialogMailbox: ref(false),
       user,
       users,
       colorGrande,
@@ -7252,6 +10139,642 @@ export default defineComponent({
         });
 
         console.log(monthsData, "actualizado");*/
+      },
+
+      dataReclamos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Reclamos recibidos en el año 2023",
+            backgroundColor: "#C56821",
+            data: mailboxIndicators[0].received,
+          },
+          {
+            label: "Reclamos Atendidos en el año 2023",
+            backgroundColor: "#F06A00",
+            data: mailboxIndicators[0].attended,
+          },
+          {
+            label: "Reclamos Por Atender en el año 2023",
+            backgroundColor: "#9B6034",
+            data: mailboxIndicators[0].readed,
+          },
+        ],
+      },
+
+      dataTooltipReclamosRecibidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Reclamos recibidos en el año 2023",
+            backgroundColor: "#C56821",
+            data: mailboxIndicators[0].received,
+          },
+        ],
+      },
+
+      dataTooltipReclamosAtendidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Reclamos Atendidos en el año 2023",
+            backgroundColor: "#F06A00",
+            data: mailboxIndicators[0].attended,
+          },
+        ],
+      },
+
+      dataTooltipReclamosPorAtender: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Reclamos Por Atender en el año 2023",
+            backgroundColor: "#9B6034",
+            data: mailboxIndicators[0].readed,
+          },
+        ],
+      },
+
+      dataSugerencias: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Sugerencias recibidos en el año 2023",
+            backgroundColor: "#C5B821",
+            data: mailboxIndicators[1].received,
+          },
+          {
+            label: "Sugerencias Atendidos en el año 2023",
+            backgroundColor: "#F0DD00",
+            data: mailboxIndicators[1].attended,
+          },
+          {
+            label: "Sugerencias Por Atender en el año 2023",
+            backgroundColor: "#9B9234",
+            data: mailboxIndicators[1].readed,
+          },
+        ],
+      },
+
+      dataTooltipSugerenciasRecibidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Sugerencias recibidos en el año 2023",
+            backgroundColor: "#C5B821",
+            data: mailboxIndicators[1].received,
+          },
+        ],
+      },
+
+      dataTooltipSugerenciasAtendidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Sugerencias Atendidos en el año 2023",
+            backgroundColor: "#F0DD00",
+            data: mailboxIndicators[1].attended,
+          },
+        ],
+      },
+
+      dataTooltipSugerenciasPorAtender: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Sugerencias Por Atender en el año 2023",
+            backgroundColor: "#9B9234",
+            data: mailboxIndicators[1].readed,
+          },
+        ],
+      },
+
+      dataComentarios: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Comentarios recibidos en el año 2023",
+            backgroundColor: "#2F9DC5",
+            data: mailboxIndicators[2].received,
+          },
+          {
+            label: "Comentarios Atendidos en el año 2023",
+            backgroundColor: "#10B4F0",
+            data: mailboxIndicators[2].attended,
+          },
+          {
+            label: "Comentarios Por Atender en el año 2023",
+            backgroundColor: "#3E829B",
+            data: mailboxIndicators[2].readed,
+          },
+        ],
+      },
+
+      dataTooltipComentariosRecibidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Comentarios recibidos en el año 2023",
+            backgroundColor: "#2F9DC5",
+            data: mailboxIndicators[2].received,
+          },
+        ],
+      },
+
+      dataTooltipComentariosAtendidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Comentarios Atendidos en el año 2023",
+            backgroundColor: "#10B4F0",
+            data: mailboxIndicators[2].attended,
+          },
+        ],
+      },
+
+      dataTooltipComentariosPorAtender: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Comentarios Por Atender en el año 2023",
+            backgroundColor: "#3E829B",
+            data: mailboxIndicators[2].readed,
+          },
+        ],
+      },
+
+      dataDenuncias: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Denuncias recibidos en el año 2023",
+            backgroundColor: "#803EC5",
+            data: mailboxIndicators[3].received,
+          },
+          {
+            label: "Denuncias Atendidos en el año 2023",
+            backgroundColor: "#8725F0",
+            data: mailboxIndicators[3].attended,
+          },
+          {
+            label: "Denuncias Por Atender en el año 2023",
+            backgroundColor: "#714B9B",
+            data: mailboxIndicators[3].readed,
+          },
+        ],
+      },
+
+      dataTooltipDenunciasRecibidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Denuncias recibidos en el año 2023",
+            backgroundColor: "#803EC5",
+            data: mailboxIndicators[3].received,
+          },
+        ],
+      },
+
+      dataTooltipDenunciasAtendidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Denuncias Atendidos en el año 2023",
+            backgroundColor: "#8725F0",
+            data: mailboxIndicators[3].attended,
+          },
+        ],
+      },
+
+      dataTooltipDenunciasPorAtender: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Denuncias Por Atender en el año 2023",
+            backgroundColor: "#714B9B",
+            data: mailboxIndicators[3].readed,
+          },
+        ],
+      },
+
+      dataQuejas: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Quejas recibidos en el año 2023",
+            backgroundColor: "#C5217B",
+            data: mailboxIndicators[4].received,
+          },
+          {
+            label: "Quejas Atendidos en el año 2023",
+            backgroundColor: "#F00085",
+            data: mailboxIndicators[4].attended,
+          },
+          {
+            label: "Quejas Por Atender en el año 2023",
+            backgroundColor: "#9B346C",
+            data: mailboxIndicators[4].readed,
+          },
+        ],
+      },
+
+      dataTooltipQuejasRecibidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Quejas recibidos en el año 2023",
+            backgroundColor: "#C5217B",
+            data: mailboxIndicators[4].received,
+          },
+        ],
+      },
+
+      dataTooltipQuejasAtendidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Quejas Atendidos en el año 2023",
+            backgroundColor: "#F00085",
+            data: mailboxIndicators[4].attended,
+          },
+        ],
+      },
+
+      dataTooltipQuejasPorAtender: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Quejas Por Atender en el año 2023",
+            backgroundColor: "#9B346C",
+            data: mailboxIndicators[4].readed,
+          },
+        ],
+      },
+
+      dataInquietudes: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Inquietudes Recibidas en el año 2023",
+            backgroundColor: "#00b332",
+            data: mailboxIndicators[5].received,
+          },
+          {
+            label: "Inquietudes Atendidas en el año 2023",
+            backgroundColor: "#44EBC9",
+            data: mailboxIndicators[5].attended,
+          },
+          {
+            label: "Inquietudes Por Atender en el año 2023",
+            backgroundColor: "#5D968A",
+            data: mailboxIndicators[5].readed,
+          },
+        ],
+      },
+
+      dataTooltipInquietudesRecibidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Inquietudes recibidos en el año 2023",
+            backgroundColor: "#58C0AB",
+            data: mailboxIndicators[5].received,
+          },
+        ],
+      },
+
+      dataTooltipInquietudesAtendidos: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Inquietudes Atendidos en el año 2023",
+            backgroundColor: "#44EBC9",
+            data: mailboxIndicators[5].attended,
+          },
+        ],
+      },
+
+      dataTooltipInquietudesPorAtender: {
+        labels: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        datasets: [
+          {
+            label: "Inquietudes Por Atender en el año 2023",
+            backgroundColor: "#5D968A",
+            data: mailboxIndicators[5].readed,
+          },
+        ],
       },
 
       dataTooltipProjectsFinished: {
