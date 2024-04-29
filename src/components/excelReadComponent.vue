@@ -264,6 +264,9 @@ export default defineComponent({
                   }
                   if (rowsTransversal[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsTransversal[i][j];
+                    if (rowsTransversal[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsTransversal[3][j] === "#fund+type") {
@@ -290,10 +293,6 @@ export default defineComponent({
                     establishmentType.value = rowsTransversal[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsTransversal[3][j] === "#location") {
                     projectUbication.value = rowsTransversal[i][j];
                   }
@@ -303,7 +302,10 @@ export default defineComponent({
                     rowsTransversal[i][j] !== null
                   ) {
                     projectName.value = rowsTransversal[i][j];
-                  } else {
+                  } else if (
+                    rowsTransversal[3][j] === "#project+code_name" &&
+                    rowsTransversal[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -442,6 +444,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -518,6 +521,9 @@ export default defineComponent({
                   }
                   if (rowsSalud[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsSalud[i][j];
+                    if (rowsSalud[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsSalud[3][j] === "#fund+type") {
@@ -544,10 +550,6 @@ export default defineComponent({
                     establishmentType.value = rowsSalud[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsSalud[3][j] === "#location") {
                     projectUbication.value = rowsSalud[i][j];
                   }
@@ -557,7 +559,10 @@ export default defineComponent({
                     rowsSalud[i][j] !== null
                   ) {
                     projectName.value = rowsSalud[i][j];
-                  } else {
+                  } else if (
+                    rowsSalud[3][j] === "#project+code_name" &&
+                    rowsSalud[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -700,6 +705,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -779,6 +785,9 @@ export default defineComponent({
                   }
                   if (rowsNutricion[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsNutricion[i][j];
+                    if (rowsNutricion[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsNutricion[3][j] === "#fund+type") {
@@ -805,10 +814,6 @@ export default defineComponent({
                     establishmentType.value = rowsNutricion[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsNutricion[3][j] === "#location") {
                     projectUbication.value = rowsNutricion[i][j];
                   }
@@ -818,7 +823,10 @@ export default defineComponent({
                     rowsNutricion[i][j] !== null
                   ) {
                     projectName.value = rowsNutricion[i][j];
-                  } else {
+                  } else if (
+                    rowsNutricion[3][j] === "#project+code_name" &&
+                    rowsNutricion[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -978,6 +986,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -1058,6 +1067,9 @@ export default defineComponent({
                   }
                   if (rowsProteccionNinos[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsProteccionNinos[i][j];
+                    if (rowsProteccionNinos[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsProteccionNinos[3][j] === "#fund+type") {
@@ -1081,9 +1093,7 @@ export default defineComponent({
                   if (rowsProteccionNinos[3][j] === "#location+type") {
                     establishmentType.value = rowsProteccionNinos[i][j];
                   }
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
+
                   if (rowsProteccionNinos[3][j] === "#location") {
                     projectUbication.value = rowsProteccionNinos[i][j];
                   }
@@ -1092,7 +1102,10 @@ export default defineComponent({
                     rowsProteccionNinos[i][j] !== null
                   ) {
                     projectName.value = rowsProteccionNinos[i][j];
-                  } else {
+                  } else if (
+                    rowsProteccionNinos[3][j] === "#project+code_name" &&
+                    rowsProteccionNinos[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -1371,6 +1384,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -1469,6 +1483,9 @@ export default defineComponent({
                   }
                   if (rowsProteccionVbg[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsProteccionVbg[i][j];
+                    if (rowsProteccionVbg[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsProteccionVbg[3][j] === "#fund+type") {
@@ -1495,10 +1512,6 @@ export default defineComponent({
                     establishmentType.value = rowsProteccionVbg[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsProteccionVbg[3][j] === "#location") {
                     projectUbication.value = rowsProteccionVbg[i][j];
                   }
@@ -1508,7 +1521,10 @@ export default defineComponent({
                     rowsProteccionVbg[i][j] !== null
                   ) {
                     projectName.value = rowsProteccionVbg[i][j];
-                  } else {
+                  } else if (
+                    rowsProteccionVbg[3][j] === "#project+code_name" &&
+                    rowsProteccionVbg[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -1684,6 +1700,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -1768,6 +1785,9 @@ export default defineComponent({
                   if (rowsSeguridadAlimentaria[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value =
                       rowsSeguridadAlimentaria[i][j];
+                    if (rowsSeguridadAlimentaria[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsSeguridadAlimentaria[3][j] === "#fund+type") {
@@ -1795,10 +1815,6 @@ export default defineComponent({
                     establishmentType.value = rowsSeguridadAlimentaria[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsSeguridadAlimentaria[3][j] === "#location") {
                     projectUbication.value = rowsSeguridadAlimentaria[i][j];
                   }
@@ -1808,7 +1824,10 @@ export default defineComponent({
                     rowsSeguridadAlimentaria[i][j] !== null
                   ) {
                     projectName.value = rowsSeguridadAlimentaria[i][j];
-                  } else {
+                  } else if (
+                    rowsSeguridadAlimentaria[3][j] === "#project+code_name" &&
+                    rowsSeguridadAlimentaria[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -1987,6 +2006,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -2064,6 +2084,9 @@ export default defineComponent({
                   }
                   if (rowsProteccionGeneral[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsProteccionGeneral[i][j];
+                    if (rowsProteccionGeneral[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsProteccionGeneral[3][j] === "#fund+type") {
@@ -2090,10 +2113,6 @@ export default defineComponent({
                     establishmentType.value = rowsProteccionGeneral[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsProteccionGeneral[3][j] === "#location") {
                     projectUbication.value = rowsProteccionGeneral[i][j];
                   }
@@ -2103,7 +2122,10 @@ export default defineComponent({
                     rowsProteccionGeneral[i][j] !== null
                   ) {
                     projectName.value = rowsProteccionGeneral[i][j];
-                  } else {
+                  } else if (
+                    rowsProteccionGeneral[3][j] === "#project+code_name" &&
+                    rowsProteccionGeneral[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -2281,6 +2303,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -2359,6 +2382,9 @@ export default defineComponent({
                   }
                   if (rowsEducacion[3][j] === "#meta+hrp") {
                     humanitaryResponsePlan.value = rowsEducacion[i][j];
+                    if (rowsEducacion[i][j] === "No") {
+                      independentActivity.value = "Si";
+                    }
                   }
 
                   if (rowsEducacion[3][j] === "#fund+type") {
@@ -2385,10 +2411,6 @@ export default defineComponent({
                     establishmentType.value = rowsEducacion[i][j];
                   }
 
-                  if (humanitaryResponsePlan.value === "No") {
-                    independentActivity.value = "Si";
-                  }
-
                   if (rowsEducacion[3][j] === "#location") {
                     projectUbication.value = rowsEducacion[i][j];
                   }
@@ -2398,7 +2420,10 @@ export default defineComponent({
                     rowsEducacion[i][j] !== null
                   ) {
                     projectName.value = rowsEducacion[i][j];
-                  } else {
+                  } else if (
+                    rowsEducacion[3][j] === "#project+code_name" &&
+                    rowsEducacion[i][j] === null
+                  ) {
                     projectName.value =
                       "Proyecto Indepediente" +
                       " " +
@@ -2553,6 +2578,7 @@ export default defineComponent({
                     comments: commentary.value,
 
                     projectName: projectName.value,
+                    humanitaryResponsePlan: humanitaryResponsePlan.value,
                     monetaryFound: monetaryFound.value,
                     establishment_details: establishment_details.value,
                     latitude: latitude.value,
@@ -2642,6 +2668,9 @@ export default defineComponent({
                 }
                 if (rowsSaneamiento[3][j] === "#meta+hrp") {
                   humanitaryResponsePlan.value = rowsSaneamiento[i][j];
+                  if (rowsSaneamiento[i][j] === "No") {
+                    independentActivity.value = "Si";
+                  }
                 }
 
                 if (rowsSaneamiento[3][j] === "#fund+type") {
@@ -2668,10 +2697,6 @@ export default defineComponent({
                   establishmentType.value = rowsSaneamiento[i][j];
                 }
 
-                if (humanitaryResponsePlan.value === "No") {
-                  independentActivity.value = "Si";
-                }
-
                 if (rowsSaneamiento[3][j] === "#location") {
                   projectUbication.value = rowsSaneamiento[i][j];
                 }
@@ -2681,7 +2706,10 @@ export default defineComponent({
                   rowsSaneamiento[i][j] !== null
                 ) {
                   projectName.value = rowsSaneamiento[i][j];
-                } else {
+                } else if (
+                  rowsSaneamiento[3][j] === "#project+code_name" &&
+                  rowsSaneamiento[i][j] === null
+                ) {
                   projectName.value =
                     "Proyecto Indepediente" +
                     " " +
@@ -2812,6 +2840,7 @@ export default defineComponent({
                   comments: commentary.value,
 
                   projectName: projectName.value,
+                  humanitaryResponsePlan: humanitaryResponsePlan.value,
                   monetaryFound: monetaryFound.value,
                   establishment_details: establishment_details.value,
                   latitude: latitude.value,
@@ -2911,10 +2940,6 @@ export default defineComponent({
                   establishmentType.value = rowsAlojamiento[i][j];
                 }
 
-                if (humanitaryResponsePlan.value === "No") {
-                  independentActivity.value = "Si";
-                }
-
                 if (rowsAlojamiento[3][j] === "#location") {
                   projectUbication.value = rowsAlojamiento[i][j];
                 }
@@ -2924,7 +2949,10 @@ export default defineComponent({
                   rowsAlojamiento[i][j] !== null
                 ) {
                   projectName.value = rowsAlojamiento[i][j];
-                } else {
+                } else if (
+                  rowsAlojamiento[3][j] === "#project+code_name" &&
+                  rowsAlojamiento[i][j] === null
+                ) {
                   projectName.value =
                     "Proyecto Indepediente" +
                     " " +
@@ -3065,6 +3093,7 @@ export default defineComponent({
                   comments: commentary.value,
 
                   projectName: projectName.value,
+                  humanitaryResponsePlan: humanitaryResponsePlan.value,
                   monetaryFound: monetaryFound.value,
                   establishment_details: establishment_details.value,
                   latitude: latitude.value,

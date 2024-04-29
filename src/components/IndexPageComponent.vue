@@ -1,234 +1,3326 @@
 <template>
-  <q-page>
-    <q-tabs
-      v-model="tab"
-      dense
-      class="text-grey"
-      active-color="primary"
-      indicator-color="primary"
-      align="justify"
-      narrow-indicator
-    >
-      <q-tab name="Pagina Principal" label="Pagina Principal" />
-      <q-tab
-        v-for="reference in clusterList"
-        :key="reference.cluster"
-        :name="reference.cluster.value"
-        :label="reference.cluster.value"
-      />
-    </q-tabs>
-
-    <q-separator />
-
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="Pagina Principal">
-        <IndexPageComponent />
-      </q-tab-panel>
-    </q-tab-panels>
-
-    <div class="flex row q-mx-lg q-py-xs items-center justify-between">
-      <div class="q-container q-my-md" id="proyectos">
-        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-pa-sm">
-          <q-card-section style="margin: 0%; padding: 0%">
-            <h5 class="no-margin q-mb-xs column items-center text-bold">
-              Organizaciones
-            </h5>
-            <div class="flex row no-wrap">
-              <div class="container flex" style="width: 168px; height: 210px">
-                <div class="flex column">
-                  <div class="column items-center">
-                    <div class="q-my-sm text-bold">Nacionales</div>
-                    <h3 class="q-my-sm" style="color: cadetblue">
-                      {{ NgoNationalAllies }}%
-                    </h3>
-                    <div
-                      class="column items-center wrap justify-center text-center"
-                    >
-                      Organizaciones que prestan ayuda nacional o estatalmente.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <q-separator vertical inset class="q-mx-sm" />
-
-              <div class="container flex" style="width: 155px; height: 210px">
-                <div class="flex column">
-                  <div class="column items-center">
-                    <div class="q-my-sm text-bold">Internacionales</div>
-                    <h3 class="q-my-sm" style="color: cadetblue">
-                      {{ NgoIntenationalAllies }}%
-                    </h3>
-                    <div class="column items-center justify-center text-center">
-                      Organizaciones que financian y apoyan a Acuario.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-
-      <div class="q-container q-my-md" id="personal">
-        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-pa-sm">
-          <q-card-section style="margin: 0%; padding: 0%">
-            <h5 class="no-margin q-mb-xs column items-center text-bold">
-              Equipo de trabajo
-            </h5>
-            <div class="flex row no-wrap">
-              <div class="container flex" style="width: 168px; height: 210px">
-                <div class="flex column">
-                  <div class="column items-center">
-                    <div class="q-my-sm text-bold">Profesionales</div>
-                    <h3 class="q-my-sm" style="color: cadetblue">
-                      {{ workTeamPreparated }}%
-                    </h3>
-                    <div
-                      class="column items-center wrap justify-center text-center"
-                    >
-                      Personal preparado profesional y academicamente.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <q-separator vertical inset class="q-mx-sm" />
-
-              <div class="container flex" style="width: 155px; height: 210px">
-                <div class="flex column">
-                  <div class="column items-center">
-                    <div class="q-my-sm text-bold">Capacitados</div>
-                    <h3 class="q-my-sm" style="color: cadetblue">
-                      {{ workteamCapitated }}%
-                    </h3>
-                    <div class="column items-center justify-center text-center">
-                      Personal capacitado en distintas areas para el trabajo.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-
-      <div class="q-container q-my-md" id="areas atendidas">
-        <q-card class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-pa-sm">
-          <q-card-section style="margin: 0%; padding: 0%">
-            <h5 class="no-margin q-mb-xs column items-center text-bold">
-              Proyectos
-            </h5>
-            <div class="flex row no-wrap">
-              <div class="container flex" style="width: 168px; height: 210px">
-                <div class="flex column">
-                  <div class="column items-center">
-                    <div class="q-my-sm text-bold">Registrados</div>
-                    <h3 class="q-my-sm" style="color: cadetblue">
-                      {{ rProyects }}
-                    </h3>
-                    <div
-                      class="column items-center wrap justify-center text-center"
-                    >
-                      Proyectos abscritos y realizados bajo financiamiento de
-                      organizaciones mayores.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <q-separator vertical inset class="q-mx-sm" />
-
-              <div class="container flex" style="width: 155px; height: 210px">
-                <div class="flex column">
-                  <div class="column items-center">
-                    <div class="q-my-sm text-bold">Independientes</div>
-                    <h3 class="q-my-sm" style="color: cadetblue">
-                      {{ iProyects }}
-                    </h3>
-                    <div class="column items-center justify-center text-center">
-                      Proyectos realizados independientemente por Acuario.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
-
-    <!--div class="flex row q-mx-lg q-py-xs items-center justify-between">
-      <div class="">
-        <q-card
-          class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-my-md q-pa-sm"
-          style="width: 355px"
-        >
-          <q-card-section style="margin: 3%; padding: 0%; height: 300px">
-            <Bar :data="dataPrueba" :options="options" />
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="">
-        <q-card
-          class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-my-md q-pa-sm"
-          style="width: 355px"
-        >
-          <q-card-section style="margin: 3%; padding: 0%; height: 300px">
-            <Radar :data="dataPersonal" :options="options" />
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="">
-        <q-card
-          class="col-xs-12 col-sm-12 col-md-4 col-lg-4 q-my-md q-pa-sm"
-          style="width: 355px"
-        >
-          <q-card-section style="margin: 3%; padding: 0%; height: 300px">
-            <Bar :data="dataMonths" :options="options" />
-          </q-card-section>
-        </q-card>
-      </div>
-    </div-->
-
-    <div
-      class="flex row q-mx-xl q-py-xs flex-center"
-      v-if="authenticated === true"
-    >
-      <div class="q-container">
-        <div class="flex row">
-          <div class="q-my-md">
-            <readExcelComponent />
-          </div>
+  <div class="flex row q-mx-xl q-py-xs flex-center">
+    <div class="q-container">
+      <div class="row inline">
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-center q-my-md">
+          <h2
+            style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400"
+          >
+            {{ projectsGeneral }}
+          </h2>
+          <h5
+            style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400"
+          >
+            {{ projectDescriptionGeneral }}
+          </h5>
         </div>
-      </div>
-    </div>
-
-    <div class="flex-row sticky-bottom">
-      <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <q-separator class="q-mx-lg" />
         <div
-          class="custom-caption text-overline"
-          style="
-            text-align: center;
-            color: grey;
-            line-height: 1rem;
-            margin-bottom: 5px;
-          "
+          class="col-xs-12 col-sm-12 col-md-5 col-lg-5 q-my-md column items-center"
         >
-          Luis Méndez, Anyelit Figuera, Cesar González <br />
-          Cumaná, Sucre, Venezuela <br />
-          2023
+          <img
+            @click="userInformation"
+            src="/Logo-acuario-11-09-2023.png"
+            style="max-height: 264px"
+          />
+          <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
+              <h5 class="row inline" v-for="item in proyectNGOAllies" :key="item.id">{{ item.ngo }},
+            </h5>
+            </h5>
+            <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Nº Proyectos en curso: {{
+              N_Proyects }}
+            </h5>
+            <h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Personal: {{ proyectWorkTeam }}
+              Voluntarios
+            </h5>-->
         </div>
-      </section>
+        <div
+          class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-my-md column items-center"
+        >
+          <h5 class="no-margin q-mb-xs text-bold" style="text-align: center">
+            Indicadores
+          </h5>
+        </div>
+      </div>
     </div>
-  </q-page>
+  </div>
+
+  <div class="flex row q-mx-lg q-py-xs flex-center" id="indicadores">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <q-card class="q-pa-lg">
+        <q-card-section style="margin: 0%; padding: 0%">
+          <div class="flex row">
+            <!--div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 row">
+                    <q-select
+                      borderless
+                      style="width: 40%"
+                      v-model="model"
+                      :options="optionsTimeSelect"
+                      label="Margen de tiempo"
+                    />
+                  </div-->
+            <div
+              class="col-xs-11 col-sm-11 col-md-12 col-lg-12 row inline justify-end items-center"
+            >
+              <div class="text-h6">Actualizar datos</div>
+              <q-btn
+                flat
+                round
+                color="black"
+                icon="autorenew"
+                @click="refreshDashboard"
+              />
+            </div>
+          </div>
+          <div class="flex row">
+            <div
+              class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column flex-center"
+            >
+              <q-card class="q-pa-lg q-ma-xs">
+                <h5 class="no-margin q-mb-xs" style="text-align: center">
+                  Proyectos registrados por clúster en la ONG Acuario año 2023
+                </h5>
+                <q-separator inset class="q-my-sm" />
+                <div class="flex row">
+                  <div
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column flex-center"
+                  >
+                    <div class="row inline">
+                      <div class="row inline flex-center" label="transversal">
+                        <div class="">Eje Transversal</div>
+                        <q-avatar class="q-mx-sm">
+                          <img src="/2459387.png" />
+                        </q-avatar>
+                        <div class="text-h5">{{ transverseTotal }}</div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div
+                        class="row inline flex-center"
+                        label="alojamiento, energia y enseres"
+                      >
+                        <div class="">Alojamiento, Energia y Enseres</div>
+                        <q-avatar class="q-mx-sm">
+                          <img src="/1458564.png" />
+                        </q-avatar>
+                        <div class="text-h5">{{ hostingTotal }}</div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div class="row inline flex-center" label="saneamiento">
+                        <div class="">Agua, Saneamiento e Higiene</div>
+                        <q-avatar class="q-mx-sm">
+                          <img src="/wash-hands-icon-png_6023dcc6ad445.png" />
+                        </q-avatar>
+                        <div class="text-h5">{{ sanitationTotal }}</div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div class="row inline flex-center" label="educacion">
+                        <div class="">Educación</div>
+                        <q-avatar class="q-mx-sm">
+                          <img
+                            src="/image_processing20220416-11036-toi50p.png"
+                          />
+                        </q-avatar>
+                        <div class="text-h5">{{ educationTotal }}</div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div class="row inline flex-center" label="nutricion">
+                        <div class="">Nutrición</div>
+                        <q-avatar class="q-mx-sm">
+                          <img src="/7757761.png" />
+                        </q-avatar>
+                        <div class="text-h5">{{ nutritionTotal }}</div>
+                      </div>
+                    </div>
+
+                    <div class="row inline">
+                      <div class="row inline flex-center" label="proteccion">
+                        <div class="">Protección General</div>
+                        <q-avatar class="q-mx-sm">
+                          <img
+                            src="/iconfinder-securityprotectlockshield39-4021447_113141.png"
+                          />
+                        </q-avatar>
+                        <div class="text-h5">{{ protectionTotal }}</div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div
+                        class="row inline flex-center"
+                        label="proteccion infantil"
+                      >
+                        <div class="">
+                          Proteccion Niños, Niñas, Adolescentes
+                        </div>
+                        <q-avatar class="q-mx-sm">
+                          <img
+                            src="/children-s-rights-color-icon-child-protection-day-hand-holding-kids-childcare-isolated-illustration-vector.jpg"
+                          />
+                        </q-avatar>
+                        <div class="text-h5">
+                          {{ childProtectionTotal }}
+                        </div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div
+                        class="row inline flex-center"
+                        label="proteccion VBG"
+                      >
+                        <div class="">
+                          Proteccion Violencia Basada en Género
+                        </div>
+                        <q-avatar class="q-mx-sm">
+                          <img
+                            src="/equal-treatment-concept-icon-employee-rights-protection-idea-thin-line-illustration-sexual-equality-gender-policy-women-empowerment-isolated-outline-drawing-editable-stroke-vector.jpg"
+                          />
+                        </q-avatar>
+                        <div class="text-h5">
+                          {{ vbgProtectionTotal }}
+                        </div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div class="row inline flex-center" label="salud">
+                        <div class="">Salud</div>
+                        <q-avatar class="q-mx-sm">
+                          <img src="/2689945.png" />
+                        </q-avatar>
+                        <div class="text-h5">{{ healthTotal }}</div>
+                      </div>
+
+                      <q-separator vertical inset class="q-mx-md" />
+
+                      <div
+                        class="row inline flex-center"
+                        label="seguridad alimentaria"
+                      >
+                        <div class="">Seguridad Alimentaria</div>
+                        <q-avatar class="q-mx-sm">
+                          <img
+                            src="/pngtree-food-safety-png-image_8624033.png"
+                          />
+                        </q-avatar>
+                        <div class="text-h5">{{ foodSafetyTotal }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </q-card>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <q-card class="q-pa-lg q-ma-xs">
+                <div class="flex row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div
+                      v-for="indicators in mailboxIndicators"
+                      :key="indicators.id"
+                      @click="dialogMailbox = true"
+                    >
+                      <div class="flex row flex-center">
+                        <div class="q-my-sm text-bold">
+                          {{ indicators.title }}
+                        </div>
+                      </div>
+                      <div class="flex row">
+                        <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                          <div class="row flex-center">
+                            <div class="q-my-sm text-bold">Recibidos</div>
+                          </div>
+                          <div
+                            class="row flex-center bg-primary q-mx-md"
+                            style="border-radius: 30px"
+                          >
+                            <div
+                              class="text-h5 text-white"
+                              style="text-shadow: 1px 1px black"
+                            >
+                              {{ indicators.countersReceived.value }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+                          <div class="row flex-center">
+                            <div class="q-my-sm text-bold">Por atender</div>
+                          </div>
+
+                          <div class="progress" style="">
+                            <div
+                              class="progress-bar column flex-center q-mx-sm"
+                              role="progressbar"
+                              :class="indicators.coloursReaded.value"
+                              style="border-radius: 20px"
+                            >
+                              <div
+                                class="inline-flex flex-center q-my-xs text-white"
+                                style="text-shadow: 1px 1px black"
+                              >
+                                <q-badge
+                                  style="font-size: 15px; font-weight: bold"
+                                  color="transparent"
+                                  :label="indicators.countersReaded.value"
+                                >
+                                  -
+                                  <div
+                                    class="flex"
+                                    v-if="
+                                      indicators.coloursReaded.value ===
+                                      'bg-green'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Bien"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                  <div
+                                    class="flex"
+                                    v-else-if="
+                                      indicators.coloursReaded.value ===
+                                      'bg-warning'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Regular"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                  <div
+                                    class="flex"
+                                    v-else-if="
+                                      indicators.coloursReaded.value ===
+                                      'bg-red'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Por Mejorar"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                </q-badge>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+                          <div class="row flex-center">
+                            <div class="q-my-sm text-bold">Atendidos</div>
+                          </div>
+
+                          <div class="progress" style="">
+                            <div
+                              class="progress-bar column flex-center q-mx-sm"
+                              role="progressbar"
+                              :class="indicators.coloursAttended.value"
+                              style="border-radius: 20px"
+                            >
+                              <div
+                                class="inline-flex flex-center q-my-xs text-white"
+                                style="text-shadow: 1px 1px black"
+                              >
+                                <q-badge
+                                  style="font-size: 15px; font-weight: bold"
+                                  color="transparent"
+                                  :label="indicators.countersAttended.value"
+                                >
+                                  -
+                                  <div
+                                    class="flex"
+                                    v-if="
+                                      indicators.coloursAttended.value ===
+                                      'bg-grey'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Sin datos"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                  <div
+                                    class="flex"
+                                    v-if="
+                                      indicators.coloursAttended.value ===
+                                      'bg-green'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Bien"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                  <div
+                                    class="flex"
+                                    v-else-if="
+                                      indicators.coloursAttended.value ===
+                                      'bg-warning'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Regular"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                  <div
+                                    class="flex"
+                                    v-else-if="
+                                      indicators.coloursAttended.value ===
+                                      'bg-red'
+                                    "
+                                  >
+                                    <q-badge
+                                      color="transparent"
+                                      label="Por Mejorar"
+                                      style="font-size: 15px; font-weight: bold"
+                                    />
+                                  </div>
+                                </q-badge>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="q-my-md" />
+                      <q-tooltip class="bg-white" :offset="[10, 10]">
+                        <q-card class="" style="width: 400px">
+                          <q-card-section>
+                            <div
+                              style="margin: 0%; height: 300px"
+                              v-if="indicators.title === 'Reclamos'"
+                            >
+                              <Bar
+                                :data="dataTooltipReclamosRecibidos"
+                                :options="options"
+                              />
+                            </div>
+                            <div
+                              style="margin: 0%; height: 300px"
+                              v-if="indicators.title === 'Sugerencias'"
+                            >
+                              <Bar
+                                :data="dataTooltipSugerenciasRecibidos"
+                                :options="options"
+                              />
+                            </div>
+                            <div
+                              style="margin: 0%; height: 300px"
+                              v-if="indicators.title === 'Comentarios'"
+                            >
+                              <Bar
+                                :data="dataTooltipComentariosRecibidos"
+                                :options="options"
+                              />
+                            </div>
+                            <div
+                              style="margin: 0%; height: 300px"
+                              v-if="indicators.title === 'Denuncias'"
+                            >
+                              <Bar
+                                :data="dataTooltipDenunciasRecibidos"
+                                :options="options"
+                              />
+                            </div>
+                            <div
+                              style="margin: 0%; height: 300px"
+                              v-if="indicators.title === 'Quejas'"
+                            >
+                              <Bar
+                                :data="dataTooltipQuejasRecibidos"
+                                :options="options"
+                              />
+                            </div>
+                            <div
+                              style="margin: 0%; height: 300px"
+                              v-if="indicators.title === 'Inquietudes'"
+                            >
+                              <Bar
+                                :data="dataTooltipInquietudesRecibidos"
+                                :options="options"
+                              />
+                            </div>
+                          </q-card-section>
+                        </q-card>
+                      </q-tooltip>
+
+                      <q-dialog v-model="dialogMailbox" full-width>
+                        <q-card class="flex row">
+                          <q-space />
+
+                          <q-btn
+                            flat
+                            rounded
+                            icon="close"
+                            class="q-mt-xl q-mr-xl"
+                            v-close-popup
+                          />
+                          <div class="row inline">
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h4
+                                class="column items-center text-bold"
+                                style="height: 5%"
+                              >
+                                Detalles de los Indicadores
+                              </h4>
+                            </div>
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h5 class="q-mx-xl column text-bold">
+                                {{ mailboxIndicators[0].title }}
+                              </h5>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <Bar
+                                      :data="dataReclamos"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  mailboxIndicators[0]
+                                                    .coloursAttended.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[0]
+                                                    .coloursAttended.value ===
+                                                  'bg-grey'
+                                                "
+                                                style="
+                                                  color: #a9a9a9;
+                                                  text-shadow: 1px 1px black;
+                                                "
+                                              >
+                                                Sin datos
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[0]
+                                                    .coloursAttended.value ===
+                                                  'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[0]
+                                                    .coloursAttended.value ===
+                                                  'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[0]
+                                                    .coloursAttended.value ===
+                                                  'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron atendidos por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                mailboxIndicators[0]
+                                                  .countersAttended.value
+                                              }}
+                                              personas, lo que equivale al
+
+                                              {{
+                                                mailboxIndicators[0].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todas las personas
+                                              atendidas.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estadistica de datos
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Recibidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #c56821"
+                                            >
+                                              {{
+                                                mailboxIndicators[0]
+                                                  .countersReceived.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al 100% de
+                                              todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Atendidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #f06a00"
+                                            >
+                                              {{
+                                                mailboxIndicators[0]
+                                                  .countersAttended.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[0].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Por Atender
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #9b6034"
+                                            >
+                                              {{
+                                                mailboxIndicators[0]
+                                                  .countersReaded.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[0].uncomplishFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="flex row">
+                              <hr class="q-my-md" />
+                            </div>
+
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h5 class="q-mx-xl column text-bold">
+                                {{ mailboxIndicators[1].title }}
+                              </h5>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <Bar
+                                      :data="dataSugerencias"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  mailboxIndicators[1]
+                                                    .coloursAttended.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[1]
+                                                    .coloursAttended.value ===
+                                                  'bg-grey'
+                                                "
+                                                style="
+                                                  color: #a9a9a9;
+                                                  text-shadow: 1px 1px black;
+                                                "
+                                              >
+                                                Sin datos
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[1]
+                                                    .coloursAttended.value ===
+                                                  'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[1]
+                                                    .coloursAttended.value ===
+                                                  'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[1]
+                                                    .coloursAttended.value ===
+                                                  'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron atendidos por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                mailboxIndicators[1]
+                                                  .countersAttended.value
+                                              }}
+                                              personas, lo que equivale al
+
+                                              {{
+                                                mailboxIndicators[1].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todas las personas
+                                              atendidas.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estadistica de datos
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Recibidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #c5b821"
+                                            >
+                                              {{
+                                                mailboxIndicators[1]
+                                                  .countersReceived.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al 100% de
+                                              todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Atendidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #f0dd00"
+                                            >
+                                              {{
+                                                mailboxIndicators[1]
+                                                  .countersAttended.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[1].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Por Atender
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #9b9234"
+                                            >
+                                              {{
+                                                mailboxIndicators[1]
+                                                  .countersReaded.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[1].uncomplishFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="flex row">
+                              <hr class="q-my-md" />
+                            </div>
+
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h5 class="q-mx-xl column text-bold">
+                                {{ mailboxIndicators[2].title }}
+                              </h5>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <Bar
+                                      :data="dataComentarios"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  mailboxIndicators[2]
+                                                    .coloursAttended.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[2]
+                                                    .coloursAttended.value ===
+                                                  'bg-grey'
+                                                "
+                                                style="
+                                                  color: #a9a9a9;
+                                                  text-shadow: 1px 1px black;
+                                                "
+                                              >
+                                                Sin datos
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[2]
+                                                    .coloursAttended.value ===
+                                                  'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[2]
+                                                    .coloursAttended.value ===
+                                                  'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[2]
+                                                    .coloursAttended.value ===
+                                                  'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron atendidos por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                mailboxIndicators[2]
+                                                  .countersAttended.value
+                                              }}
+                                              personas, lo que equivale al
+
+                                              {{
+                                                mailboxIndicators[2].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todas las personas
+                                              atendidas.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estadistica de datos
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Recibidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #2f9dc5"
+                                            >
+                                              {{
+                                                mailboxIndicators[2]
+                                                  .countersReceived.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al 100% de
+                                              todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Atendidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #10b4f0"
+                                            >
+                                              {{
+                                                mailboxIndicators[2]
+                                                  .countersAttended.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[2].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Por Atender
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #3e829b"
+                                            >
+                                              {{
+                                                mailboxIndicators[2]
+                                                  .countersReaded.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[2].uncomplishFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="flex row">
+                              <hr class="q-my-md" />
+                            </div>
+
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h5 class="q-mx-xl column text-bold">
+                                {{ mailboxIndicators[3].title }}
+                              </h5>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <Bar
+                                      :data="dataDenuncias"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  mailboxIndicators[3]
+                                                    .coloursAttended.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[3]
+                                                    .coloursAttended.value ===
+                                                  'bg-grey'
+                                                "
+                                                style="
+                                                  color: #a9a9a9;
+                                                  text-shadow: 1px 1px black;
+                                                "
+                                              >
+                                                Sin datos
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[3]
+                                                    .coloursAttended.value ===
+                                                  'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[3]
+                                                    .coloursAttended.value ===
+                                                  'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[3]
+                                                    .coloursAttended.value ===
+                                                  'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron atendidos por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                mailboxIndicators[3]
+                                                  .countersAttended.value
+                                              }}
+                                              personas, lo que equivale al
+
+                                              {{
+                                                mailboxIndicators[3].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todas las personas
+                                              atendidas.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estadistica de datos
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Recibidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #803ec5"
+                                            >
+                                              {{
+                                                mailboxIndicators[3]
+                                                  .countersReceived.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al 100% de
+                                              todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Atendidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #8725f0"
+                                            >
+                                              {{
+                                                mailboxIndicators[3]
+                                                  .countersAttended.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[3].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Por Atender
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #714b9b"
+                                            >
+                                              {{
+                                                mailboxIndicators[3]
+                                                  .countersReaded.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[3].uncomplishFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="flex row">
+                              <hr class="q-my-md" />
+                            </div>
+
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h5 class="q-mx-xl column text-bold">
+                                {{ mailboxIndicators[4].title }}
+                              </h5>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <Bar
+                                      :data="dataQuejas"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  mailboxIndicators[4]
+                                                    .coloursAttended.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[4]
+                                                    .coloursAttended.value ===
+                                                  'bg-grey'
+                                                "
+                                                style="
+                                                  color: #a9a9a9;
+                                                  text-shadow: 1px 1px black;
+                                                "
+                                              >
+                                                Sin datos
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[4]
+                                                    .coloursAttended.value ===
+                                                  'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[4]
+                                                    .coloursAttended.value ===
+                                                  'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[4]
+                                                    .coloursAttended.value ===
+                                                  'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron atendidos por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                mailboxIndicators[4]
+                                                  .countersAttended.value
+                                              }}
+                                              personas, lo que equivale al
+
+                                              {{
+                                                mailboxIndicators[4].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todas las personas
+                                              atendidas.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estadistica de datos
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Recibidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #c5217b"
+                                            >
+                                              {{
+                                                mailboxIndicators[4]
+                                                  .countersReceived.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al 100% de
+                                              todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Atendidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #f00085"
+                                            >
+                                              {{
+                                                mailboxIndicators[4]
+                                                  .countersAttended.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[4].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Por Atender
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #9b346c"
+                                            >
+                                              {{
+                                                mailboxIndicators[4]
+                                                  .countersReaded.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[4].uncomplishFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="flex row">
+                              <hr class="q-my-md" />
+                            </div>
+
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h5 class="q-mx-xl column text-bold">
+                                {{ mailboxIndicators[5].title }}
+                              </h5>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <Bar
+                                      :data="dataInquietudes"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  mailboxIndicators[5]
+                                                    .coloursAttended.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[5]
+                                                    .coloursAttended.value ===
+                                                  'bg-grey'
+                                                "
+                                                style="
+                                                  color: #a9a9a9;
+                                                  text-shadow: 1px 1px black;
+                                                "
+                                              >
+                                                Sin datos
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[5]
+                                                    .coloursAttended.value ===
+                                                  'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[5]
+                                                    .coloursAttended.value ===
+                                                  'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  mailboxIndicators[5]
+                                                    .coloursAttended.value ===
+                                                  'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron atendidos por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                mailboxIndicators[5]
+                                                  .countersAttended.value
+                                              }}
+                                              personas, lo que equivale al
+
+                                              {{
+                                                mailboxIndicators[5].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todas las personas
+                                              atendidas.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                              <div class="q-pa-xs q-mx-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    class="flex row flex-center"
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estadistica de datos
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Recibidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #00b332"
+                                            >
+                                              {{
+                                                mailboxIndicators[5]
+                                                  .countersReceived.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al 100% de
+                                              todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Atendidos
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #44ebc9"
+                                            >
+                                              {{
+                                                mailboxIndicators[5]
+                                                  .countersAttended.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[5].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <q-separator
+                                        vertical
+                                        inset
+                                        class="q-mx-sm"
+                                      />
+
+                                      <div
+                                        class="container flex"
+                                        style="width: 33%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="q-my-sm text-bold">
+                                              Por Atender
+                                            </div>
+                                            <h4
+                                              class="q-my-sm"
+                                              style="color: #5d968a"
+                                            >
+                                              {{
+                                                mailboxIndicators[5]
+                                                  .countersReaded.value
+                                              }}
+                                            </h4>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron recibidos por la
+                                              organizacion Acuario hasta la
+                                              fecha, lo que equivale al
+                                              {{
+                                                mailboxIndicators[5].uncomplishFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% de todos los reclamos.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="flex row">
+                              <hr class="q-my-md" />
+                            </div>
+                          </div>
+                        </q-card>
+                      </q-dialog>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+                </div>
+              </q-card>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              <q-card class="q-pa-lg q-ma-xs">
+                <h5 class="no-margin q-mb-xs" style="text-align: center">
+                  Indice de cumplimiento de Acuario año 2023
+                </h5>
+                <div class="flex row" style="text-shadow: 1px 1px rgb(0, 0, 0)">
+                  <!--chartComponent
+                          class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                          v-for="indicator in personsAttendedValue"
+                          v-bind="indicator"
+                          :indicator="indicator"
+                          :key="indicator.id"
+                          :colorGrande="colorGrande"
+                          :peopleToAssistYearly="peopleToAssistYearly"
+                          :monthsDataValuesGeneral="monthsDataValuesGeneral"
+                          :monthsDataValuesWomen="monthsDataValuesWomen"
+                          :monthsDataValuesMen="monthsDataValuesMen"
+                          :monthsDataValuesDisabled="monthsDataValuesDisabled"
+                          :monthsDataValuesNative="monthsDataValuesNative"
+                        /-->
+                  <div
+                    class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                    @click="dialogFinishedProjects = true"
+                    style="cursor: pointer"
+                    v-for="projects in projectsValue"
+                    :key="projects.id"
+                  >
+                    <q-card class="q-ma-xs">
+                      <q-card-section
+                        class="text-white"
+                        :class="
+                          projects.title === 'Proyectos Finalizados'
+                            ? projects.colours.value
+                            : 'bg-primary'
+                        "
+                      >
+                        <div
+                          class="text-subtitle1 text-bold"
+                          style="text-align: center"
+                        >
+                          {{ projects.title }}
+                        </div>
+                        <div class="row flex-center" style="text-align: center">
+                          <div
+                            class="column"
+                            v-if="projects.title === 'Proyectos Finalizados'"
+                          >
+                            <div class="text-subtitle2">Atendidos</div>
+                            <div class="text-h6">
+                              {{ projects.counters }}
+                            </div>
+                          </div>
+                          <div
+                            class="flex column"
+                            v-if="projects.title !== 'Proyectos Finalizados'"
+                          >
+                            <div class="text-bold text-h3">
+                              {{ projects.counters }}
+                            </div>
+                          </div>
+                          <q-separator
+                            vertical
+                            inset
+                            class="q-mx-sm"
+                            v-if="projects.title === 'Proyectos Finalizados'"
+                          />
+                          <div
+                            class="column"
+                            v-if="projects.title === 'Proyectos Finalizados'"
+                          >
+                            <div class="text-subtitle2">Cumplido</div>
+                            <div class="text-h6">
+                              {{
+                                projects.cumplishmentFormula.value.toFixed(2) +
+                                "%"
+                              }}
+                            </div>
+                          </div>
+                          <q-separator
+                            vertical
+                            inset
+                            class="q-mx-sm"
+                            v-if="projects.title === 'Proyectos Finalizados'"
+                          />
+                          <div
+                            class="column"
+                            v-if="projects.title === 'Proyectos Finalizados'"
+                          >
+                            <div class="text-subtitle2">
+                              Finalizados/a Cumplir
+                            </div>
+                            <div class="text-h6">
+                              {{
+                                projects.counters.value +
+                                "/" +
+                                projectsToCulminateYearly
+                              }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <q-tooltip class="bg-white" :offset="[10, 10]">
+                          <q-card class="" style="width: 400px">
+                            <q-card-section>
+                              <div
+                                style="margin: 0%; height: 300px"
+                                v-if="
+                                  projects.title === 'Proyectos Finalizados'
+                                "
+                              >
+                                <Bar
+                                  :data="dataTooltipProjectsFinished"
+                                  :options="options"
+                                />
+                              </div>
+                              <div
+                                style="margin: 0%; height: 300px"
+                                v-if="
+                                  projects.title === 'Proyectos Registrados'
+                                "
+                              >
+                                <Bar
+                                  :data="dataTooltipProjectsRegistered"
+                                  :options="options"
+                                />
+                              </div>
+                              <div
+                                style="margin: 0%; height: 300px"
+                                v-if="
+                                  projects.title === 'Proyectos Planificados'
+                                "
+                              >
+                                <Bar
+                                  :data="dataTooltipProjectsPlanned"
+                                  :options="options"
+                                />
+                              </div>
+                              <div
+                                style="margin: 0%; height: 300px"
+                                v-if="
+                                  projects.title === 'Proyectos en Ejecución'
+                                "
+                              >
+                                <Bar
+                                  :data="dataTooltipProjectsInAction"
+                                  :options="options"
+                                />
+                              </div>
+                            </q-card-section>
+                          </q-card>
+                        </q-tooltip>
+                      </q-card-section>
+                    </q-card>
+
+                    <q-dialog v-model="dialogFinishedProjects" full-width>
+                      <q-card class="flex row">
+                        <q-space />
+
+                        <q-btn
+                          flat
+                          rounded
+                          icon="close"
+                          class="q-mt-xl q-mr-xl"
+                          v-close-popup
+                        />
+
+                        <q-card-section>
+                          <div class="row inline">
+                            <div
+                              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            >
+                              <h4 class="row flex-center text-bold">
+                                Detalles del indicador
+                              </h4>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <div class="q-pa-xs q-mx-md">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="margin: 0%; padding: 3%"
+                                  >
+                                    <Bar
+                                      :data="dataProjectsGeneral"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <div class="q-pa-xs q-mx-md">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section class="flex row flex-center">
+                                    <h5
+                                      class="no-margin q-mb-xs column items-center text-bold"
+                                    >
+                                      Estado del indicador
+                                    </h5>
+                                    <div class="flex row no-wrap">
+                                      <div
+                                        class="container flex"
+                                        style="width: 100%"
+                                      >
+                                        <div class="flex column">
+                                          <div class="column items-center">
+                                            <div class="row inline flex-center">
+                                              <div
+                                                style="
+                                                  border-radius: 50%;
+                                                  display: inline-block;
+                                                  height: 70px;
+                                                  width: 70px;
+                                                "
+                                                :class="
+                                                  projectsValue[0].colours.value
+                                                "
+                                                class="q-mx-lg"
+                                              >
+                                                <span></span>
+                                              </div>
+                                              <h2
+                                                v-if="
+                                                  projectsValue[0].colours
+                                                    .value === 'bg-green'
+                                                "
+                                                style="
+                                                  color: #00a126;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Bien
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  projectsValue[0].colours
+                                                    .value === 'bg-warning'
+                                                "
+                                                style="
+                                                  color: #ffb700;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Regular
+                                              </h2>
+                                              <h2
+                                                v-if="
+                                                  projectsValue[0].colours
+                                                    .value === 'bg-red'
+                                                "
+                                                style="
+                                                  color: #c10000;
+                                                  text-shadow: 1px 1px grey;
+                                                "
+                                              >
+                                                Por mejorar
+                                              </h2>
+                                            </div>
+                                            <div
+                                              class="column items-center justify-center text-center"
+                                            >
+                                              Fueron finalizados por la
+                                              organizacion Acuario hasta la
+                                              fecha
+                                              {{
+                                                projectsValue[0].counters.value
+                                              }}
+                                              projectos, lo que equivale al
+
+                                              {{
+                                                projectsValue[0].cumplishmentFormula.value.toFixed(
+                                                  2
+                                                )
+                                              }}% con respecto a la meta por
+                                              cumplir anual.
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                          </div>
+                        </q-card-section>
+                        <q-card-section>
+                          <div class="row inline">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <div class="q-pa-xs q-mx-md">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section class="q-pa-lg q-ma-xs">
+                                    <h5
+                                      class="no-margin q-mb-xs"
+                                      style="text-align: center"
+                                    >
+                                      Proyectos registrados por clúster en la
+                                      ONG Acuario año 2023
+                                    </h5>
+                                    <q-separator inset class="q-my-sm" />
+                                    <div class="flex row">
+                                      <div
+                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column flex-center"
+                                      >
+                                        <div class="column">
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="transversal"
+                                          >
+                                            <div class="">Eje Transversal</div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img src="/2459387.png" />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ transverseTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="alojamiento, Energia y Enseres"
+                                          >
+                                            <div class="">
+                                              Alojamiento, Energia y Enseres
+                                            </div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img src="/1458564.png" />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ hostingTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="saneamiento"
+                                          >
+                                            <div class="">
+                                              Agua, Saneamiento e Higiene
+                                            </div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img
+                                                src="/wash-hands-icon-png_6023dcc6ad445.png"
+                                              />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ sanitationTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="educacion"
+                                          >
+                                            <div class="">Educación</div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img
+                                                src="/image_processing20220416-11036-toi50p.png"
+                                              />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ educationTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="nutricion"
+                                          >
+                                            <div class="">Nutrición</div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img src="/7757761.png" />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ nutritionTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="proteccion"
+                                          >
+                                            <div class="">
+                                              Protección General
+                                            </div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img
+                                                src="/iconfinder-securityprotectlockshield39-4021447_113141.png"
+                                              />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ protectionTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="proteccion infantil"
+                                          >
+                                            <div class="">
+                                              Proteccion Niños, Niñas,
+                                              Adolescentes
+                                            </div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img
+                                                src="/children-s-rights-color-icon-child-protection-day-hand-holding-kids-childcare-isolated-illustration-vector.jpg"
+                                              />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ childProtectionTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="proteccion VBG"
+                                          >
+                                            <div class="">
+                                              Proteccion Violencia Basada en
+                                              Género
+                                            </div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img
+                                                src="/equal-treatment-concept-icon-employee-rights-protection-idea-thin-line-illustration-sexual-equality-gender-policy-women-empowerment-isolated-outline-drawing-editable-stroke-vector.jpg"
+                                              />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ vbgProtectionTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="salud"
+                                          >
+                                            <div class="">Salud</div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img src="/2689945.png" />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ healthTotal }}
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            class="row inline flex-center q-my-md"
+                                            label="seguridad alimentaria"
+                                          >
+                                            <div class="">
+                                              Seguridad Alimentaria
+                                            </div>
+                                            <q-avatar class="q-mx-sm">
+                                              <img
+                                                src="/pngtree-food-safety-png-image_8624033.png"
+                                              />
+                                            </q-avatar>
+                                            <div class="text-h5">
+                                              {{ foodSafetyTotal }}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <div class="q-pa-xs q-mx-md q-mb-lg q-mt-xs">
+                                <q-card
+                                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                >
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 550px;
+                                    "
+                                  >
+                                    <Doughnut
+                                      :data="dataProjectsDoughnut"
+                                      :options="options"
+                                    />
+                                  </q-card-section>
+                                </q-card>
+                              </div>
+                            </div>
+                          </div>
+                        </q-card-section>
+                      </q-card>
+                    </q-dialog>
+                  </div>
+                  <div
+                    :class="
+                      persons.title === 'Personas Atendidas (General)'
+                        ? 'col-xs-12 col-sm-12 col-md-12 col-lg-12'
+                        : 'col-xs-12 col-sm-12 col-md-6 col-lg-6'
+                    "
+                    @click="dialogAttendedPersons = true"
+                    style="cursor: pointer"
+                    v-for="persons in personsAttendedValue"
+                    :key="persons.id"
+                  >
+                    <q-card class="q-ma-xs">
+                      <q-card-section
+                        class="text-white"
+                        :class="
+                          persons.title === 'Personas Atendidas (General)'
+                            ? persons.colours.value
+                            : 'bg-primary'
+                        "
+                      >
+                        <div
+                          class="text-subtitle1 text-bold"
+                          style="text-align: center"
+                        >
+                          {{ persons.title }}
+                        </div>
+                        <div class="row flex-center" style="text-align: center">
+                          <div
+                            class="column"
+                            v-if="
+                              persons.title === 'Personas Atendidas (General)'
+                            "
+                          >
+                            <div class="text-subtitle2">Atendidos</div>
+                            <div class="text-h6">
+                              {{ persons.counters.value }}
+                            </div>
+                          </div>
+                          <div
+                            class="column"
+                            v-if="
+                              persons.title !== 'Personas Atendidas (General)'
+                            "
+                          >
+                            <div class="text-bold text-h3">
+                              {{ persons.counters.value }}
+                            </div>
+                          </div>
+                          <q-separator
+                            vertical
+                            inset
+                            class="q-mx-sm"
+                            v-if="
+                              persons.title === 'Personas Atendidas (General)'
+                            "
+                          />
+                          <div
+                            class="column"
+                            v-if="
+                              persons.title === 'Personas Atendidas (General)'
+                            "
+                          >
+                            <div class="text-caption">Cumplido</div>
+                            <div class="text-subtitle1">
+                              {{
+                                persons.cumplishmentFormula.value.toFixed(2) +
+                                "%"
+                              }}
+                            </div>
+                          </div>
+                          <q-separator
+                            vertical
+                            inset
+                            class="q-mx-sm"
+                            v-if="
+                              persons.title === 'Personas Atendidas (General)'
+                            "
+                          />
+                          <div
+                            class="column"
+                            v-if="
+                              persons.title === 'Personas Atendidas (General)'
+                            "
+                          >
+                            <div class="text-caption">Alcanzado/a Cumplir</div>
+                            <div class="text-subtitle1">
+                              {{
+                                persons.counters.value +
+                                "/" +
+                                peopleToAssistYearly
+                              }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <q-tooltip class="bg-white" :offset="[10, 10]">
+                          <q-card class="" style="width: 400px">
+                            <q-card-section>
+                              <div
+                                style="margin: 0%; height: 300px"
+                                v-if="
+                                  persons.title ===
+                                  'Personas Atendidas (General)'
+                                "
+                              >
+                                <Bar
+                                  :data="dataTooltipPersonsGeneral"
+                                  :options="options"
+                                />
+                              </div>
+                              <div
+                                style="
+                                  margin: 0%;
+
+                                  height: 300px;
+                                "
+                                v-if="
+                                  persons.title ===
+                                  'Personas Atendidas (Mujeres)'
+                                "
+                              >
+                                <Bar :data="data2" :options="options" />
+                              </div>
+                              <div
+                                style="
+                                  margin: 0%;
+
+                                  height: 300px;
+                                "
+                                v-if="
+                                  persons.title ===
+                                  'Personas Atendidas (Hombres)'
+                                "
+                              >
+                                <Bar :data="data3" :options="options" />
+                              </div>
+                              <div
+                                style="
+                                  margin: 0%;
+
+                                  height: 300px;
+                                "
+                                v-if="
+                                  persons.title ===
+                                  'Personas Atendidas (Discapacitadas)'
+                                "
+                              >
+                                <Bar :data="data4" :options="options" />
+                              </div>
+                              <div
+                                style="
+                                  margin: 0%;
+
+                                  height: 300px;
+                                "
+                                v-if="
+                                  persons.title ===
+                                  'Personas Atendidas (Poblacion indigena)'
+                                "
+                              >
+                                <Bar :data="data5" :options="options" />
+                              </div>
+                            </q-card-section>
+                          </q-card>
+                        </q-tooltip>
+                      </q-card-section>
+                    </q-card>
+                    <!--
+                        Seccion del dialog
+                      -->
+
+                    <q-dialog v-model="dialogAttendedPersons" full-width>
+                      <q-card class="flex row">
+                        <q-space />
+
+                        <q-btn
+                          flat
+                          rounded
+                          icon="close"
+                          class="q-mt-xl q-mr-xl"
+                          v-close-popup
+                        />
+                        <div class="row inline">
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h4 class="column items-center text-bold">
+                              Detalles del indicador
+                            </h4>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="q-pa-xs q-mx-md">
+                              <q-card
+                                class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                              >
+                                <q-card-section style="margin: 0%; padding: 3%">
+                                  <Bar
+                                    :data="dataAttendedPersons"
+                                    :options="options"
+                                  />
+                                </q-card-section>
+                              </q-card>
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="q-pa-xs q-mx-md">
+                              <q-card
+                                class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                              >
+                                <q-card-section class="flex row flex-center">
+                                  <h5
+                                    class="no-margin q-mb-xs column items-center text-bold"
+                                  >
+                                    Estado del indicador
+                                  </h5>
+                                  <div class="flex row no-wrap">
+                                    <div
+                                      class="container flex"
+                                      style="width: 100%"
+                                    >
+                                      <div class="flex column">
+                                        <div class="column items-center">
+                                          <div class="row inline flex-center">
+                                            <div
+                                              style="
+                                                border-radius: 50%;
+                                                display: inline-block;
+                                                height: 70px;
+                                                width: 70px;
+                                              "
+                                              :class="
+                                                personsAttendedValue[0].colours
+                                                  .value
+                                              "
+                                              class="q-mx-lg"
+                                            >
+                                              <span></span>
+                                            </div>
+                                            <h2
+                                              v-if="
+                                                personsAttendedValue[0].colours
+                                                  .value === 'bg-green'
+                                              "
+                                              style="
+                                                color: #00a126;
+                                                text-shadow: 1px 1px grey;
+                                              "
+                                            >
+                                              Bien
+                                            </h2>
+                                            <h2
+                                              v-if="
+                                                personsAttendedValue[0].colours
+                                                  .value === 'bg-warning'
+                                              "
+                                              style="
+                                                color: #ffb700;
+                                                text-shadow: 1px 1px grey;
+                                              "
+                                            >
+                                              Regular
+                                            </h2>
+                                            <h2
+                                              v-if="
+                                                personsAttendedValue[0].colours
+                                                  .value === 'bg-red'
+                                              "
+                                              style="
+                                                color: #c10000;
+                                                text-shadow: 1px 1px grey;
+                                              "
+                                            >
+                                              Por mejorar
+                                            </h2>
+                                          </div>
+                                          <div
+                                            class="column items-center justify-center text-center"
+                                          >
+                                            Fueron atendidos por la organizacion
+                                            Acuario hasta la fecha
+                                            {{
+                                              personsAttendedValue[0].counters
+                                                .value
+                                            }}
+                                            personas, lo que equivale al
+
+                                            {{
+                                              personsAttendedValue[0].cumplishmentFormula.value.toFixed(
+                                                2
+                                              )
+                                            }}% de todas las personas atendidas.
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </q-card-section>
+                              </q-card>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row inline">
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="q-pa-xs q-mx-md">
+                              <q-card
+                                class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                              >
+                                <q-card-section class="flex row flex-center">
+                                  <h5
+                                    class="no-margin q-mb-xs column items-center text-bold"
+                                  >
+                                    Segregación
+                                  </h5>
+                                  <div class="flex row no-wrap">
+                                    <div
+                                      class="container flex"
+                                      style="width: 25%"
+                                    >
+                                      <div class="flex column">
+                                        <div class="column items-center">
+                                          <div class="q-my-sm text-bold">
+                                            Hombres
+                                          </div>
+                                          <h4
+                                            class="q-my-sm"
+                                            style="color: #5361f5"
+                                          >
+                                            {{
+                                              personsAttendedValue[2].counters
+                                                .value
+                                            }}
+                                          </h4>
+                                          <div
+                                            class="column items-center wrap justify-center text-center"
+                                          >
+                                            Fueron atendidos por la organizacion
+                                            Acuario hasta la fecha, lo que
+                                            equivale al
+                                            {{
+                                              personsAttendedValue[2].cumplishmentFormula.value.toFixed(
+                                                2
+                                              )
+                                            }}% de todas las personas atendidas.
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <q-separator
+                                      vertical
+                                      inset
+                                      class="q-mx-sm"
+                                    />
+
+                                    <div
+                                      class="container flex"
+                                      style="width: 25%"
+                                    >
+                                      <div class="flex column">
+                                        <div class="column items-center">
+                                          <div class="q-my-sm text-bold">
+                                            Mujeres
+                                          </div>
+                                          <h4
+                                            class="q-my-sm"
+                                            style="color: #ff4ec1"
+                                          >
+                                            {{
+                                              personsAttendedValue[1].counters
+                                                .value
+                                            }}
+                                          </h4>
+                                          <div
+                                            class="column items-center justify-center text-center"
+                                          >
+                                            Fueron atendidos por la organizacion
+                                            Acuario hasta la fecha, lo que
+                                            equivale al
+                                            {{
+                                              personsAttendedValue[1].cumplishmentFormula.value.toFixed(
+                                                2
+                                              )
+                                            }}% de todas las personas atendidas.
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <q-separator
+                                      vertical
+                                      inset
+                                      class="q-mx-sm"
+                                    />
+
+                                    <div
+                                      class="container flex"
+                                      style="width: 25%"
+                                    >
+                                      <div class="flex column">
+                                        <div class="column items-center">
+                                          <div class="q-my-sm text-bold">
+                                            Discapacitados
+                                          </div>
+                                          <h4
+                                            class="q-my-sm"
+                                            style="color: #5f9ea0"
+                                          >
+                                            {{
+                                              personsAttendedValue[3].counters
+                                                .value
+                                            }}
+                                          </h4>
+                                          <div
+                                            class="column items-center justify-center text-center"
+                                          >
+                                            Fueron atendidos por la organizacion
+                                            Acuario hasta la fecha, lo que
+                                            equivale al
+                                            {{
+                                              personsAttendedValue[3].cumplishmentFormula.value.toFixed(
+                                                2
+                                              )
+                                            }}% de todas las personas atendidas.
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <q-separator
+                                      vertical
+                                      inset
+                                      class="q-mx-sm"
+                                    />
+
+                                    <div
+                                      class="container flex"
+                                      style="width: 25%"
+                                    >
+                                      <div class="flex column">
+                                        <div class="column items-center">
+                                          <div class="q-my-sm text-bold">
+                                            P. Indigena
+                                          </div>
+                                          <h4
+                                            class="q-my-sm"
+                                            style="color: #3eb137"
+                                          >
+                                            {{
+                                              personsAttendedValue[4].counters
+                                                .value
+                                            }}
+                                          </h4>
+                                          <div
+                                            class="column items-center justify-center text-center"
+                                          >
+                                            Fueron atendidos por la organizacion
+                                            Acuario hasta la fecha, lo que
+                                            equivale al
+                                            {{
+                                              personsAttendedValue[4].cumplishmentFormula.value.toFixed(
+                                                2
+                                              )
+                                            }}% de todas las personas atendidas.
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </q-card-section>
+                              </q-card>
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="q-pa-xs q-mx-md q-mb-lg">
+                              <q-card
+                                class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                              >
+                                <q-card-section style="margin: 0%; padding: 3%">
+                                  <Doughnut :data="data6" :options="options" />
+                                </q-card-section>
+                              </q-card>
+                            </div>
+                          </div>
+                        </div>
+                      </q-card>
+                    </q-dialog>
+                  </div>
+                </div>
+
+                <!--h5 class="no-margin q-mb-xs" style="text-align: center">
+                        Indice de variacion de Acuario año 2023
+                      </h5>
+                      <div
+                        class="flex row"
+                        style="text-shadow: 1px 1px rgb(0, 0, 0)"
+                      >
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                          v-for="indicators in personsAttendedValue"
+                          :key="indicators.id"
+                        >
+                          <q-card class="q-ma-xs">
+                            <q-card-section
+                              class="text-white"
+                              :class="indicators.colours.value"
+                            >
+                              <div class="text-subtitle1 text-bold">
+                                {{ indicators.title }}
+                              </div>
+                              <div class="text-h5" style="text-align: end">
+                                {{
+                                  indicators.counters.value +
+                                  "/" +
+                                  peopleToAssistYearly
+                                }}
+                              </div>
+                              <q-tooltip class="bg-white" :offset="[10, 10]">
+                                <q-card class="" style="width: 355px">
+                                  <q-card-section
+                                    style="
+                                      margin: 0%;
+                                      padding: 3%;
+                                      height: 300px;
+                                    "
+                                  >
+                                    <div
+                                      style="
+                                        margin: 0%;
+
+                                        height: 300px;
+                                      "
+                                      v-if="
+                                        personsIndicators.title ===
+                                        'Personas Atendidas (General)'
+                                      "
+                                    >
+                                      <Bar
+                                        :data="dataTooltipPersonsGeneral"
+                                        :options="options"
+                                      />
+                                    </div>
+                                    <div
+                                      style="
+                                        margin: 0%;
+
+                                        height: 300px;
+                                      "
+                                      v-if="
+                                        personsIndicators.title ===
+                                        'Personas Atendidas (Mujeres)'
+                                      "
+                                    >
+                                      <Bar :data="data2" :options="options" />
+                                    </div>
+                                    <div
+                                      style="
+                                        margin: 0%;
+
+                                        height: 300px;
+                                      "
+                                      v-if="
+                                        personsIndicators.title ===
+                                        'Personas Atendidas (Hombres)'
+                                      "
+                                    >
+                                      <Bar :data="data3" :options="options" />
+                                    </div>
+                                    <div
+                                      style="
+                                        margin: 0%;
+
+                                        height: 300px;
+                                      "
+                                      v-if="
+                                        personsIndicators.title ===
+                                        'Personas Atendidas (Discapacitadas)'
+                                      "
+                                    >
+                                      <Bar :data="data4" :options="options" />
+                                    </div>
+                                    <div
+                                      style="
+                                        margin: 0%;
+
+                                        height: 300px;
+                                      "
+                                      v-if="
+                                        personsIndicators.title ===
+                                        'Personas Atendidas (Poblacion indigena)'
+                                      "
+                                    >
+                                      <Bar :data="data5" :options="options" />
+                                    </div>
+                                  </q-card-section>
+                                </q-card>
+                              </q-tooltip>
+                            </q-card-section>
+                          </q-card>
+                        </div>
+                      </div-->
+              </q-card>
+            </div>
+          </div>
+          <br />
+          <!--div class="row justify-center items-center">
+                  <div class="">
+                    <q-btn @click="randomize">Prueba</q-btn>
+                  </div>
+                  <div class="">
+                    <q-btn @click="display">ver resolucion</q-btn>
+                  </div>
+
+                </div-->
+        </q-card-section>
+      </q-card>
+    </div>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import readExcelComponent from "components/excelReadComponent.vue";
-import IndexPageComponent from "components/IndexPageComponent.vue";
 import { mapState, mapMutations, mapActions } from "vuex";
 import { reactive, computed } from "vue";
 import {
@@ -249,8 +3341,6 @@ import {
 import { Bar, Radar, Doughnut } from "vue-chartjs";
 import axios from "axios";
 
-//import { excelToJson } from 'convert-excel-to-json'
-
 ChartJS.register(
   CategoryScale,
   ArcElement,
@@ -264,239 +3354,6 @@ ChartJS.register(
   LineElement,
   Filler
 );
-
-const clusterList = [
-  /*{
-    title: ref("Conocimiento de el área nutricional en sucre"),
-    caption: ref(
-      "talleres acerca del valor nutricional en alimentos para niños en desarrollo"
-    ),
-    //icon: ref("food-fork-drink"),
-    cluster: ref("Seguridad Alimentaria"),
-
-    //generales
-    servedPeople: ref(20),
-    servedPeopleDisabled: ref(0),
-    servedPeopleNative: ref(0),
-    servedPeopleWomen: ref(15),
-    servedPeopleMen: ref(5),
-
-    //seguridad alimentaria pero pueede ser general
-    servedHomes: ref(0),
-    servedCenters: ref(1),
-
-    //saneamiento y seguridad alimentaria
-    washReport: ref(""),
-    foodReport: ref("12/1/2024"),
-
-    boys0to17: ref(2),
-    girls0to17: ref(3),
-    men18to59: ref(3),
-    women18to59: ref(10),
-    //educacion tambien
-    men60orOlder: ref(0),
-    women60orOlder: ref(2),
-
-    //salud
-    healthReport: ref(""),
-    boys0to5: ref(0),
-    girls0to5: ref(0),
-    boys6to19: ref(0),
-    girls6to19: ref(0),
-    men20to64: ref(0),
-    women20to64: ref(0),
-    men65orOlder: ref(0),
-    women65orOlder: ref(0),
-
-    //educacion
-    educationReport: ref(""),
-    boys0to2: ref(0),
-    girls0to2: ref(0),
-    boys3to5: ref(0),
-    girls3to5: ref(0),
-    boys6to11: ref(0),
-    girls6to11: ref(0),
-    boys12to17: ref(0),
-    girls12to17: ref(0),
-    boys18to19: ref(0),
-    girls18to19: ref(0),
-    men20to59: ref(0),
-    women20to59: ref(0),
-  },
-  {
-    title: ref("Preparación para la vida en el área laboral"),
-    caption: ref(
-      "talleres acerca de las adversidades que manejan las personas en la vida diaria"
-    ),
-    //icon: ref("school"),
-    cluster: ref("Educación"),
-
-    //generales
-    servedPeople: ref(100),
-    servedPeopleDisabled: ref(3),
-    servedPeopleNative: ref(2),
-    servedPeopleWomen: ref(47),
-    servedPeopleMen: ref(53),
-
-    //seguridad alimentaria pero pueede ser general
-    servedHomes: ref(0),
-    servedCenters: ref(1),
-
-    //saneamiento y seguridad alimentaria
-    washReport: ref(""),
-    foodReport: ref(""),
-
-    boys0to17: ref(2),
-    girls0to17: ref(3),
-    men18to59: ref(3),
-    women18to59: ref(10),
-    //educacion tambien
-    men60orOlder: ref(15),
-    women60orOlder: ref(5),
-
-    //salud
-    healthReport: ref(""),
-    boys0to5: ref(0),
-    girls0to5: ref(0),
-    boys6to19: ref(0),
-    girls6to19: ref(0),
-    men20to64: ref(0),
-    women20to64: ref(0),
-    men65orOlder: ref(0),
-    women65orOlder: ref(0),
-
-    //educacion
-    educationReport: ref("12/1/2024"),
-    boys0to2: ref(0),
-    girls0to2: ref(0),
-    boys3to5: ref(0),
-    girls3to5: ref(0),
-    boys6to11: ref(0),
-    girls6to11: ref(0),
-    boys12to17: ref(10),
-    girls12to17: ref(2),
-    boys18to19: ref(10),
-    girls18to19: ref(8),
-    men20to59: ref(28),
-    women20to59: ref(22),
-  },
-  {
-    title: ref("Jornada de esterilización femenina y masculina"),
-    caption: ref(
-      "jornada donde se aplicarán procesos quirúrgicos de estrilización para hombres y mujeres"
-    ),
-    //icon: ref("hospital-building"),
-    cluster: ref("Salud"),
-
-    //generales
-    servedPeople: ref(50),
-    servedPeopleDisabled: ref(0),
-    servedPeopleNative: ref(0),
-    servedPeopleWomen: ref(35),
-    servedPeopleMen: ref(15),
-
-    //seguridad alimentaria pero pueede ser general
-    servedHomes: ref(0),
-    servedCenters: ref(1),
-
-    //saneamiento y seguridad alimentaria
-    washReport: ref(""),
-    foodReport: ref(""),
-
-    boys0to17: ref(0),
-    girls0to17: ref(0),
-    men18to59: ref(0),
-    women18to59: ref(0),
-    //educacion tambien
-    men60orOlder: ref(0),
-    women60orOlder: ref(0),
-
-    //salud
-    healthReport: ref("12/1/2024"),
-    boys0to5: ref(0),
-    girls0to5: ref(0),
-    boys6to19: ref(0),
-    girls6to19: ref(0),
-    men20to64: ref(15),
-    women20to64: ref(35),
-    men65orOlder: ref(0),
-    women65orOlder: ref(0),
-
-    //educacion
-    educationReport: ref("12/1/2024"),
-    boys0to2: ref(0),
-    girls0to2: ref(0),
-    boys3to5: ref(0),
-    girls3to5: ref(0),
-    boys6to11: ref(0),
-    girls6to11: ref(0),
-    boys12to17: ref(10),
-    girls12to17: ref(2),
-    boys18to19: ref(10),
-    girls18to19: ref(8),
-    men20to59: ref(28),
-    women20to59: ref(22),
-  },
-  {
-    title: ref(
-      "Jornada de limpieza en instituciones públicas del área de Cariaco"
-    ),
-    caption: ref(
-      "jornadas donde se harán servicios de limpieza, estrilización de ambientes, reorganización"
-    ),
-    //icon: ref("hand-wash"),
-    cluster: ref("Saneamiento"),
-
-    //generales
-    servedPeople: ref(300),
-    servedPeopleDisabled: ref(20),
-    servedPeopleNative: ref(15),
-    servedPeopleWomen: ref(186),
-    servedPeopleMen: ref(114),
-
-    //seguridad alimentaria pero pueede ser general
-    servedHomes: ref(0),
-    servedCenters: ref(4),
-
-    //saneamiento y seguridad alimentaria
-    washReport: ref("12/1/2024"),
-    foodReport: ref(""),
-
-    boys0to17: ref(87),
-    girls0to17: ref(121),
-    men18to59: ref(24),
-    women18to59: ref(43),
-    //educacion tambien
-    men60orOlder: ref(3),
-    women60orOlder: ref(22),
-
-    //salud
-    healthReport: ref("12/1/2024"),
-    boys0to5: ref(0),
-    girls0to5: ref(0),
-    boys6to19: ref(0),
-    girls6to19: ref(0),
-    men20to64: ref(15),
-    women20to64: ref(35),
-    men65orOlder: ref(0),
-    women65orOlder: ref(0),
-
-    //educacion
-    educationReport: ref("12/1/2024"),
-    boys0to2: ref(0),
-    girls0to2: ref(0),
-    boys3to5: ref(0),
-    girls3to5: ref(0),
-    boys6to11: ref(0),
-    girls6to11: ref(0),
-    boys12to17: ref(10),
-    girls12to17: ref(2),
-    boys18to19: ref(10),
-    girls18to19: ref(8),
-    men20to59: ref(28),
-    women20to59: ref(22),
-  },*/
-];
 
 const mailboxIndicators = [
   {
@@ -747,10 +3604,6 @@ const personsAttendedValue = [
 const users = [];
 const user = [];
 const authenticated = ref(false);
-const rProyects = ref(0);
-const iProyects = ref(0);
-
-//valores referenciales de meta para comparativa a cumplir
 
 const projectsToCulminateYearly = ref(150); //aproximate
 const projectstoCulminateMonthly = ref(13); //aproximate
@@ -815,34 +3668,6 @@ const monthsDataValuesWomen = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const monthsDataValuesMen = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const monthsDataValuesDisabled = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const monthsDataValuesNative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-/*function colorsDisplay() {
-  personsAttendedValue.forEach((element) => {
-    console.log(element.cumplishmentFormula.value, "element.cumplishmentFormula.value");
-    if (element.cumplishmentFormula.value >= 95.0) {
-      element.colours.value = "bg-green";
-    } else {
-      if (element.cumplishmentFormula.value >= 60.0 && element.cumplishmentFormula.value < 94.0) {
-        element.colours.value = "bg-warning";
-      } else {
-        element.colours.value = "bg-red";
-      }
-    }
-  });
-
-  if ((projectsValue[0].counters.value / projectsValue[0].counters.value) * 100 > 61) {
-    colorGrande.value = "bg-green";
-  } else {
-    if (
-      (projectsValue[0].counters.value / projectsValue[0].counters.value) * 100 >= 50 &&
-      (projectsValue[0].counters.value / projectsValue[0].counters.value) * 100 < 61
-    ) {
-      colorGrande.value = "bg-warning";
-    } else {
-      colorGrande.value = "bg-red";
-    }
-  }
-}*/
 
 function randomizeAll(/*min, max*/) {
   //min = Math.ceil(0);
@@ -5770,9 +8595,6 @@ function distributeValues() {
     personsAttendedValue[3].counters.value = 0;
     personsAttendedValue[4].counters.value = 0;*/
 
-    iProyects.value = 0;
-    rProyects.value = 0;
-
     generalArray.forEach((element) => {
       personsAttendedValue[0].counters.value =
         element.assistedPeople + personsAttendedValue[0].counters.value;
@@ -5781,20 +8603,6 @@ function distributeValues() {
         personsAttendedValue[0].counters.value,
         "sort data (counter de personsAttendedvalue)"
       );
-
-      if (
-        element.humanitaryResponsePlan !== null &&
-        element.humanitaryResponsePlan === "No"
-      ) {
-        iProyects.value++;
-      }
-
-      if (
-        element.humanitaryResponsePlan !== null &&
-        element.humanitaryResponsePlan === "Sí"
-      ) {
-        rProyects.value++;
-      }
 
       totalAssisted.value = element.assistedPeople + totalAssisted.value;
 
@@ -6557,39 +9365,17 @@ function distributeValues() {
 }
 
 export default defineComponent({
-  name: "IndexPage , App",
+  name: "IndexPageComponent",
   components: {
-    readExcelComponent,
-    IndexPageComponent,
+    Bar,
+    Doughnut,
   },
 
   setup() {
-    const dataForChart = ref(null); //elementos generales del front
     const projectsGeneral = ref("Estadísticas de Acuario");
     const projectDescriptionGeneral = ref(
       "A continuación se mostrarán datos acerca de las actividades realizadas recientemente por Acuario"
     );
-    const proyectType = ref("Tipo");
-    const proyectPoblation = ref(0);
-    const proyectNGOAllies = ref([
-      { ngo: "nombre1" },
-      { ngo: "nombre2" },
-      { ngo: "nombre3" },
-    ]);
-    const NgoIntenationalAllies = ref(20);
-    const NgoNationalAllies = ref(80);
-    const proyectFinancing = ref(0);
-    const proyectAttendedComunity = ref(0);
-
-    const N_Proyects = ref(10);
-
-    const proyectWorkTeam = ref(200);
-    const workteamCapitated = ref(50);
-    const workTeamPreparated = ref(50);
-
-    const totalValue = ref(0);
-
-    const screendisplay = ref("");
 
     /*const prueba = (function () {
       function a() {
@@ -6618,10 +9404,6 @@ export default defineComponent({
     });*/
 
     return {
-      //dataForChart,
-      //prueba,
-      //MultiPurposeDashboard: ClusterList,
-      authenticated,
       projectsToCulminateYearly,
       projectstoCulminateMonthly,
       peopleToAssistYearly,
@@ -6631,8 +9413,6 @@ export default defineComponent({
       dialogAttendedPersons: ref(false),
       dialogFinishedProjects: ref(false),
       dialogMailbox: ref(false),
-      user,
-      users,
       colorGrande,
       monthsData,
       monthsDataValuesProjects,
@@ -6655,226 +9435,14 @@ export default defineComponent({
       totalMen,
       totalDisabled,
       totalNative,
-      readExcelComponent,
-      clusterList,
-      totalValue,
       totalAssisted,
       tab: ref("Pagina Principal"),
       //elementos reactivos a retornar de datos del back
       projectsGeneral,
       projectDescriptionGeneral,
-      proyectType,
-      proyectFinancing,
-      proyectNGOAllies,
-      proyectPoblation,
-      proyectAttendedComunity,
-      rProyects,
-      iProyects,
-      N_Proyects,
-      proyectWorkTeam,
-      workTeamPreparated,
-      workteamCapitated,
-      NgoIntenationalAllies,
-      NgoNationalAllies,
       mailboxIndicators,
       personsAttendedValue,
       projectsValue,
-      userInformation() {
-        console.log(user, "user");
-        console.log(users, "users");
-        console.log(JSON.parse(localStorage.getItem("tokenUser")));
-        console.log(authenticated.value);
-      },
-      async refreshDashboard() {
-        distributeValues();
-        /*console.log("aqui arranca el refresh");
-        childProtectionArray.splice(0);
-        console.log(childProtectionArray, "este child protection");
-        healthArray.splice(0);
-        console.log(healthArray, "este es health");
-        vbgProtectionArray.splice(0);
-        console.log(vbgProtectionArray, "este es vbg protection");
-        transverseArray.splice(0);
-        console.log(transverseArray, "este es transverse");
-        generalArray.splice(0);
-        console.log(generalArray, "este es general");
-        hostingArray.splice(0);
-        console.log(hostingArray, "este es hosting");
-        educationArray.splice(0);
-        console.log(educationArray, "este es education");
-        nutritionArray.splice(0);
-        console.log(nutritionArray, "este es nutrition");
-        foodSafetyArray.splice(0);
-        console.log(foodSafetyArray, "este es food safety");
-        protectionArray.splice(0);
-        console.log(protectionArray, "este es protection");
-        sanitationArray.splice(0);
-        console.log(sanitationArray, "este es sanitation");
-        await axios
-          .get("http://localhost:5000/transverse")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              transverseArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/education")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              educationArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/health")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              healthArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/protection")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              protectionArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/nutrition")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              nutritionArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/food-safety")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              foodSafetyArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/hosting")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              hostingArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/sanitation")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              sanitationArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/child-protection")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              childProtectionArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/vbg-protection")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              vbgProtectionArray.push(element);
-            });
-          });
-
-        await axios
-          .get("http://localhost:5000/project")
-          .then(function (response) {
-            response.data.forEach((element) => {
-              generalArray.push(element);
-            });
-          });
-
-        console.log("refresco hecho");
-        console.log(childProtectionArray, "este child protection");
-
-        console.log(healthArray, "este es health");
-
-        console.log(vbgProtectionArray, "este es vbg protection");
-
-        console.log(transverseArray, "este es transverse");
-
-        console.log(generalArray, "este es general");
-
-        console.log(hostingArray, "este es hosting");
-
-        console.log(educationArray, "este es education");
-
-        console.log(nutritionArray, "este es nutrition");
-
-        console.log(foodSafetyArray, "este es food safety");
-
-        console.log(protectionArray, "este es protection");
-
-        console.log(sanitationArray, "este es sanitation");*/
-      },
-      randomize(min, max) {
-        min = Math.ceil(0);
-        max = Math.floor(100);
-        mailboxIndicators.forEach((element) => {
-          element.counters.value = Math.floor(
-            Math.random() * (max - min) + min
-          );
-          if (element.counters.value < 30) {
-            element.colours.value = "bg-green";
-          } else {
-            if (element.counters.value >= 30 && element.counters.value < 70) {
-              element.colours.value = "bg-warning";
-            } else {
-              element.colours.value = "bg-red";
-            }
-          }
-        });
-        /*personsAttendedValue.forEach((element) => {
-          element.counters.value = Math.floor(
-            Math.random() * (max - min) + min
-          );
-          totalValue.value = element.counters.value + totalValue.value;
-          if (element.counters.value < 30) {
-            element.colours.value = "bg-green";
-          } else {
-            if (element.counters.value >= 30 && element.counters.value < 70) {
-              element.colours.value = "bg-warning";
-            } else {
-              element.colours.value = "bg-red";
-            }
-          }
-        });*/
-
-        const object = [];
-        clusterList.forEach((element, index, h) => {
-          console.log(element);
-          console.log(index);
-          console.log(h);
-          //dashboardArray.value.push(element.cluster.value);
-
-          if (element.cluster.value === "Seguridad Alimentaria") {
-          } else {
-            if (element.cluster.value === "Educación") {
-            } else {
-              if (element.cluster.value === "Salud") {
-              } else {
-                if (element.cluster.value === "Saneamiento") {
-                }
-              }
-            }
-          }
-        });
-        console.log(totalAssisted.value);
-      },
       display() {
         //console.log(dataAttendedPersons);
         /*sanitationArray.forEach((element) => {
@@ -8091,8 +10659,6 @@ export default defineComponent({
         responsive: true,
         maintainAspectRatio: false,
       },
-
-      screendisplay,
       //elementos a retornar de la funcion para subir xlsx
 
       model: ref(null),
@@ -8119,11 +10685,6 @@ export default defineComponent({
 
   beforeMount() {
     distributeValues();
-    axios.get("http://localhost:5000/users").then(function (response) {
-      response.data.forEach((element) => {
-        users.push(element);
-      });
-    });
   },
   data() {},
   computed() {},
