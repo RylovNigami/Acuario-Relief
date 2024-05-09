@@ -45,23 +45,24 @@
               <div class="column flex-center">
                 <div class="text-h6 q-mb-xs">Configuracion</div>
                 <q-list style="">
-                  <!--q-item clickable v-close-popup>
-                    <q-item-section>Ver Perfil</q-item-section>
-                  </q-item>
-                  <q-separator />
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Cambiar contraseña</q-item-section>
-                  </q-item>
-                  <q-separator /-->
-                  <!--q-item
+                  <q-item
                     clickable
                     v-close-popup
                     push
                     @click="$router.push('/userPage')"
                   >
+                    <q-item-section>Ver Perfil</q-item-section>
+                  </q-item>
+                  <q-separator />
+                  <q-item
+                    clickable
+                    v-close-popup
+                    push
+                    @click="$router.push('/userEdit')"
+                  >
                     <q-item-section>Editar perfil</q-item-section>
                   </q-item>
-                  <q-separator /-->
+                  <q-separator />
                   <q-item clickable v-close-popup push @click="logOut()">
                     <q-item-section>Cerrar sesión</q-item-section>
                   </q-item>
@@ -424,10 +425,6 @@ export default defineComponent({
               icon: "error",
               title: "Ha ocurrido un error al iniciar sesión.",
               showConfirmButton: false,
-              timer: 5000,
-              position: "bottom-end",
-              timerProgressBar: true,
-              toast: true,
               showCloseButton: true,
             });
           });

@@ -3,7 +3,7 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/IndexPage.vue") },
+      { path: "/", component: () => import("pages/IndexPage.vue") },
       {
         path: "registerPage",
         component: () => import("src/pages/registerPage.vue"),
@@ -23,6 +23,10 @@ const routes = [
       {
         path: "mailboxIndex",
         component: () => import("src/pages/mailboxIndex.vue"),
+      },
+      {
+        path: "userEdit",
+        component: () => import("src/pages/userEdit.vue"),
       },
       {
         path: "userPage",

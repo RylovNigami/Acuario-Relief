@@ -9372,9 +9372,9 @@ export default defineComponent({
   },
 
   setup() {
-    const projectsGeneral = ref("Estadísticas de Acuario");
+    const projectsGeneral = ref("Estadísticas generales de Acuario");
     const projectDescriptionGeneral = ref(
-      "A continuación se mostrarán datos acerca de las actividades realizadas recientemente por Acuario"
+      "Aquí se muestran los datos acerca de las actividades realizadas recientemente por Acuario"
     );
 
     /*const prueba = (function () {

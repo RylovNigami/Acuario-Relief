@@ -24,6 +24,9 @@
       <q-tab-panel name="Pagina Principal">
         <IndexPageComponent />
       </q-tab-panel>
+      <q-tab-panel name="Saneamiento">
+        <IndexPageComponent />
+      </q-tab-panel>
     </q-tab-panels>
 
     <div class="flex row q-mx-lg q-py-xs items-center justify-between">
@@ -266,14 +269,14 @@ ChartJS.register(
 );
 
 const clusterList = [
-  /*{
-    title: ref("Conocimiento de el área nutricional en sucre"),
+  {
+    /*title: ref("Conocimiento de el área nutricional en sucre"),
     caption: ref(
       "talleres acerca del valor nutricional en alimentos para niños en desarrollo"
     ),
-    //icon: ref("food-fork-drink"),
+    //icon: ref("food-fork-drink"),*/
     cluster: ref("Seguridad Alimentaria"),
-
+    /*
     //generales
     servedPeople: ref(20),
     servedPeopleDisabled: ref(0),
@@ -321,16 +324,16 @@ const clusterList = [
     boys18to19: ref(0),
     girls18to19: ref(0),
     men20to59: ref(0),
-    women20to59: ref(0),
+    women20to59: ref(0),*/
   },
   {
-    title: ref("Preparación para la vida en el área laboral"),
+    /*title: ref("Preparación para la vida en el área laboral"),
     caption: ref(
       "talleres acerca de las adversidades que manejan las personas en la vida diaria"
     ),
-    //icon: ref("school"),
+    //icon: ref("school"),*/
     cluster: ref("Educación"),
-
+    /*
     //generales
     servedPeople: ref(100),
     servedPeopleDisabled: ref(3),
@@ -378,16 +381,16 @@ const clusterList = [
     boys18to19: ref(10),
     girls18to19: ref(8),
     men20to59: ref(28),
-    women20to59: ref(22),
+    women20to59: ref(22),*/
   },
   {
-    title: ref("Jornada de esterilización femenina y masculina"),
+    /* title: ref("Jornada de esterilización femenina y masculina"),
     caption: ref(
       "jornada donde se aplicarán procesos quirúrgicos de estrilización para hombres y mujeres"
     ),
-    //icon: ref("hospital-building"),
+    //icon: ref("hospital-building"),*/
     cluster: ref("Salud"),
-
+    /*
     //generales
     servedPeople: ref(50),
     servedPeopleDisabled: ref(0),
@@ -435,18 +438,18 @@ const clusterList = [
     boys18to19: ref(10),
     girls18to19: ref(8),
     men20to59: ref(28),
-    women20to59: ref(22),
+    women20to59: ref(22),*/
   },
   {
-    title: ref(
+    /*title: ref(
       "Jornada de limpieza en instituciones públicas del área de Cariaco"
     ),
     caption: ref(
       "jornadas donde se harán servicios de limpieza, estrilización de ambientes, reorganización"
     ),
-    //icon: ref("hand-wash"),
+    //icon: ref("hand-wash"),*/
     cluster: ref("Saneamiento"),
-
+    /*
     //generales
     servedPeople: ref(300),
     servedPeopleDisabled: ref(20),
@@ -494,8 +497,8 @@ const clusterList = [
     boys18to19: ref(10),
     girls18to19: ref(8),
     men20to59: ref(28),
-    women20to59: ref(22),
-  },*/
+    women20to59: ref(22),*/
+  },
 ];
 
 const mailboxIndicators = [
