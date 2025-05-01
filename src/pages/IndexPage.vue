@@ -24,8 +24,14 @@
       <q-tab-panel name="Pagina Principal">
         <IndexPageComponent />
       </q-tab-panel>
+      <q-tab-panel name="Seguridad Alimentaria">
+        <FoodSafetyPageComponent />
+      </q-tab-panel>
+      <q-tab-panel name="Educación">
+        <EducationPageComponent />
+      </q-tab-panel>
       <q-tab-panel name="Saneamiento">
-        <IndexPageComponent />
+        <SanitationPageComponent />
       </q-tab-panel>
     </q-tab-panels>
 
@@ -232,6 +238,9 @@
 import { defineComponent, ref, onMounted } from "vue";
 import readExcelComponent from "components/excelReadComponent.vue";
 import IndexPageComponent from "components/IndexPageComponent.vue";
+import SanitationPageComponent from "components/SanitationPageComponent.vue";
+import EducationPageComponent from "components/EducationPageComponent.vue";
+import FoodSafetyPageComponent from "components/FoodSafetyPageComponent.vue";
 import { mapState, mapMutations, mapActions } from "vuex";
 import { reactive, computed } from "vue";
 import {
@@ -6564,6 +6573,9 @@ export default defineComponent({
   components: {
     readExcelComponent,
     IndexPageComponent,
+    SanitationPageComponent,
+    FoodSafetyPageComponent,
+    EducationPageComponent,
   },
 
   setup() {

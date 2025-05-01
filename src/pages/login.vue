@@ -116,27 +116,26 @@ export default defineComponent({
       async login() {
         try {
           await axios
-                  .post("http://localhost:5000/transverse", {
-                    project: projectID.value,
-                    channelUsed: channelUsed.value,
-                    topicsAddressed: topicsAddressed.value,
-                    girls0to17T: girls0to17.value,
-                    boys0to17T: boys0to17.value,
-                    women18to59T: women18to59.value,
-                    men18to59T: men18to59.value,
-                    menOlderThan60T: menOlderThan60E.value,
-                    womenOlderThan60T: womenOlderThan60E.value,
-                  })
-                  .then(function (response) {
-                    //console.log(response, "esto es transverse cluster");
-                  })
-                  .catch(function (error) {
-                    console.log(error, "error en transverse cluster");
-                  });
-
+            .post("http://localhost:5000/transverse", {
+              project: projectID.value,
+              channelUsed: channelUsed.value,
+              topicsAddressed: topicsAddressed.value,
+              girls0to17T: girls0to17.value,
+              boys0to17T: boys0to17.value,
+              women18to59T: women18to59.value,
+              men18to59T: men18to59.value,
+              menOlderThan60T: menOlderThan60E.value,
+              womenOlderThan60T: womenOlderThan60E.value,
+            })
+            .then(function (response) {
+              //console.log(response, "esto es transverse cluster");
+            })
+            .catch(function (error) {
+              console.log(error, "error en transverse cluster");
+            });
         } catch (error) {
           this.overlay = false;
-          Sswal.fire({
+          Swal.fire({
             title: "Ha ocurrido un error",
             text: "No se ha podido iniciar sesión",
             icon: "error",

@@ -6,12 +6,12 @@
           <h2
             style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400"
           >
-            {{ projectsGeneral }}
+            {{ foodSafetyGeneral }}
           </h2>
           <h5
             style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400"
           >
-            {{ projectDescriptionGeneral }}
+            {{ foodSafetyDescriptionGeneral }}
           </h5>
         </div>
         <div
@@ -19,7 +19,7 @@
         >
           <img
             @click="userInformation"
-            src="/Logo-acuario-11-09-2023.png"
+            src="/pngtree-food-safety-png-image_8624033.png"
             style="max-height: 264px"
           />
           <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
@@ -77,7 +77,8 @@
             >
               <q-card class="q-pa-lg q-ma-xs">
                 <h5 class="no-margin q-mb-xs" style="text-align: center">
-                  Proyectos registrados por clúster en la ONG Acuario año 2023
+                  Proyectos registrados en el clúster de Seguridad Alimentaria
+                  en la ONG Acuario año 2023
                 </h5>
                 <q-separator inset class="q-my-sm" />
                 <div class="flex row">
@@ -85,121 +86,6 @@
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column flex-center"
                   >
                     <div class="row inline">
-                      <div class="row inline flex-center" label="transversal">
-                        <div class="">Eje Transversal</div>
-                        <q-avatar class="q-mx-sm">
-                          <img src="/2459387.png" />
-                        </q-avatar>
-                        <div class="text-h5">{{ transverseTotal }}</div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div
-                        class="row inline flex-center"
-                        label="alojamiento, energia y enseres"
-                      >
-                        <div class="">Alojamiento, Energia y Enseres</div>
-                        <q-avatar class="q-mx-sm">
-                          <img src="/1458564.png" />
-                        </q-avatar>
-                        <div class="text-h5">{{ hostingTotal }}</div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div class="row inline flex-center" label="saneamiento">
-                        <div class="">Agua, Saneamiento e Higiene</div>
-                        <q-avatar class="q-mx-sm">
-                          <img src="/wash-hands-icon-png_6023dcc6ad445.png" />
-                        </q-avatar>
-                        <div class="text-h5">{{ sanitationTotal }}</div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div class="row inline flex-center" label="educacion">
-                        <div class="">Educación</div>
-                        <q-avatar class="q-mx-sm">
-                          <img
-                            src="/image_processing20220416-11036-toi50p.png"
-                          />
-                        </q-avatar>
-                        <div class="text-h5">{{ educationTotal }}</div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div class="row inline flex-center" label="nutricion">
-                        <div class="">Nutrición</div>
-                        <q-avatar class="q-mx-sm">
-                          <img src="/7757761.png" />
-                        </q-avatar>
-                        <div class="text-h5">{{ nutritionTotal }}</div>
-                      </div>
-                    </div>
-
-                    <div class="row inline">
-                      <div class="row inline flex-center" label="proteccion">
-                        <div class="">Protección General</div>
-                        <q-avatar class="q-mx-sm">
-                          <img
-                            src="/iconfinder-securityprotectlockshield39-4021447_113141.png"
-                          />
-                        </q-avatar>
-                        <div class="text-h5">{{ protectionTotal }}</div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div
-                        class="row inline flex-center"
-                        label="proteccion infantil"
-                      >
-                        <div class="">
-                          Proteccion Niños, Niñas, Adolescentes
-                        </div>
-                        <q-avatar class="q-mx-sm">
-                          <img
-                            src="/children-s-rights-color-icon-child-protection-day-hand-holding-kids-childcare-isolated-illustration-vector.jpg"
-                          />
-                        </q-avatar>
-                        <div class="text-h5">
-                          {{ childProtectionTotal }}
-                        </div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div
-                        class="row inline flex-center"
-                        label="proteccion VBG"
-                      >
-                        <div class="">
-                          Proteccion Violencia Basada en Género
-                        </div>
-                        <q-avatar class="q-mx-sm">
-                          <img
-                            src="/equal-treatment-concept-icon-employee-rights-protection-idea-thin-line-illustration-sexual-equality-gender-policy-women-empowerment-isolated-outline-drawing-editable-stroke-vector.jpg"
-                          />
-                        </q-avatar>
-                        <div class="text-h5">
-                          {{ vbgProtectionTotal }}
-                        </div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
-                      <div class="row inline flex-center" label="salud">
-                        <div class="">Salud</div>
-                        <q-avatar class="q-mx-sm">
-                          <img src="/2689945.png" />
-                        </q-avatar>
-                        <div class="text-h5">{{ healthTotal }}</div>
-                      </div>
-
-                      <q-separator vertical inset class="q-mx-md" />
-
                       <div
                         class="row inline flex-center"
                         label="seguridad alimentaria"
@@ -217,13 +103,9 @@
                 </div>
               </q-card>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            <!--div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
               <q-card class="q-pa-lg q-ma-xs">
                 <div class="flex row">
-                  <h5 class="no-margin q-mb-xs" style="text-align: center">
-                    Indice de atención a beneficiarios de la ONG Acuario año
-                    2023
-                  </h5>
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div
                       v-for="indicators in mailboxIndicators"
@@ -2207,11 +2089,12 @@
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
                 </div>
               </q-card>
-            </div>
+            </div-->
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
               <q-card class="q-pa-lg q-ma-xs">
                 <h5 class="no-margin q-mb-xs" style="text-align: center">
-                  Indice de cumplimiento de Acuario año 2023
+                  Indice de cumplimiento de proyectos de Seguridad Alimentaria
+                  en Acuario año 2023
                 </h5>
                 <div class="flex row" style="text-shadow: 1px 1px rgb(0, 0, 0)">
                   <!--chartComponent
@@ -9376,9 +9259,11 @@ export default defineComponent({
   },
 
   setup() {
-    const projectsGeneral = ref("Estadísticas generales de Acuario");
-    const projectDescriptionGeneral = ref(
-      "Aquí se muestran los datos acerca de las actividades realizadas recientemente por Acuario"
+    const foodSafetyGeneral = ref(
+      "Estadísticas del Cluster de seguridad alimentaria en Acuario"
+    );
+    const foodSafetyDescriptionGeneral = ref(
+      "Aquí se muestran los datos acerca de las actividades de seguridad alimentaria realizadas recientemente por Acuario"
     );
 
     /*const prueba = (function () {
@@ -9442,8 +9327,8 @@ export default defineComponent({
       totalAssisted,
       tab: ref("Pagina Principal"),
       //elementos reactivos a retornar de datos del back
-      projectsGeneral,
-      projectDescriptionGeneral,
+      foodSafetyGeneral,
+      foodSafetyDescriptionGeneral,
       mailboxIndicators,
       personsAttendedValue,
       projectsValue,

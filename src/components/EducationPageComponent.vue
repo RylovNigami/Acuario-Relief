@@ -6,12 +6,12 @@
           <h2
             style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400"
           >
-            {{ projectsGeneral }}
+            {{ educationGeneral }}
           </h2>
           <h5
             style="color: rgb(77, 75, 75); font-style: italic; font-weight: 400"
           >
-            {{ projectDescriptionGeneral }}
+            {{ educationDescriptionGeneral }}
           </h5>
         </div>
         <div
@@ -19,7 +19,7 @@
         >
           <img
             @click="userInformation"
-            src="/Logo-acuario-11-09-2023.png"
+            src="/image_processing20220416-11036-toi50p.png"
             style="max-height: 264px"
           />
           <!--<h5 style="color: rgb(77, 75, 75); font-weight: 400; text-align: end;"> Organizaciones Aliadas:
@@ -220,10 +220,6 @@
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
               <q-card class="q-pa-lg q-ma-xs">
                 <div class="flex row">
-                  <h5 class="no-margin q-mb-xs" style="text-align: center">
-                    Indice de atención a beneficiarios de la ONG Acuario año
-                    2023
-                  </h5>
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div
                       v-for="indicators in mailboxIndicators"
@@ -9376,9 +9372,9 @@ export default defineComponent({
   },
 
   setup() {
-    const projectsGeneral = ref("Estadísticas generales de Acuario");
-    const projectDescriptionGeneral = ref(
-      "Aquí se muestran los datos acerca de las actividades realizadas recientemente por Acuario"
+    const educationGeneral = ref("Estadísticas del cluster de Educación en Acuario");
+    const educationDescriptionGeneral = ref(
+      "Aquí se muestran los datos acerca de las actividades de Educación realizadas recientemente por Acuario"
     );
 
     /*const prueba = (function () {
@@ -9442,8 +9438,8 @@ export default defineComponent({
       totalAssisted,
       tab: ref("Pagina Principal"),
       //elementos reactivos a retornar de datos del back
-      projectsGeneral,
-      projectDescriptionGeneral,
+      educationGeneral,
+      educationDescriptionGeneral,
       mailboxIndicators,
       personsAttendedValue,
       projectsValue,
